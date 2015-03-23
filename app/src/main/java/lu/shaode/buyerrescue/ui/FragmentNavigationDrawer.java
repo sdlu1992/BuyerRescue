@@ -23,6 +23,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import lu.shaode.buyerrescue.R;
+import lu.shaode.netsupport.AppConfigCache;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -60,6 +61,7 @@ public class FragmentNavigationDrawer extends Fragment {
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
 
+    ArrayAdapter<String> stringArrayAdapter;
     public FragmentNavigationDrawer() {
     }
 
@@ -99,15 +101,18 @@ public class FragmentNavigationDrawer extends Fragment {
                 selectItem(position);
             }
         });
-        mDrawerListView.setAdapter(new ArrayAdapter<String>(
+        String name = AppConfigCache.getCacheConfigString(getActivity(), "name");
+        String items[] = new String[]{getString(R.string.title_section1),
+                                    name.equals("") ? getString(R.string.title_section2) : name,
+                                    getString(R.string.title_section3)
+                                        };
+        stringArrayAdapter = new ArrayAdapter<String>(
                 getActionBar().getThemedContext(),
                 android.R.layout.simple_list_item_activated_1,
                 android.R.id.text1,
-                new String[]{
-                        getString(R.string.title_section1),
-                        getString(R.string.title_section2),
-                        getString(R.string.title_section3),
-                }));
+                items
+                );
+        mDrawerListView.setAdapter(stringArrayAdapter);
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;
     }

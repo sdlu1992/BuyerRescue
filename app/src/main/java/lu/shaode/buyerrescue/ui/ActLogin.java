@@ -1,18 +1,29 @@
 package lu.shaode.buyerrescue.ui;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import lu.shaode.buyerrescue.R;
+import lu.shaode.netsupport.AppConfigCache;
+import lu.shaode.netsupport.BizManager;
+import lu.shaode.netsupport.listener.ApiListener;
 
 public class ActLogin extends ActParent implements View.OnClickListener{
 
+    private final String TAG = ((Object) this).getClass().getSimpleName();
     public static final int         REQUEST_REGISTER = 1992;
     EditText    etPhone;
     EditText    etPwd;
@@ -39,6 +50,7 @@ public class ActLogin extends ActParent implements View.OnClickListener{
         btLogin = (Button) findViewById(R.id.act_login_bt_login);
 
         btRegister.setOnClickListener(this);
+        btLogin.setOnClickListener(this);
     }
 
     @Override
@@ -55,11 +67,6 @@ public class ActLogin extends ActParent implements View.OnClickListener{
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -71,6 +78,7 @@ public class ActLogin extends ActParent implements View.OnClickListener{
                 startActivityForResult(intent, REQUEST_REGISTER);
                 break;
             case R.id.act_login_bt_login:
+                login();
                 break;
         }
     }
@@ -90,5 +98,58 @@ public class ActLogin extends ActParent implements View.OnClickListener{
     private void startActivity(Class clazz){
         Intent intent = new Intent(ActLogin.this, clazz);
         startActivity(intent);
+    }
+
+    private void login(){
+        final String phone = etPhone.getText().toString();
+        final String pwd = etPwd.getText().toString();
+        if (phone.equals("")){
+            Toast.makeText(this, getString(R.string.cannot_empty_phone), Toast.LENGTH_SHORT).show();
+            return;
+        } else if (pwd.equals("")){
+            Toast.makeText(this, getString(R.string.cannot_empty_pwd), Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (pwd.length() < 6){
+            Toast.makeText(this, getString(R.string.pwd_more_6), Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("password", pwd);
+        params.put("phone", phone);
+        BizManager bizManager = BizManager.getInstance(getApplicationContext());
+        bizManager.login(params, new ApiListener() {
+            @Override
+            public void success(JSONObject jsonObject) {
+                Log.e(TAG + "sdlu jsonObject.toString() = ", jsonObject.toString());
+                int responseCode = 2;
+                try {
+                    responseCode = jsonObject.getInt("response");
+                    switch (responseCode) {
+                        case 1://success
+                            JSONObject info = jsonObject.getJSONObject("info");
+                            AppConfigCache.setCacheConfig(ActLogin.this, "token", jsonObject.getString("token"));
+                            AppConfigCache.setCacheConfig(ActLogin.this, "name", info.getString("name"));
+                            AppConfigCache.setCacheConfig(ActLogin.this, "phone", info.getString("phone"));
+                            AppConfigCache.setCacheConfig(ActLogin.this, "email", info.getString("email"));
+                            Toast.makeText(ActLogin.this, getString(R.string.login_success), Toast.LENGTH_SHORT).show();
+                            setResult(RESULT_OK);
+                            finish();
+                            break;
+                        case 2://error
+                            Toast.makeText(ActLogin.this, jsonObject.getString("error_msg").toString(), Toast.LENGTH_SHORT).show();
+                            break;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void error(String string) {
+                Log.e(TAG + "sdlu string = ", string);
+                Toast.makeText(ActLogin.this, getString(R.string.net_wrong), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

@@ -43,10 +43,36 @@ public class BizManager {
         post(ApiConfig._REGISTER, params, listener);
     }
 
+    public void login(Map<String, String> params, final ApiListener listener){
+        post(ApiConfig._LOGIN, params, listener);
+    }
+
+    public void getUserInfo(Map<String, String> params, final ApiListener listener){
+        params.put("token", AppConfigCache.getCacheConfigString(context, "token"));
+        post(ApiConfig._LOGIN, params, listener);
+    }
 
     public void post(String url, Map<String, String> params, final ApiListener listener){
-        Log.e(TAG + "sdlu  = ", "hello");
         Request<JSONObject> request = mQueue.add(new JsonObjectRequest(Request.Method.POST, url,
+                new JSONObject(params),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.e(TAG, "response : " + response.toString());
+                        listener.success(response);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG + "sdlu error.getMessage() = ", error.toString());
+                listener.error(error.toString());
+            }
+        }));
+        mQueue.start();
+    }
+
+    public void get(String url, Map<String, String> params, final ApiListener listener){
+        Request<JSONObject> request = mQueue.add(new JsonObjectRequest(Request.Method.GET, url,
                 new JSONObject(params),
                 new Response.Listener<JSONObject>() {
                     @Override

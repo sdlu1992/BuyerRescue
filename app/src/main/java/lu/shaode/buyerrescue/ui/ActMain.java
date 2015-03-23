@@ -2,6 +2,7 @@ package lu.shaode.buyerrescue.ui;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -14,10 +15,11 @@ import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 
 import lu.shaode.buyerrescue.R;
+import lu.shaode.netsupport.AppConfigCache;
 
 
 public class ActMain extends ActParent
-        implements FragmentNavigationDrawer.NavigationDrawerCallbacks {
+        implements FragmentNavigationDrawer.NavigationDrawerCallbacks,FragmentParent.OnFragmentInteractionListener {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -57,14 +59,20 @@ public class ActMain extends ActParent
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
+        FragmentManager fragmentManager = getSupportFragmentManager();
         switch (position){
             case 1:
-                Intent intent = new Intent();
-                intent.setClass(ActMain.this, ActLogin.class);
-                startActivity(intent);
+                if (AppConfigCache.getCacheConfigString(this, "token").equals("")){
+                    Intent intent = new Intent();
+                    intent.setClass(ActMain.this, ActLogin.class);
+                    startActivity(intent);
+                } else {
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.container, FragmentInfo.newInstance())
+                            .commit();
+                }
                 return;
         }
-        FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
                 .commit();
@@ -76,7 +84,11 @@ public class ActMain extends ActParent
                 mTitle = "";
                 break;
             case 2:
-                mTitle = getString(R.string.title_section2);
+                if(AppConfigCache.getCacheConfigString(this, "name").equals("")){
+                    mTitle = getString(R.string.title_section2);
+                } else {
+                    mTitle = AppConfigCache.getCacheConfigString(this, "name");
+                }
                 break;
             case 3:
                 mTitle = getString(R.string.title_section3);
@@ -99,10 +111,12 @@ public class ActMain extends ActParent
             // if the drawer is not showing. Otherwise, let the drawer
             // decide what to show in the action bar.
             getMenuInflater().inflate(R.menu.main, menu);
-            restoreActionBar();
+//            restoreActionBar();
             return true;
         }
-        return super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.empty, menu);
+//        return super.onCreateOptionsMenu(menu);
+        return true;
     }
 
     @Override
@@ -112,10 +126,6 @@ public class ActMain extends ActParent
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
         switch (id){
             case R.id.action_search:
                 Intent intent = new Intent(ActMain.this, ActRegister.class);
@@ -123,6 +133,11 @@ public class ActMain extends ActParent
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 
     /**
