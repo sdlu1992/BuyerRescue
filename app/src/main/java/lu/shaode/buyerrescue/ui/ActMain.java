@@ -127,8 +127,8 @@ public class ActMain extends ActParent
         int id = item.getItemId();
 
         switch (id){
-            case R.id.action_search:
-                Intent intent = new Intent(ActMain.this, ActRegister.class);
+            case R.id.action_category:
+                Intent intent = new Intent(ActMain.this, ActCategory.class);
                 startActivity(intent);
         }
 

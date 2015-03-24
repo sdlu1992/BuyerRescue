@@ -49,7 +49,12 @@ public class BizManager {
 
     public void getUserInfo(Map<String, String> params, final ApiListener listener){
         params.put("token", AppConfigCache.getCacheConfigString(context, "token"));
-        post(ApiConfig._LOGIN, params, listener);
+        post(ApiConfig._USER_INFO, params, listener);
+    }
+
+    public void getCategory(Map<String, String> params, final ApiListener listener){
+        params.put("token", AppConfigCache.getCacheConfigString(context, "token"));
+        get(ApiConfig._CATEGORY, params, listener);
     }
 
     public void post(String url, Map<String, String> params, final ApiListener listener){

@@ -11,7 +11,24 @@
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">15dip</item>
     </style>
-    
+
+    <style name="InfoTextViewStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/grey</item>
+        <item name="android:textSize">18dip</item>
+        <item name="android:padding">5dip</item>
+    </style>
+
+    <style name="CategoryItemTv">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">25dip</item>
+        <item name="android:padding">10dip</item>
+
+    </style>
+
     <style name="MyEditTextStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
