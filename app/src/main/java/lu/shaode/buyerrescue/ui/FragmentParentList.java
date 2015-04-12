@@ -13,16 +13,16 @@ import android.view.ViewGroup;
 
 import lu.shaode.buyerrescue.R;
 
-public class FragmentParent extends Fragment {
+public class FragmentParentList extends ListFragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public static FragmentParent newInstance() {
-        FragmentParent fragment = new FragmentParent();
+    public static FragmentParentList newInstance() {
+        FragmentParentList fragment = new FragmentParentList();
         return fragment;
     }
 
-    public FragmentParent() {
+    public FragmentParentList() {
         // Required empty public constructor
     }
 
@@ -57,7 +57,7 @@ public class FragmentParent extends Fragment {
 
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
+        public void onFragmentInteraction(String String);
     }
 
     protected ActionBar getActionBar() {

@@ -1,5 +1,6 @@
 package lu.shaode.buyerrescue.ui;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.app.Activity;
 import android.support.v7.app.ActionBar;
@@ -174,6 +175,8 @@ public class FragmentCategory extends Fragment {
         Map<String, String> item = (Map<String, String>) simpleAdapter.getItem(position);
         String id = item.get("id");
         Log.e(TAG + "sdlu item.toString() = ", id);
+        Intent intent = new Intent(getActivity(), ActGoodsList.class);
+        startActivity(intent);
     }
 
     @Override

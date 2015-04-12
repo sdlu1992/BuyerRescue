@@ -91,7 +91,7 @@ public class ActCategory extends ActParent
                 map.put("id", key);
                 list.add(map);
             }
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return list;
@@ -119,9 +119,6 @@ public class ActCategory extends ActParent
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
         return super.onOptionsItemSelected(item);
     }
 

@@ -40,4 +40,5 @@
     <string name="phone">手机号</string>
     <string name="email">电子邮箱</string>
     <string name="title_activity_act_category">类目</string>
+    <string name="title_activity_act_goods_list">ActGoodsList</string>
 </resources>

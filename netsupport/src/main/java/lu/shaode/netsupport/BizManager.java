@@ -48,16 +48,16 @@ public class BizManager {
     }
 
     public void getUserInfo(Map<String, String> params, final ApiListener listener){
-        params.put("token", AppConfigCache.getCacheConfigString(context, "token"));
         post(ApiConfig._USER_INFO, params, listener);
     }
 
     public void getCategory(Map<String, String> params, final ApiListener listener){
-        params.put("token", AppConfigCache.getCacheConfigString(context, "token"));
         get(ApiConfig._CATEGORY, params, listener);
     }
 
     public void post(String url, Map<String, String> params, final ApiListener listener){
+        params.put("platform", "android");
+        params.put("token", AppConfigCache.getCacheConfigString(context, "token"));
         Request<JSONObject> request = mQueue.add(new JsonObjectRequest(Request.Method.POST, url,
                 new JSONObject(params),
                 new Response.Listener<JSONObject>() {
@@ -77,6 +77,8 @@ public class BizManager {
     }
 
     public void get(String url, Map<String, String> params, final ApiListener listener){
+        params.put("platform", "android");
+        params.put("token", AppConfigCache.getCacheConfigString(context, "token"));
         Request<JSONObject> request = mQueue.add(new JsonObjectRequest(Request.Method.GET, url,
                 new JSONObject(params),
                 new Response.Listener<JSONObject>() {
