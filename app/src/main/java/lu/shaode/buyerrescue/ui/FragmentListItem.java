@@ -29,8 +29,8 @@ public class FragmentListItem extends FragmentParentList{
     String category = "";
 
     private OnFragmentInteractionListener mListener;
+    public AdapterGoodsList mAdapter;
 
-    // TODO: Rename and change types of parameters
     public static FragmentListItem newInstance() {
         return new FragmentListItem();
     }
@@ -45,43 +45,11 @@ public class FragmentListItem extends FragmentParentList{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setListAdapter(new AdapterGoodsList(getActivity(), ContentGoods.ITEMS));
+        mAdapter = new AdapterGoodsList(getActivity(), ContentGoods.ITEMS);
+        setListAdapter(mAdapter);
         category = getActivity().getIntent().getStringExtra("category");
         Log.e(TAG + "sdlu", "category= " + category);
-        BizManager.getInstance(getActivity()).getGoodsByCategory(category, new ApiListener() {
-            @Override
-            public void success(JSONObject jsonObject) {
-                Log.e(TAG + " sdlu", "jsonObject= " + jsonObject.toString());
-                try {
-                    String response = jsonObject.getString("response");
-                    int length = jsonObject.getInt("len");
-                    if (length != 0){
-                        JSONArray goods = jsonObject.getJSONArray("goods");
-                        for (int i = 0; i < goods.length(); i++){
-                            JSONObject foo = goods.getJSONObject(i);
-                            String id = foo.getString("id");
-                            String title = foo.getString("title");
-                            String price = foo.getString("price");
-                            String count = foo.getString("count");
-                            String store = foo.getString("store");
-                            String storeName = foo.getString("store_name");
-                            String category = foo.getString("category");
-                            String describe = foo.getString("des");
-                            ContentGoods.ITEMS.add(new ContentGoods.DummyItem(id, describe, title, price, store, storeName, count));
-                        }
-
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void error(String string) {
-                Log.e(TAG + " sdlu", "string= " + string);
-            }
-        });
+        getGoodList();
     }
 
 
@@ -114,4 +82,50 @@ public class FragmentListItem extends FragmentParentList{
         }
     }
 
+    public void getGoodList(){
+        BizManager.getInstance(getActivity()).getGoodsByCategory(category, new ApiListener() {
+            @Override
+            public void success(JSONObject jsonObject) {
+                Log.e(TAG + " sdlu", "jsonObject= " + jsonObject.toString());
+                int responseCode = 2;
+                try {
+                    responseCode = jsonObject.getInt("response");
+                    switch (responseCode){
+                        case 1:
+                            int length = jsonObject.getInt("len");
+                            if (length != 0){
+                                JSONArray goods = jsonObject.getJSONArray("goods");
+                                for (int i = 0; i < goods.length(); i++){
+                                    JSONObject foo = goods.getJSONObject(i);
+                                    String id = foo.getString("id");
+                                    String title = foo.getString("title");
+                                    String price = foo.getString("price");
+                                    String count = foo.getString("count");
+                                    String store = foo.getString("store");
+                                    String storeName = foo.getString("store_name");
+                                    String category = foo.getString("category");
+                                    String describe = foo.getString("des");
+                                    ContentGoods.ITEMS.add(new ContentGoods.DummyItem(
+                                            id, describe, title, price,
+                                            store, storeName, count, category));
+                                }
+                                mAdapter.notifyDataSetChanged();
+                            }
+                            break;
+                        case 2:
+                            break;
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void error(String string) {
+                Log.e(TAG + " sdlu", "string= " + string);
+            }
+        });
+
+    }
 }

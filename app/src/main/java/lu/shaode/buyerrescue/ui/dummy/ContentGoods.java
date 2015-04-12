@@ -25,7 +25,7 @@ public class ContentGoods {
 
     static {
         // Add 3 sample items.
-        addItem(new DummyItem("1", "Item 1", "mygoods", 10+"", "2", "mystore", 30+""));
+        addItem(new DummyItem("1", "Item 1", "mygoods", 10+"", "2", "mystore", 30+"", "11"));
     }
 
     private static void addItem(DummyItem item) {
@@ -44,8 +44,9 @@ public class ContentGoods {
         public String store;
         public String storeName;
         public String id;
+        public String category;
 
-        public DummyItem(String id, String describe, String name, String price, String store, String storeName, String count) {
+        public DummyItem(String id, String describe, String name, String price, String store, String storeName, String count, String category) {
             this.id = id;
             this.describe = describe;
             this.name = name;
