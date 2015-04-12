@@ -39,20 +39,36 @@ public class BizManager {
         mQueue = Volley.newRequestQueue(context);
     }
 
-    public void register(Map<String, String> params, final ApiListener listener){
+    public void register(String phone, String name, String pwd, String email, final ApiListener listener){
+        Map<String, String> params = new HashMap<>();
+        params.put("name", name);
+        params.put("password", pwd);
+        params.put("phone", phone);
+        params.put("email", email);
         post(ApiConfig._REGISTER, params, listener);
     }
 
-    public void login(Map<String, String> params, final ApiListener listener){
+    public void login(String phone, String pwd, final ApiListener listener){
+        Map<String, String> params = new HashMap<>();
+        params.put("password", pwd);
+        params.put("phone", phone);
         post(ApiConfig._LOGIN, params, listener);
     }
 
-    public void getUserInfo(Map<String, String> params, final ApiListener listener){
+    public void getUserInfo(final ApiListener listener){
+        Map<String, String> params = new HashMap<>();
         post(ApiConfig._USER_INFO, params, listener);
     }
 
-    public void getCategory(Map<String, String> params, final ApiListener listener){
+    public void getCategory(final ApiListener listener){
+        Map<String, String> params = new HashMap<>();
         get(ApiConfig._CATEGORY, params, listener);
+    }
+
+    public void getGoodsByCategory(String category, final ApiListener listener){
+        Map<String, String> params = new HashMap<>();
+        params.put("category", category);
+        post(ApiConfig._GET_GOODS_BY_CATEGORY, params, listener);
     }
 
     public void post(String url, Map<String, String> params, final ApiListener listener){

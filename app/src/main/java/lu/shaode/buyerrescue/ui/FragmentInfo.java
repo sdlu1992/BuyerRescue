@@ -66,8 +66,7 @@ public class FragmentInfo extends FragmentParent {
         tvEmail = (TextView) v.findViewById(R.id.frag_info_email);
         setInfo();
 
-        Map<String, String> params = new HashMap<>();
-        BizManager.getInstance(getActivity()).getUserInfo(params, new ApiListener() {
+        BizManager.getInstance(getActivity()).getUserInfo(new ApiListener() {
             @Override
             public void success(JSONObject jsonObject) {
                 JSONObject info = null;

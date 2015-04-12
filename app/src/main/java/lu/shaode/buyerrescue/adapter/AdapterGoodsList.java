@@ -7,12 +7,15 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.List;
 
 import lu.shaode.buyerrescue.R;
 import lu.shaode.buyerrescue.ui.dummy.ContentGoods;
+import lu.shaode.buyerrescue.util.BuyerApplication;
+import lu.shaode.buyerrescue.util.BuyerImageCache;
 import lu.shaode.buyerrescue.util.ViewHolder;
 
 /**
@@ -51,6 +54,8 @@ public class AdapterGoodsList extends BaseAdapter{
         }
 
         NetworkImageView imageView = ViewHolder.get(convertView, R.id.item_goods_image);
+        ImageLoader loader = new ImageLoader(BuyerApplication.queue, BuyerImageCache.getInstance());
+        imageView.setImageUrl("https://www.baidu.com/img/bdlogo.png", loader);
         TextView tvTitle = ViewHolder.get(convertView, R.id.item_goods_title);
         TextView tvCount = ViewHolder.get(convertView, R.id.item_goods_count);
         TextView tvPrice = ViewHolder.get(convertView, R.id.item_goods_price);
@@ -58,7 +63,7 @@ public class AdapterGoodsList extends BaseAdapter{
         ContentGoods.DummyItem good = getItem(position);
         tvTitle.setText(good.name);
         tvCount.setText(good.count+"");
-        tvPrice.setText(good.price+"");
+        tvPrice.setText(good.price + "");
 
         return convertView;
     }

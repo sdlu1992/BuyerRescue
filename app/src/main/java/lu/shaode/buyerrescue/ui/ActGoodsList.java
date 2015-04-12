@@ -3,19 +3,26 @@ package lu.shaode.buyerrescue.ui;
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import org.json.JSONObject;
+
 import lu.shaode.buyerrescue.R;
+import lu.shaode.buyerrescue.util.BuyerImageCache;
+import lu.shaode.netsupport.BizManager;
+import lu.shaode.netsupport.listener.ApiListener;
 
 public class ActGoodsList extends ActionBarActivity implements FragmentParentList.OnFragmentInteractionListener {
 
+    private final String TAG = ((Object) this).getClass().getSimpleName();
     FragmentListItem fragment = null;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_act_goods_list);
-        fragment = FragmentListItem.newInstance("hello", "hello2");
+        fragment = FragmentListItem.newInstance();
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
                     .add(R.id.container, fragment)

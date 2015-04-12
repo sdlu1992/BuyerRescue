@@ -103,13 +103,8 @@ public class ActRegister extends ActParent implements View.OnClickListener {
             return;
         }
 
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("name", name);
-        params.put("password", pwd);
-        params.put("phone", phone);
-        params.put("email", email);
         BizManager bizManager = BizManager.getInstance(getApplicationContext());
-        bizManager.register(params, new ApiListener() {
+        bizManager.register(phone, name, pwd, email, new ApiListener() {
             @Override
             public void success(JSONObject jsonObject) {
                 Log.e(TAG + "sdlu jsonObject.toString() = " , jsonObject.toString());

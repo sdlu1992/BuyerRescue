@@ -19,4 +19,7 @@ public class ApiConfig {
 
     public static final String _CATEGORY    = _DOMAIN_ROOT
                                             + "category/";
+
+    public static final String _GET_GOODS_BY_CATEGORY   = _DOMAIN_ROOT
+                                            + "getGoodsByCategory/";
 }

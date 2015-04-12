@@ -176,6 +176,7 @@ public class FragmentCategory extends Fragment {
         String id = item.get("id");
         Log.e(TAG + "sdlu item.toString() = ", id);
         Intent intent = new Intent(getActivity(), ActGoodsList.class);
+        intent.putExtra("category", id);
         startActivity(intent);
     }
 

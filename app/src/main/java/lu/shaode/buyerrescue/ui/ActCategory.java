@@ -124,7 +124,7 @@ public class ActCategory extends ActParent
 
     public void getAndSetCategory(){
 
-        BizManager.getInstance(this).getCategory(new HashMap<String, String>(), new ApiListener() {
+        BizManager.getInstance(this).getCategory(new ApiListener() {
             @Override
             public void success(JSONObject jsonObject) {
                 Log.e(TAG + "sdlu jsonObject = ", jsonObject.toString());

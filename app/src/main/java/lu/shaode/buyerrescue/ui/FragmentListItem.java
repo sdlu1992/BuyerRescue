@@ -2,13 +2,18 @@ package lu.shaode.buyerrescue.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import lu.shaode.buyerrescue.R;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import lu.shaode.buyerrescue.adapter.AdapterGoodsList;
 import lu.shaode.buyerrescue.ui.dummy.ContentGoods;
+import lu.shaode.netsupport.BizManager;
+import lu.shaode.netsupport.listener.ApiListener;
 
 /**
  * A fragment representing a list of Items.
@@ -19,25 +24,15 @@ import lu.shaode.buyerrescue.ui.dummy.ContentGoods;
  */
 public class FragmentListItem extends FragmentParentList{
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private final String TAG = ((Object) this).getClass().getSimpleName();
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    String category = "";
 
     private OnFragmentInteractionListener mListener;
 
     // TODO: Rename and change types of parameters
-    public static FragmentListItem newInstance(String param1, String param2) {
-        FragmentListItem fragment = new FragmentListItem();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public static FragmentListItem newInstance() {
+        return new FragmentListItem();
     }
 
     /**
@@ -51,13 +46,42 @@ public class FragmentListItem extends FragmentParentList{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-
-        // TODO: Change Adapter to display your content
         setListAdapter(new AdapterGoodsList(getActivity(), ContentGoods.ITEMS));
+        category = getActivity().getIntent().getStringExtra("category");
+        Log.e(TAG + "sdlu", "category= " + category);
+        BizManager.getInstance(getActivity()).getGoodsByCategory(category, new ApiListener() {
+            @Override
+            public void success(JSONObject jsonObject) {
+                Log.e(TAG + " sdlu", "jsonObject= " + jsonObject.toString());
+                try {
+                    String response = jsonObject.getString("response");
+                    int length = jsonObject.getInt("len");
+                    if (length != 0){
+                        JSONArray goods = jsonObject.getJSONArray("goods");
+                        for (int i = 0; i < goods.length(); i++){
+                            JSONObject foo = goods.getJSONObject(i);
+                            String id = foo.getString("id");
+                            String title = foo.getString("title");
+                            String price = foo.getString("price");
+                            String count = foo.getString("count");
+                            String store = foo.getString("store");
+                            String storeName = foo.getString("store_name");
+                            String category = foo.getString("category");
+                            String describe = foo.getString("des");
+                            ContentGoods.ITEMS.add(new ContentGoods.DummyItem(id, describe, title, price, store, storeName, count));
+                        }
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void error(String string) {
+                Log.e(TAG + " sdlu", "string= " + string);
+            }
+        });
     }
 
 
