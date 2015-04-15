@@ -35,6 +35,10 @@
             android:name=".ui.ActGoodsList"
             android:label="@string/title_activity_act_goods_list" >
         </activity>
+        <activity
+            android:name=".ui.ActGoodDetail"
+            android:label="@string/title_activity_act_good_detail" >
+        </activity>
     </application>
 
 </manifest>

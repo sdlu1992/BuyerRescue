@@ -5,6 +5,7 @@ package lu.shaode.buyerrescue.ui;
  */
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
@@ -22,7 +23,7 @@ import lu.shaode.buyerrescue.R;
 public class ActParent extends ActionBarActivity{
 
     private Toast mToast;
-    private Dialog mDialog;
+    private DialogLoading mDialog;
     private TextView mTextMessage;
 
     @Override
@@ -72,36 +73,28 @@ public class ActParent extends ActionBarActivity{
 
         NetworkInfo mNetworkInfo = connMgr.getActiveNetworkInfo();
 
-        if (mNetworkInfo != null) {
-            return mNetworkInfo.isAvailable();
-        }
+        return mNetworkInfo != null && mNetworkInfo.isAvailable();
 
-        return false;
     }
 
-//    public void showDialogWorking(String msg) {
-//        if (mDialog == null) {
-//            mDialog = new Dialog(this, R.style.LoadingCustomDialog);
-//            mDialog.setContentView(R.layout.layout_dialog_loading);
-//            mTextMessage = (TextView) mDialog.findViewById(R.id.id_message_dialog_loading);
-//            mDialog.setCancelable(false);
-//            mDialog.setCanceledOnTouchOutside(false);
-//        }
-//        if (!StringUtil.isBlank(msg)) {
-//            mTextMessage.setText(msg);
-//        }
-//        mDialog.show();
-//    }
+    public void showDialogWorking() {
+        if (mDialog == null) {
+            mDialog = new DialogLoading(this);
+            mDialog.setCancelable(false);
+            mDialog.setCanceledOnTouchOutside(false);
+        }
+        mDialog.show();
+    }
 
-//    public void showDialogLoading() {
-//        showDialogWorking(getString(R.string.str_loading));
-//    }
+    public void showDialogLoading() {
+        showDialogWorking();
+    }
 
-//    public void dismissDialogLoading() {
-//        if (mDialog != null && mDialog.isShowing()) {
-//            mDialog.dismiss();
-//        }
-//    }
+    public void dismissDialogLoading() {
+        if (mDialog != null && mDialog.isShowing()) {
+            mDialog.dismiss();
+        }
+    }
 
     public void showToastMessage(String text) {
         if (mToast == null) {

@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -35,6 +36,7 @@ public class FragmentInfo extends FragmentParent {
     TextView tvName;
     TextView tvPhone;
     TextView tvEmail;
+    Button   btLogout;
 
     /**
      * Use this factory method to create a new instance of
@@ -64,6 +66,8 @@ public class FragmentInfo extends FragmentParent {
         tvName = (TextView) v.findViewById(R.id.frag_info_name);
         tvPhone = (TextView) v.findViewById(R.id.frag_info_phone);
         tvEmail = (TextView) v.findViewById(R.id.frag_info_email);
+        btLogout = (Button) v.findViewById(R.id.frag_info_logout);
+        btLogout.setOnClickListener(new OnLogoutClickListener());
         setInfo();
 
         BizManager.getInstance(getActivity()).getUserInfo(new ApiListener() {
@@ -71,6 +75,9 @@ public class FragmentInfo extends FragmentParent {
             public void success(JSONObject jsonObject) {
                 JSONObject info = null;
                 try {
+                    if (getActivity() == null){
+                        return;
+                    }
                     info = jsonObject.getJSONObject("info");
                     AppConfigCache.setCacheConfig(getActivity(), "name", info.getString("name"));
                     AppConfigCache.setCacheConfig(getActivity(), "phone", info.getString("phone"));
@@ -112,5 +119,14 @@ public class FragmentInfo extends FragmentParent {
         tvName.setText(AppConfigCache.getCacheConfigString(getActivity(), "name"));
         tvPhone.setText(AppConfigCache.getCacheConfigString(getActivity(), "phone"));
         tvEmail.setText(AppConfigCache.getCacheConfigString(getActivity(), "email"));
+    }
+
+    class OnLogoutClickListener implements View.OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+            AppConfigCache.logout(getActivity().getApplicationContext());
+            ((ActMain)getActivity()).selectDrawerItem(0);
+        }
     }
 }

@@ -114,21 +114,23 @@ public class ActLogin extends ActParent implements View.OnClickListener{
             Toast.makeText(this, getString(R.string.pwd_more_6), Toast.LENGTH_SHORT).show();
             return;
         }
+        showDialogLoading();
         BizManager bizManager = BizManager.getInstance(getApplicationContext());
         bizManager.login(phone, pwd, new ApiListener() {
             @Override
             public void success(JSONObject jsonObject) {
                 Log.e(TAG + "sdlu jsonObject.toString() = ", jsonObject.toString());
                 int responseCode = 2;
+                dismissDialogLoading();
                 try {
                     responseCode = jsonObject.getInt("response");
                     switch (responseCode) {
                         case 1://success
                             JSONObject info = jsonObject.getJSONObject("info");
-                            AppConfigCache.setCacheConfig(ActLogin.this, "token", jsonObject.getString("token"));
-                            AppConfigCache.setCacheConfig(ActLogin.this, "name", info.getString("name"));
-                            AppConfigCache.setCacheConfig(ActLogin.this, "phone", info.getString("phone"));
-                            AppConfigCache.setCacheConfig(ActLogin.this, "email", info.getString("email"));
+                            AppConfigCache.saveLoginInfo(ActLogin.this, jsonObject.getString("token"),
+                                    info.getString("name"), info.getString("phone"),
+                                    info.getString("email"));
+
                             Toast.makeText(ActLogin.this, getString(R.string.login_success), Toast.LENGTH_SHORT).show();
                             setResult(RESULT_OK);
                             finish();
@@ -145,6 +147,7 @@ public class ActLogin extends ActParent implements View.OnClickListener{
             @Override
             public void error(String string) {
                 Log.e(TAG + "sdlu string = ", string);
+                dismissDialogLoading();
                 Toast.makeText(ActLogin.this, getString(R.string.net_wrong), Toast.LENGTH_SHORT).show();
             }
         });

@@ -24,9 +24,9 @@ import lu.shaode.buyerrescue.util.ViewHolder;
 public class AdapterGoodsList extends BaseAdapter{
 
     Context context;
-    List<ContentGoods.DummyItem> list;
+    List<ContentGoods.Good> list;
 
-    public AdapterGoodsList(Context context, List<ContentGoods.DummyItem> list) {
+    public AdapterGoodsList(Context context, List<ContentGoods.Good> list) {
         this.context = context;
         this.list = list;
     }
@@ -37,7 +37,7 @@ public class AdapterGoodsList extends BaseAdapter{
     }
 
     @Override
-    public ContentGoods.DummyItem getItem(int position) {
+    public ContentGoods.Good getItem(int position) {
         return list.get(position);
     }
 
@@ -60,10 +60,10 @@ public class AdapterGoodsList extends BaseAdapter{
         TextView tvCount = ViewHolder.get(convertView, R.id.item_goods_count);
         TextView tvPrice = ViewHolder.get(convertView, R.id.item_goods_price);
 
-        ContentGoods.DummyItem good = getItem(position);
+        ContentGoods.Good good = getItem(position);
         tvTitle.setText(good.name);
-        tvCount.setText(good.count+"");
-        tvPrice.setText(good.price + "");
+        tvCount.setText("已售出 " + good.count + " 件");
+        tvPrice.setText(good.price + " 元");
 
         return convertView;
     }

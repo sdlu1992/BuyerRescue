@@ -71,6 +71,19 @@ public class BizManager {
         post(ApiConfig._GET_GOODS_BY_CATEGORY, params, listener);
     }
 
+    public void getGoodById(String id, final  ApiListener listener){
+        Map<String, String> params = new HashMap<>();
+        params.put("good_id", id);
+        post(ApiConfig._GET_GOOD, params, listener);
+    }
+
+    public void addWishList(String good_id, String count, final  ApiListener listener){
+        Map<String, String> params = new HashMap<>();
+        params.put("good_id", good_id);
+        params.put("count", count);
+        post(ApiConfig._ADD_WISH, params, listener);
+    }
+
     public void post(String url, Map<String, String> params, final ApiListener listener){
         params.put("platform", "android");
         params.put("token", AppConfigCache.getCacheConfigString(context, "token"));

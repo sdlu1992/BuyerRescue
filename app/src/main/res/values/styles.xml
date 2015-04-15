@@ -1,10 +1,17 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    </style>
+    <style name="GoodDetailActStyle" parent="Theme.AppCompat.Light">
+        <item name="android:actionBarStyle">@style/GoodDetailActBarStyle</item>
     </style>
 
+    <style name="GoodDetailActBarStyle" parent="android:Widget.ActionBar">
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:background">@color/transparent</item>
+    </style>
     <style name="MyTextViewStyle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -45,5 +52,12 @@
         <item name="android:paddingRight">3dip</item>
         <item name="android:background">@drawable/sel_b_button</item>
         <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="DialogLoading" parent="Base.V11.Theme.AppCompat.Light.Dialog">
+        <item name="android:windowCloseOnTouchOutside">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
     </style>
 </resources>

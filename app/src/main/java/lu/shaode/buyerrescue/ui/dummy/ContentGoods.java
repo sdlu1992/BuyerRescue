@@ -1,5 +1,7 @@
 package lu.shaode.buyerrescue.ui.dummy;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,51 +11,36 @@ import java.util.Map;
  * Helper class for providing sample content for user interfaces created by
  * Android template wizards.
  * <p/>
- * TODO: Replace all uses of this class before publishing your app.
  */
 public class ContentGoods {
 
-    /**
-     * An array of sample (dummy) items.
-     */
-    public static List<DummyItem> ITEMS = new ArrayList<DummyItem>();
+    public static List<Good> ITEMS = new ArrayList<Good>();
 
-    /**
-     * A map of sample (dummy) items, by ID.
-     */
-    public static Map<String, DummyItem> ITEM_MAP = new HashMap<String, DummyItem>();
+    public static Map<String, Good> ITEM_MAP = new HashMap<String, Good>();
 
-    static {
-        // Add 3 sample items.
-        addItem(new DummyItem("1", "Item 1", "mygoods", 10+"", "2", "mystore", 30+"", "11"));
-    }
-
-    private static void addItem(DummyItem item) {
+    private static void addItem(Good item) {
         ITEMS.add(item);
         ITEM_MAP.put(item.id, item);
     }
 
-    /**
-     * A dummy item representing a piece of content.
-     */
-    public static class DummyItem {
+    public static class Good {
         public String name;
         public String count;
         public String price;
         public String describe;
-        public String store;
-        public String storeName;
+        public ContentStore.Store store;
         public String id;
         public String category;
 
-        public DummyItem(String id, String describe, String name, String price, String store, String storeName, String count, String category) {
+        public Good(String id, String describe, String name, String price,
+                    ContentStore.Store store, String count, String category) {
             this.id = id;
             this.describe = describe;
             this.name = name;
             this.price = price;
             this.store = store;
-            this.storeName = storeName;
             this.count = count;
+            this.category = category;
         }
 
         @Override

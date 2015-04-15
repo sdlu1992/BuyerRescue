@@ -22,4 +22,10 @@ public class ApiConfig {
 
     public static final String _GET_GOODS_BY_CATEGORY   = _DOMAIN_ROOT
                                             + "getGoodsByCategory/";
+
+    public static final String _GET_GOOD    = _DOMAIN_ROOT
+                                            + "good/";
+
+    public static final String _ADD_WISH    = _DOMAIN_ROOT
+                                            + "addWishList/";
 }

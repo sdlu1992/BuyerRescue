@@ -35,8 +35,6 @@ public class ActMain extends ActParent
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-
     }
 
     @Override
@@ -81,7 +79,7 @@ public class ActMain extends ActParent
     public void onSectionAttached(int number) {
         switch (number) {
             case 1:
-                mTitle = "";
+                mTitle = "Buyer";
                 break;
             case 2:
                 if(AppConfigCache.getCacheConfigString(this, "name").equals("")){
@@ -136,7 +134,7 @@ public class ActMain extends ActParent
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
+    public void onFragmentInteraction(String String) {
 
     }
 
@@ -180,4 +178,14 @@ public class ActMain extends ActParent
         }
     }
 
+    public void selectDrawerItem(int position){
+        mNavigationDrawerFragment.selectItem(position);
+        restoreActionBar();
+    }
+
+    @Override
+    public void logout(){
+        mNavigationDrawerFragment.notifyItems();
+        AppConfigCache.logout(this);
+    }
 }

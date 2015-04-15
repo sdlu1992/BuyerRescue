@@ -22,6 +22,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import lu.shaode.buyerrescue.R;
 import lu.shaode.netsupport.AppConfigCache;
 
@@ -62,6 +65,8 @@ public class FragmentNavigationDrawer extends Fragment {
     private boolean mUserLearnedDrawer;
 
     ArrayAdapter<String> stringArrayAdapter;
+    String items[];
+
     public FragmentNavigationDrawer() {
     }
 
@@ -101,11 +106,7 @@ public class FragmentNavigationDrawer extends Fragment {
                 selectItem(position);
             }
         });
-        String name = AppConfigCache.getCacheConfigString(getActivity(), "name");
-        String items[] = new String[]{getString(R.string.title_section1),
-                                    name.equals("") ? getString(R.string.title_section2) : name,
-                                    getString(R.string.title_section3)
-                                        };
+        items = getItems();
         stringArrayAdapter = new ArrayAdapter<String>(
                 getActionBar().getThemedContext(),
                 android.R.layout.simple_list_item_activated_1,
@@ -194,7 +195,7 @@ public class FragmentNavigationDrawer extends Fragment {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
 
-    private void selectItem(int position) {
+    public void selectItem(int position) {
         mCurrentSelectedPosition = position;
         if (mDrawerListView != null) {
             mDrawerListView.setItemChecked(position, true);
@@ -284,5 +285,23 @@ public class FragmentNavigationDrawer extends Fragment {
          * Called when an item in the navigation drawer is selected.
          */
         void onNavigationDrawerItemSelected(int position);
+    }
+
+    private String[] getItems(){
+        String name = AppConfigCache.getCacheConfigString(getActivity(), "name");
+        List<String> array = new ArrayList<>();
+        array.add(getString(R.string.title_section1));
+        array.add(name.equals("") ? getString(R.string.title_section2) : name);
+        array.add(getString(R.string.title_section3));
+        array.add(getString(R.string.title_section4));
+        array.add(getString(R.string.title_section5));
+        items = (String[])(array.toArray(new String[0]));
+        return items;
+    }
+
+    public void notifyItems(){
+        stringArrayAdapter.clear();
+        stringArrayAdapter.addAll(items);
+        stringArrayAdapter.notifyDataSetChanged();
     }
 }

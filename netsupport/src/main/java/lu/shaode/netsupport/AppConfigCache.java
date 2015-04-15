@@ -43,4 +43,20 @@ public class AppConfigCache {
         editor.putLong(name, value);
         editor.commit();
     }
+
+    public static void saveLoginInfo(Context ctx, String token, String name, String phone, String email){
+        AppConfigCache.setCacheConfig(ctx, "token", token);
+        AppConfigCache.setCacheConfig(ctx, "name", name);
+        AppConfigCache.setCacheConfig(ctx, "phone", phone);
+        AppConfigCache.setCacheConfig(ctx, "email", email);
+
+    }
+
+    public static void logout(Context ctx){
+        AppConfigCache.setCacheConfig(ctx, "token", "");
+        AppConfigCache.setCacheConfig(ctx, "name", "");
+        AppConfigCache.setCacheConfig(ctx, "phone", "");
+        AppConfigCache.setCacheConfig(ctx, "email", "");
+
+    }
 }

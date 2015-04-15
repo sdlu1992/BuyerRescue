@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import lu.shaode.buyerrescue.adapter.AdapterGoodsList;
 import lu.shaode.buyerrescue.ui.dummy.ContentGoods;
+import lu.shaode.buyerrescue.ui.dummy.ContentStore;
 import lu.shaode.netsupport.BizManager;
 import lu.shaode.netsupport.listener.ApiListener;
 
@@ -49,6 +50,7 @@ public class FragmentListItem extends FragmentParentList{
         setListAdapter(mAdapter);
         category = getActivity().getIntent().getStringExtra("category");
         Log.e(TAG + "sdlu", "category= " + category);
+        ContentGoods.ITEMS.clear();
         getGoodList();
     }
 
@@ -83,6 +85,7 @@ public class FragmentListItem extends FragmentParentList{
     }
 
     public void getGoodList(){
+        ((ActParent)getActivity()).showDialogLoading();
         BizManager.getInstance(getActivity()).getGoodsByCategory(category, new ApiListener() {
             @Override
             public void success(JSONObject jsonObject) {
@@ -101,13 +104,14 @@ public class FragmentListItem extends FragmentParentList{
                                     String title = foo.getString("title");
                                     String price = foo.getString("price");
                                     String count = foo.getString("count");
-                                    String store = foo.getString("store");
-                                    String storeName = foo.getString("store_name");
+                                    ContentStore.Store store = new ContentStore.Store(
+                                            foo.getString("store"), foo.getString("store_name"),
+                                            null, null);
                                     String category = foo.getString("category");
                                     String describe = foo.getString("des");
-                                    ContentGoods.ITEMS.add(new ContentGoods.DummyItem(
+                                    ContentGoods.ITEMS.add(new ContentGoods.Good(
                                             id, describe, title, price,
-                                            store, storeName, count, category));
+                                            store, count, category));
                                 }
                                 mAdapter.notifyDataSetChanged();
                             }
@@ -116,6 +120,7 @@ public class FragmentListItem extends FragmentParentList{
                             break;
                     }
 
+                    ((ActParent)getActivity()).dismissDialogLoading();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -124,8 +129,10 @@ public class FragmentListItem extends FragmentParentList{
             @Override
             public void error(String string) {
                 Log.e(TAG + " sdlu", "string= " + string);
+                ((ActParent)getActivity()).dismissDialogLoading();
             }
         });
 
     }
+
 }
