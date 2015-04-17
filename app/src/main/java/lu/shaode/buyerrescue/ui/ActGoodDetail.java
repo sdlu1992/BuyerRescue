@@ -31,6 +31,7 @@ import lu.shaode.buyerrescue.ui.dummy.ContentSolder;
 import lu.shaode.buyerrescue.ui.dummy.ContentStore;
 import lu.shaode.buyerrescue.util.BuyerApplication;
 import lu.shaode.buyerrescue.util.BuyerImageCache;
+import lu.shaode.buyerrescue.util.StringUtil;
 import lu.shaode.netsupport.BizManager;
 import lu.shaode.netsupport.listener.ApiListener;
 
@@ -132,7 +133,7 @@ public class ActGoodDetail extends ActParent implements ViewPager.OnPageChangeLi
                             jsonGood.getString("category")
                     );
                     tvTitle.setText(good.name);
-                    tvPrice.setText(good.price + " 元");
+                    tvPrice.setText(StringUtil.getMoneyString(good.price) + " 元");
                     tvCount.setText("已售出" + good.count + "件");
                     if (good.describe.equals("")){
                         tvDes.setText(getString(R.string.good_no_des));

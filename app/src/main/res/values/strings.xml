@@ -60,5 +60,21 @@
     <string name="good_no_des">这件商品没有详细信息</string>
     <string name="select_all">全选</string>
     <string name="price_total">总价</string>
+    <string name="pay_now">现在付款</string>
+    <string name="affirm_take_good">确认收货</string>
+    <string name="apply_refund">申请退款</string>
+    <string name="appraise_order">评价订单</string>
+    <string name="money_suffix">&#160;元</string>
+    <string name="total_price_prefix">实付：</string>
+    <string-array name="state_order">
+        <item>未付款</item>
+        <item>已付款</item>
+        <item>已发货</item>
+        <item>待评价</item>
+        <item>已评价</item>
+        <item>退款中</item>
+        <item>已退款</item>
+        <item>已关闭</item>
+    </string-array>
 
 </resources>

@@ -22,6 +22,7 @@ import lu.shaode.buyerrescue.ui.FragmentWishList;
 import lu.shaode.buyerrescue.ui.dummy.ContentWishList;
 import lu.shaode.buyerrescue.util.BuyerApplication;
 import lu.shaode.buyerrescue.util.BuyerImageCache;
+import lu.shaode.buyerrescue.util.StringUtil;
 import lu.shaode.buyerrescue.util.ViewHolder;
 
 /**
@@ -84,7 +85,7 @@ public class AdapterWishList extends BaseAdapter{
         npCount.setMinValue(0);
         npCount.setValue(wish.count);
         npCount.setOnValueChangedListener(new OnCountChangeListener(position));
-        tvPrice.setText(wish.good.price + " 元");
+        tvPrice.setText(StringUtil.getMoneyString(wish.good.price) + " 元");
         checkBox.setChecked(wish.isCheck());
         checkBox.setOnCheckedChangeListener(new OnCheckBoxListener(position));
         return convertView;

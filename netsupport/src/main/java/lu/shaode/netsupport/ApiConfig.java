@@ -34,4 +34,7 @@ public class ApiConfig {
 
     public static final String _ORDER       = _DOMAIN_ROOT
                                             + "order/";
+
+    public static final String _GET_HISTORY_LIST = _DOMAIN_ROOT
+                                            + "getBuyHistory/";
 }

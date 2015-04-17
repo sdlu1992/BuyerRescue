@@ -90,6 +90,11 @@ public class BizManager {
         post(ApiConfig._GET_WISH_LIST, params, listener);
     }
 
+    public void getHistoryList(final  ApiListener listener){
+        Map<String, String> params = new HashMap<>();
+        post(ApiConfig._GET_HISTORY_LIST, params, listener);
+    }
+
     public void addOrder(JSONArray goods, final  ApiListener listener){
         Map<String, String> params = new HashMap<>();
         params.put("goods", goods.toString());

@@ -54,6 +54,20 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <style name="ButtonStyleOrangeStroke">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">34dip</item>
+        <item name="android:background">@drawable/sel_b_button_orange_stroke</item>
+        <item name="android:textColor">@color/sel_t_button_orange</item>
+    </style>
+
+    <style name="ButtonStyleGreyStroke">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">34dip</item>
+        <item name="android:background">@drawable/sel_b_button_grey_stroke</item>
+        <item name="android:textColor">@color/sel_t_button_grey</item>
+    </style>
+
     <style name="CancelButtonStyle" parent="MyButtonStyle">
 
     </style>

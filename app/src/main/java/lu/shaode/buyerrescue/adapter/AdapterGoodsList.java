@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
@@ -17,6 +18,7 @@ import lu.shaode.buyerrescue.R;
 import lu.shaode.buyerrescue.ui.dummy.ContentGoods;
 import lu.shaode.buyerrescue.util.BuyerApplication;
 import lu.shaode.buyerrescue.util.BuyerImageCache;
+import lu.shaode.buyerrescue.util.StringUtil;
 import lu.shaode.buyerrescue.util.ViewHolder;
 
 /**
@@ -66,7 +68,7 @@ public class AdapterGoodsList extends BaseAdapter{
         ContentGoods.Good good = getItem(position);
         tvTitle.setText(good.name);
         tvCount.setText("已售出 " + good.count + " 件");
-        tvPrice.setText(good.price + " 元");
+        tvPrice.setText(StringUtil.getMoneyString(good.price) + context.getString(R.string.money_suffix));
 
         return convertView;
     }
