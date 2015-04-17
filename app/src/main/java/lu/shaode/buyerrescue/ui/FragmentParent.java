@@ -10,11 +10,14 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import lu.shaode.buyerrescue.R;
 
 public class FragmentParent extends Fragment {
 
+    private Toast mToast;
+    private DialogLoading mDialog;
     private OnFragmentInteractionListener mListener;
 
     public static FragmentParent newInstance() {
@@ -63,6 +66,34 @@ public class FragmentParent extends Fragment {
 
     protected ActionBar getActionBar() {
         return ((ActionBarActivity) getActivity()).getSupportActionBar();
+    }
+
+    public void showDialogWorking() {
+        if (mDialog == null) {
+            mDialog = new DialogLoading(getActivity().getApplicationContext());
+            mDialog.setCancelable(false);
+            mDialog.setCanceledOnTouchOutside(false);
+        }
+        mDialog.show();
+    }
+
+    public void showDialogLoading() {
+        showDialogWorking();
+    }
+
+    public void dismissDialogLoading() {
+        if (mDialog != null && mDialog.isShowing()) {
+            mDialog.dismiss();
+        }
+    }
+
+    public void showToastMessage(String text) {
+        if (mToast == null) {
+            mToast = Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT);
+        }
+        mToast.setText(text);
+        mToast.setDuration(Toast.LENGTH_SHORT);
+        mToast.show();
     }
 
 }

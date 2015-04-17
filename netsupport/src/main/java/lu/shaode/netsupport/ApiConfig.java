@@ -28,4 +28,10 @@ public class ApiConfig {
 
     public static final String _ADD_WISH    = _DOMAIN_ROOT
                                             + "addWishList/";
+
+    public static final String _GET_WISH_LIST = _DOMAIN_ROOT
+                                            + "getWishList/";
+
+    public static final String _ORDER       = _DOMAIN_ROOT
+                                            + "order/";
 }

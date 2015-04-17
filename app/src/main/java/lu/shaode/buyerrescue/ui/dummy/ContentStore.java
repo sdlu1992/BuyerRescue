@@ -1,5 +1,8 @@
 package lu.shaode.buyerrescue.ui.dummy;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,11 +29,27 @@ public class ContentStore {
         public String name;
         public String credit;
         public ContentSolder.Solder solder;
+        public String address;
 
         public Store(String id, String name, String credit, ContentSolder.Solder solder) {
             this.id = id;
             this.name = name;
             this.credit = credit;
+            this.solder = solder;
+        }
+
+        public Store(JSONObject jsonObject){
+            try {
+                this.id = jsonObject.getString("id");
+                this.name = jsonObject.getString("name");
+                this.address = jsonObject.getString("address");
+                this.credit = jsonObject.getString("credit");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        public void setSolder(ContentSolder.Solder solder) {
             this.solder = solder;
         }
 

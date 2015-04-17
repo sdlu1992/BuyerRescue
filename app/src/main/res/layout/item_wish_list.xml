@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <NumberPicker
+        android:id="@+id/item_wish_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        >
+
+    </NumberPicker>
+    <CheckBox
+        android:id="@+id/item_wish_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"/>
+    <com.android.volley.toolbox.NetworkImageView
+        android:layout_width="100dip"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/item_wish_count"
+        android:layout_alignTop="@+id/item_wish_count"
+        android:layout_toRightOf="@id/item_wish_check"
+        android:id="@+id/item_wish_image"
+        android:layout_margin="3dip"
+    />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/item_wish_title"
+        android:layout_toRightOf="@+id/item_wish_image"
+        android:layout_marginLeft="10dip"
+        android:layout_marginTop="10dip"
+        android:textSize="17dip"
+        android:textColor="@color/black"
+        android:text="hello"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/item_wish_price"
+        android:text="145"
+        android:textSize="20dip"
+        android:textColor="@color/red_light"
+        android:layout_alignBottom="@+id/item_wish_count"
+        android:layout_alignLeft="@+id/item_wish_title"/>
+
+</RelativeLayout>

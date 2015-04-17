@@ -19,6 +19,7 @@ import android.widget.Toast;
 import java.util.HashMap;
 
 import lu.shaode.buyerrescue.R;
+import lu.shaode.netsupport.AppConfigCache;
 
 public class ActParent extends ActionBarActivity{
 
@@ -147,6 +148,10 @@ public class ActParent extends ActionBarActivity{
 
     public HashMap<String, String> getAnalyticsTrackPageEnterParams() {
         return new HashMap<String, String>();
+    }
+
+    public boolean isLogin(){
+        return !AppConfigCache.getCacheConfigString(this, "token").equals("");
     }
 
 }

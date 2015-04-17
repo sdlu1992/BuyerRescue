@@ -17,7 +17,7 @@ public class ActGoodsList extends ActParent implements FragmentParentList.OnFrag
         super.onCreate(savedInstanceState);
         fragment = FragmentListItem.newInstance();
         if (savedInstanceState == null) {
-            getFragmentManager().beginTransaction()
+            getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, fragment)
                     .commit();
         }

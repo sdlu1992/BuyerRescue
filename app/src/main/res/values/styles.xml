@@ -54,10 +54,24 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <style name="CancelButtonStyle" parent="MyButtonStyle">
+
+    </style>
+
+    <style name="OkButtonStyle" parent="MyButtonStyle">
+        <item name="android:background">@drawable/sel_b_button_orange</item>
+    </style>
+
     <style name="DialogLoading" parent="Base.V11.Theme.AppCompat.Light.Dialog">
         <item name="android:windowCloseOnTouchOutside">false</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <style name="DialogNumberPicker" parent="Base.V11.Theme.AppCompat.Light.Dialog">
+        <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="android:windowNoTitle">false</item>
+        <item name="android:backgroundDimEnabled">true</item>
     </style>
 </resources>

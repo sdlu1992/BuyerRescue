@@ -1,6 +1,7 @@
 package lu.shaode.buyerrescue.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import lu.shaode.buyerrescue.util.ViewHolder;
  */
 public class AdapterGoodsList extends BaseAdapter{
 
+    private final String TAG = ((Object) this).getClass().getSimpleName();
     Context context;
     List<ContentGoods.Good> list;
 
@@ -33,6 +35,7 @@ public class AdapterGoodsList extends BaseAdapter{
 
     @Override
     public int getCount() {
+        Log.e(TAG + " sdlu", "list.size()= " + list.size());
         return list.size();
     }
 

@@ -11,6 +11,9 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
+    <string name="cancel">取消</string>
+    <string name="ok">确定</string>
+
     <string name="action_example">Example action</string>
     <string name="search">搜索</string>
     <string name="category">类目</string>
@@ -55,4 +58,7 @@
     <string name="solder_des">卖家详情</string>
     <string name="good_appraise">商品评价</string>
     <string name="good_no_des">这件商品没有详细信息</string>
+    <string name="select_all">全选</string>
+    <string name="price_total">总价</string>
+
 </resources>

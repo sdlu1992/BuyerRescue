@@ -10,6 +10,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -84,7 +85,19 @@ public class BizManager {
         post(ApiConfig._ADD_WISH, params, listener);
     }
 
+    public void getWishList(final  ApiListener listener){
+        Map<String, String> params = new HashMap<>();
+        post(ApiConfig._GET_WISH_LIST, params, listener);
+    }
+
+    public void addOrder(JSONArray goods, final  ApiListener listener){
+        Map<String, String> params = new HashMap<>();
+        params.put("goods", goods.toString());
+        post(ApiConfig._ORDER, params, listener);
+    }
+
     public void post(String url, Map<String, String> params, final ApiListener listener){
+
         params.put("platform", "android");
         params.put("token", AppConfigCache.getCacheConfigString(context, "token"));
         Request<JSONObject> request = mQueue.add(new JsonObjectRequest(Request.Method.POST, url,

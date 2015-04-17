@@ -1,0 +1,48 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" tools:context="lu.shaode.buyerrescue.ui.FragmentParent">
+
+    <RelativeLayout
+        android:id="@+id/frag_wish_bottom"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <CheckBox
+            android:id="@+id/frag_wish_select_all"
+            android:text="@string/select_all"
+            android:layout_width="wrap_content"
+            android:textColor="@color/grey"
+            android:checked="true"
+            android:layout_alignParentLeft="true"
+            android:layout_height="50dip" />
+        <Button
+            style="@android:style/ButtonBar"
+            android:id="@+id/frag_wish_buy"
+            android:text="@string/buy_now"
+            android:layout_width="wrap_content"
+            android:textColor="@color/white"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/sel_b_button_red"
+            android:layout_height="50dip" />
+        <TextView
+            android:id="@+id/frag_wish_total_price"
+            android:layout_width="wrap_content"
+            android:layout_toLeftOf="@id/frag_wish_buy"
+            android:textColor="@color/orange"
+            android:text="@string/price_total"
+            android:gravity="center|left"
+            android:layout_marginRight="10dip"
+            android:layout_height="50dip" />
+    </RelativeLayout>
+    <ListView
+        android:id="@android:id/list"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/frag_wish_bottom"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+    </ListView>
+
+</RelativeLayout>

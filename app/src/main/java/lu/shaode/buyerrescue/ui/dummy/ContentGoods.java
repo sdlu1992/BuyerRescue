@@ -1,5 +1,6 @@
 package lu.shaode.buyerrescue.ui.dummy;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -31,6 +32,8 @@ public class ContentGoods {
         public ContentStore.Store store;
         public String id;
         public String category;
+        public String imageUrlTitle;
+        public String imageUrlOther;
 
         public Good(String id, String describe, String name, String price,
                     ContentStore.Store store, String count, String category) {
@@ -41,6 +44,24 @@ public class ContentGoods {
             this.store = store;
             this.count = count;
             this.category = category;
+        }
+
+        public Good(JSONObject jsonObject) {
+            try {
+                this.id = jsonObject.getString("id");
+                this.describe = jsonObject.getString("des");
+                this.name = jsonObject.getString("name");
+                this.price = jsonObject.getString("price");
+                this.category = jsonObject.getString("category");
+                this.imageUrlOther= jsonObject.getString("image_url_other");
+                this.imageUrlTitle= jsonObject.getString("image_url_title");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        public void setStore(ContentStore.Store store) {
+            this.store = store;
         }
 
         @Override

@@ -19,7 +19,11 @@ import android.widget.Toast;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import lu.shaode.buyerrescue.R;
 import lu.shaode.buyerrescue.ui.dummy.ContentGoods;
@@ -46,6 +50,7 @@ public class ActGoodDetail extends ActParent implements ViewPager.OnPageChangeLi
     Button btBuy;
     ViewPager imagePager;
     ViewGroup imageTips;
+    DialogNumberPicker dialogNumberPicker;
     /**
      * 装点点的ImageView数组
      */
@@ -61,9 +66,9 @@ public class ActGoodDetail extends ActParent implements ViewPager.OnPageChangeLi
      */
     private String[] imgUrlArray ;
 
-    ContentSolder.Solder solder;
-    ContentGoods.Good good;
-    ContentStore.Store store;
+    ContentSolder.Solder solder = null;
+    ContentGoods.Good good = null;
+    ContentStore.Store store = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -187,18 +192,51 @@ public class ActGoodDetail extends ActParent implements ViewPager.OnPageChangeLi
                 startActivity(intent);
                 break;
             case R.id.act_good_wish_add:
-                addWishList();
+                showNumberPickerDialog(getString(R.string.wish_add), new OnWishOkClickListener());
+                break;
+            case R.id.act_good_buy:
+                showNumberPickerDialog(getString(R.string.buy_now), new OnBuyOkClickListener());
+                break;
         }
+    }
+
+    public void order(){
+        showDialogLoading();
+        Map<String, String> mGood = new HashMap<>();
+        mGood.put("id", good.id);
+        mGood.put("count", String.valueOf(dialogNumberPicker.npCount.getValue()));
+        JSONObject jGood = new JSONObject(mGood);
+        JSONArray jsonArray = new JSONArray();
+        jsonArray.put(jGood);
+        Log.e(TAG + " sdlu", "jsonArray.toString()= " + jsonArray.toString());
+        BizManager.getInstance(ActGoodDetail.this).addOrder(jsonArray, new ApiListener() {
+                    @Override
+                    public void success(JSONObject jsonObject) {
+                        Log.e(TAG + " sdlu", "jsonObject.toString()= " + jsonObject.toString());
+                        dismissDialogLoading();
+                        dismissPickerDialog();
+                    }
+
+                    @Override
+                    public void error(String string) {
+                        Log.e(TAG + " sdlu", "string= " + string);
+                        showToastMessage(string);
+                        dismissDialogLoading();
+                    }
+                });
+
     }
 
     public void addWishList(){
         showDialogLoading();
-        BizManager.getInstance(ActGoodDetail.this).addWishList(good.id, "1", new ApiListener() {
+        BizManager.getInstance(ActGoodDetail.this).addWishList(good.id,
+                String.valueOf(getNpDialogCount()) , new ApiListener() {
             @Override
             public void success(JSONObject jsonObject) {
                 Log.e(TAG + " sdlu", "jsonObject.toString()= " + jsonObject.toString());
                 Toast.makeText(ActGoodDetail.this, getString(R.string.wish_added), Toast.LENGTH_SHORT).show();
                 dismissDialogLoading();
+                dismissPickerDialog();
             }
 
             @Override
@@ -313,6 +351,41 @@ public class ActGoodDetail extends ActParent implements ViewPager.OnPageChangeLi
         //设置监听，主要是设置点点的背景
         imagePager.setOnPageChangeListener(this);
 
+    }
+
+    public void showNumberPickerDialog(String title, View.OnClickListener onOkListener){
+        if (dialogNumberPicker == null){
+            dialogNumberPicker = new DialogNumberPicker(this);
+        }
+        dialogNumberPicker.setTitle(title);
+        dialogNumberPicker.setOnOkListener(onOkListener);
+        dialogNumberPicker.show();
+
+    }
+
+    public void dismissPickerDialog(){
+        if (dialogNumberPicker != null && dialogNumberPicker.isShowing()){
+            dialogNumberPicker.dismiss();
+        }
+    }
+
+    public int getNpDialogCount(){
+        return dialogNumberPicker == null ? 0 : dialogNumberPicker.npCount.getValue();
+    }
+
+    class OnBuyOkClickListener implements View.OnClickListener{
+        @Override
+        public void onClick(View v) {
+            order();
+        }
+    }
+
+    class OnWishOkClickListener implements View.OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+            addWishList();
+        }
     }
 
 }

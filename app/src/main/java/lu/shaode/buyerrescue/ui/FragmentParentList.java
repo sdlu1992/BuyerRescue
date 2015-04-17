@@ -1,20 +1,21 @@
 package lu.shaode.buyerrescue.ui;
 
 import android.app.Activity;
-import android.app.ListFragment;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import lu.shaode.buyerrescue.R;
 
 public class FragmentParentList extends ListFragment {
 
+    private Toast mToast;
+    private DialogLoading mDialog;
     private OnFragmentInteractionListener mListener;
 
     public static FragmentParentList newInstance() {
@@ -35,7 +36,11 @@ public class FragmentParentList extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fragment_parent, container, false);
+        return inflater.inflate(getLayoutContent(), container, false);
+    }
+
+    protected int getLayoutContent() {
+        return R.layout.fragment_fragment_parent_list;
     }
 
     @Override
@@ -64,4 +69,31 @@ public class FragmentParentList extends ListFragment {
         return ((ActionBarActivity) getActivity()).getSupportActionBar();
     }
 
+    public void showDialogWorking() {
+        if (mDialog == null) {
+            mDialog = new DialogLoading(getActivity());
+            mDialog.setCancelable(false);
+            mDialog.setCanceledOnTouchOutside(false);
+        }
+        mDialog.show();
+    }
+
+    public void showDialogLoading() {
+        showDialogWorking();
+    }
+
+    public void dismissDialogLoading() {
+        if (mDialog != null && mDialog.isShowing()) {
+            mDialog.dismiss();
+        }
+    }
+
+    public void showToastMessage(String text) {
+        if (mToast == null) {
+            mToast = Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT);
+        }
+        mToast.setText(text);
+        mToast.setDuration(Toast.LENGTH_SHORT);
+        mToast.show();
+    }
 }

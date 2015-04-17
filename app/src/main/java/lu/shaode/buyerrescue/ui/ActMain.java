@@ -3,9 +3,9 @@ package lu.shaode.buyerrescue.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,7 +19,9 @@ import lu.shaode.netsupport.AppConfigCache;
 
 
 public class ActMain extends ActParent
-        implements FragmentNavigationDrawer.NavigationDrawerCallbacks,FragmentParent.OnFragmentInteractionListener {
+        implements FragmentNavigationDrawer.NavigationDrawerCallbacks,
+        FragmentParent.OnFragmentInteractionListener,
+        FragmentParentList.OnFragmentInteractionListener{
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -70,10 +72,18 @@ public class ActMain extends ActParent
                             .commit();
                 }
                 return;
+            case 2:
+                if (AppConfigCache.getCacheConfigString(this, "token").equals("")){
+                    Intent intent = new Intent();
+                    intent.setClass(ActMain.this, ActLogin.class);
+                    startActivity(intent);
+                } else {
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.container, FragmentWishList.newInstance())
+                            .commit();
+                }
+
         }
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                .commit();
     }
 
     public void onSectionAttached(int number) {
