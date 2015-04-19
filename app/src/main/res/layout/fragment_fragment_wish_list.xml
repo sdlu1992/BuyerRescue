@@ -1,48 +1,58 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context="lu.shaode.buyerrescue.ui.FragmentParent">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="lu.shaode.buyerrescue.ui.FragmentParent">
 
     <RelativeLayout
         android:id="@+id/frag_wish_bottom"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:background="@color/white"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:orientation="horizontal">
 
         <CheckBox
             android:id="@+id/frag_wish_select_all"
-            android:text="@string/select_all"
             android:layout_width="wrap_content"
-            android:textColor="@color/grey"
-            android:checked="true"
+            android:layout_height="50dip"
             android:layout_alignParentLeft="true"
-            android:layout_height="50dip" />
+            android:checked="true"
+            android:text="@string/select_all"
+            android:textColor="@color/grey" />
+
         <Button
-            style="@android:style/ButtonBar"
             android:id="@+id/frag_wish_buy"
-            android:text="@string/buy_now"
+            style="@android:style/ButtonBar"
             android:layout_width="wrap_content"
-            android:textColor="@color/white"
+            android:layout_height="50dip"
             android:layout_alignParentRight="true"
             android:background="@drawable/sel_b_button_red"
-            android:layout_height="50dip" />
+            android:text="@string/buy_now"
+            android:textColor="@color/white" />
+
         <TextView
             android:id="@+id/frag_wish_total_price"
             android:layout_width="wrap_content"
-            android:layout_toLeftOf="@id/frag_wish_buy"
-            android:textColor="@color/orange"
-            android:text="@string/price_total"
-            android:gravity="center|left"
+            android:layout_height="50dip"
             android:layout_marginRight="10dip"
-            android:layout_height="50dip" />
+            android:layout_toLeftOf="@id/frag_wish_buy"
+            android:gravity="center|left"
+            android:text="@string/price_total"
+            android:textColor="@color/orange" />
     </RelativeLayout>
-    <ListView
-        android:id="@android:id/list"
-        android:layout_alignParentTop="true"
-        android:layout_above="@+id/frag_wish_bottom"
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/frag_wish_refresh"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
-    </ListView>
+
+        <ListView
+            android:id="@android:id/list"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_above="@+id/frag_wish_bottom"
+            android:layout_alignParentTop="true"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </RelativeLayout>

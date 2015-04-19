@@ -2,6 +2,8 @@ package lu.shaode.buyerrescue.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,10 +29,12 @@ import lu.shaode.netsupport.listener.ApiListener;
 /**
  * A fragment representing a list of Items.
  */
-public class FragmentBuyHistoryList extends FragmentParentList implements AdapterHistoryList.OnCountChange{
+public class FragmentBuyHistoryList extends FragmentParentList implements
+        AdapterHistoryList.OnCountChange, SwipeRefreshLayout.OnRefreshListener{
 
     private final String TAG = ((Object) this).getClass().getSimpleName();
 
+    SwipeRefreshLayout refreshLayout;
     private OnFragmentInteractionListener mListener;
     public AdapterHistoryList mAdapter;
 
@@ -53,7 +57,6 @@ public class FragmentBuyHistoryList extends FragmentParentList implements Adapte
         Log.e(TAG + " sdlu", "ContentWishList.ITEMS.size()= " + ContentWishList.ITEMS.size());
         setListAdapter(mAdapter);
         ContentWishList.ITEMS.clear();
-        getHistoryList();
     }
 
     @Override
@@ -61,7 +64,27 @@ public class FragmentBuyHistoryList extends FragmentParentList implements Adapte
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(getLayoutContent(), container, false);
+        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.frag_history_refresh);
+        refreshLayout.setOnRefreshListener(this);
+        refreshLayout.post(new Runnable() {
+
+            @Override
+            public void run() {
+                refreshLayout.setRefreshing(true);
+                onRefresh();
+            }
+        });
         return view;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -97,7 +120,6 @@ public class FragmentBuyHistoryList extends FragmentParentList implements Adapte
     }
 
     public void getHistoryList(){
-        showDialogLoading();
         BizManager.getInstance(getActivity()).getHistoryList(new ApiListener() {
             @Override
             public void success(JSONObject jsonObject) {
@@ -112,6 +134,7 @@ public class FragmentBuyHistoryList extends FragmentParentList implements Adapte
                                 break;
                             }
                             JSONArray history_list = jsonObject.getJSONArray("history_list");
+                            ContentHistoryList.ITEMS.clear();
                             for (int i = 0; i < history_list.length(); i++) {
                                 JSONObject foo = history_list.getJSONObject(i);
                                 JSONObject storeJsonObject = foo.getJSONObject("store");
@@ -132,20 +155,30 @@ public class FragmentBuyHistoryList extends FragmentParentList implements Adapte
                             break;
                     }
 
-                    dismissDialogLoading();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                refreshComplete();
             }
 
             @Override
             public void error(String string) {
                 Log.e(TAG + " sdlu", "string= " + string);
                 Log.e(TAG + " sdlu", "(getActivity()==null)= " + (getActivity() == null));
-                dismissDialogLoading();
+                refreshComplete();
             }
         });
 
     }
 
+    @Override
+    public void onRefresh() {
+        getHistoryList();
+    }
+
+    public void refreshComplete(){
+        if (refreshLayout != null){
+            refreshLayout.setRefreshing(false);
+        }
+    }
 }

@@ -71,7 +71,7 @@ public class ActMain extends ActParent
                             .replace(R.id.container, FragmentInfo.newInstance())
                             .commit();
                 }
-                return;
+                break;
             case 2:
                 if (AppConfigCache.getCacheConfigString(this, "token").equals("")){
                     Intent intent = new Intent();
@@ -82,6 +82,7 @@ public class ActMain extends ActParent
                             .replace(R.id.container, FragmentWishList.newInstance())
                             .commit();
                 }
+                break;
             case 3:
                 if (AppConfigCache.getCacheConfigString(this, "token").equals("")){
                     Intent intent = new Intent();
@@ -92,6 +93,7 @@ public class ActMain extends ActParent
                             .replace(R.id.container, FragmentBuyHistoryList.newInstance())
                             .commit();
                 }
+                break;
 
         }
     }

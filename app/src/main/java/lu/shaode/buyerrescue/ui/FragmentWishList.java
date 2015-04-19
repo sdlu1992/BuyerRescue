@@ -2,6 +2,7 @@ package lu.shaode.buyerrescue.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,12 +29,13 @@ import lu.shaode.netsupport.listener.ApiListener;
 /**
  * A fragment representing a list of Items.
  */
-public class FragmentWishList extends FragmentParentList implements AdapterWishList.OnCountChange{
+public class FragmentWishList extends FragmentParentList implements AdapterWishList.OnCountChange, SwipeRefreshLayout.OnRefreshListener{
 
     private final String TAG = ((Object) this).getClass().getSimpleName();
 
     TextView tvPriceTotal;
     CheckBox cbSelectAll;
+    SwipeRefreshLayout refreshLayout;
     private OnFragmentInteractionListener mListener;
     public AdapterWishList mAdapter;
 
@@ -56,7 +58,6 @@ public class FragmentWishList extends FragmentParentList implements AdapterWishL
         Log.e(TAG + " sdlu", "ContentWishList.ITEMS.size()= " + ContentWishList.ITEMS.size());
         setListAdapter(mAdapter);
         ContentWishList.ITEMS.clear();
-        getWishList();
     }
 
     @Override
@@ -67,6 +68,16 @@ public class FragmentWishList extends FragmentParentList implements AdapterWishL
         tvPriceTotal = (TextView) view.findViewById(R.id.frag_wish_total_price);
         cbSelectAll = (CheckBox) view.findViewById(R.id.frag_wish_select_all);
         cbSelectAll.setOnClickListener(new OnSelectAllListener());
+        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.frag_wish_refresh);
+        refreshLayout.setOnRefreshListener(this);
+        refreshLayout.post(new Runnable() {
+
+            @Override
+            public void run() {
+                refreshLayout.setRefreshing(true);
+                onRefresh();
+            }
+        });
         return view;
     }
 
@@ -103,7 +114,6 @@ public class FragmentWishList extends FragmentParentList implements AdapterWishL
     }
 
     public void getWishList(){
-        showDialogLoading();
         BizManager.getInstance(getActivity()).getWishList(new ApiListener() {
             @Override
             public void success(JSONObject jsonObject) {
@@ -116,6 +126,7 @@ public class FragmentWishList extends FragmentParentList implements AdapterWishL
                             int length = jsonObject.getInt("len");
                             if (length != 0) {
                                 JSONArray wish_list = jsonObject.getJSONArray("wish_list");
+                                ContentWishList.ITEMS.clear();
                                 for (int i = 0; i < wish_list.length(); i++) {
                                     JSONObject foo = wish_list.getJSONObject(i);
                                     JSONObject storeJsonObject = foo.getJSONObject("store");
@@ -138,17 +149,17 @@ public class FragmentWishList extends FragmentParentList implements AdapterWishL
                             break;
                     }
 
-                    dismissDialogLoading();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                refreshComplete();
             }
 
             @Override
             public void error(String string) {
                 Log.e(TAG + " sdlu", "string= " + string);
                 Log.e(TAG + " sdlu", "(getActivity()==null)= " + (getActivity() == null));
-                dismissDialogLoading();
+                refreshComplete();
             }
         });
 
@@ -160,6 +171,11 @@ public class FragmentWishList extends FragmentParentList implements AdapterWishL
             total += wish.isCheck ? Float.parseFloat(wish.good.price) * (float)wish.count : 0;
         }
         tvPriceTotal.setText("总价: " + total + "元");
+    }
+
+    @Override
+    public void onRefresh() {
+        getWishList();
     }
 
     class OnSelectAllListener implements View.OnClickListener{
@@ -187,5 +203,11 @@ public class FragmentWishList extends FragmentParentList implements AdapterWishL
             isSelectAll = isSelectAll && wish.isCheck;
         }
         cbSelectAll.setChecked(isSelectAll);
+    }
+
+    public void refreshComplete(){
+        if (refreshLayout != null){
+            refreshLayout.setRefreshing(false);
+        }
     }
 }
