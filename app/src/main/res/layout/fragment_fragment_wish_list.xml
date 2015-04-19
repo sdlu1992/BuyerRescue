@@ -23,7 +23,6 @@
 
         <Button
             android:id="@+id/frag_wish_buy"
-            style="@android:style/ButtonBar"
             android:layout_width="wrap_content"
             android:layout_height="50dip"
             android:layout_alignParentRight="true"
@@ -43,6 +42,7 @@
     </RelativeLayout>
 
     <android.support.v4.widget.SwipeRefreshLayout
+        android:layout_above="@+id/frag_wish_bottom"
         android:id="@+id/frag_wish_refresh"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
@@ -51,7 +51,6 @@
             android:id="@android:id/list"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_above="@+id/frag_wish_bottom"
             android:layout_alignParentTop="true"/>
     </android.support.v4.widget.SwipeRefreshLayout>
 

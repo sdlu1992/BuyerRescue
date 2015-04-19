@@ -39,6 +39,10 @@
             android:name=".ui.ActGoodDetail"
             android:label="@string/title_activity_act_good_detail" >
         </activity>
+        <activity
+            android:name=".ui.ActOrderDetail"
+            android:label="@string/title_activity_act_order_detail" >
+        </activity>
     </application>
 
 </manifest>

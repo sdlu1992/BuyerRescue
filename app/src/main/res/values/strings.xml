@@ -76,5 +76,6 @@
         <item>已退款</item>
         <item>已关闭</item>
     </string-array>
+    <string name="title_activity_act_order_detail">ActOrderDetail</string>
 
 </resources>

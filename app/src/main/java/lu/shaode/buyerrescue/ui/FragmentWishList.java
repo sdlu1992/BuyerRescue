@@ -7,34 +7,37 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ListView;
-import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import lu.shaode.buyerrescue.R;
-import lu.shaode.buyerrescue.adapter.AdapterGoodsList;
 import lu.shaode.buyerrescue.adapter.AdapterWishList;
 import lu.shaode.buyerrescue.ui.dummy.ContentGoods;
 import lu.shaode.buyerrescue.ui.dummy.ContentStore;
 import lu.shaode.buyerrescue.ui.dummy.ContentWishList;
+import lu.shaode.buyerrescue.util.StringUtil;
 import lu.shaode.netsupport.BizManager;
 import lu.shaode.netsupport.listener.ApiListener;
 
 /**
  * A fragment representing a list of Items.
  */
-public class FragmentWishList extends FragmentParentList implements AdapterWishList.OnCountChange, SwipeRefreshLayout.OnRefreshListener{
+public class FragmentWishList extends FragmentParentList implements AdapterWishList.OnCountChange, SwipeRefreshLayout.OnRefreshListener, View.OnClickListener{
 
     private final String TAG = ((Object) this).getClass().getSimpleName();
 
     TextView tvPriceTotal;
     CheckBox cbSelectAll;
+    Button btBuy;
     SwipeRefreshLayout refreshLayout;
     private OnFragmentInteractionListener mListener;
     public AdapterWishList mAdapter;
@@ -67,17 +70,12 @@ public class FragmentWishList extends FragmentParentList implements AdapterWishL
         View view = inflater.inflate(getLayoutContent(), container, false);
         tvPriceTotal = (TextView) view.findViewById(R.id.frag_wish_total_price);
         cbSelectAll = (CheckBox) view.findViewById(R.id.frag_wish_select_all);
-        cbSelectAll.setOnClickListener(new OnSelectAllListener());
+        btBuy = (Button) view.findViewById(R.id.frag_wish_buy);
+        cbSelectAll.setOnClickListener(this);
+        btBuy.setOnClickListener(this);
         refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.frag_wish_refresh);
         refreshLayout.setOnRefreshListener(this);
-        refreshLayout.post(new Runnable() {
-
-            @Override
-            public void run() {
-                refreshLayout.setRefreshing(true);
-                onRefresh();
-            }
-        });
+        beginRefresh();
         return view;
     }
 
@@ -165,6 +163,42 @@ public class FragmentWishList extends FragmentParentList implements AdapterWishL
 
     }
 
+    public void order(){
+        showDialogLoading();
+        JSONArray goodArray = new JSONArray();
+        JSONArray wishArray = new JSONArray();
+        for(ContentWishList.Wish wish : ContentWishList.ITEMS){
+            Map<String, String> mGood = new HashMap<>();
+            if (!wish.isCheck()){
+                continue;
+            }
+            mGood.put("id", wish.good.id);
+            mGood.put("count", String.valueOf(wish.count));
+            goodArray.put(new JSONObject(mGood));
+            mGood.clear();
+            mGood.put("id", wish.id);
+            wishArray.put(new JSONObject(mGood));
+        }
+        Log.e(TAG + " sdlu", "jsonArray.toString()= " + goodArray.toString());
+        Log.e(TAG + " sdlu", "wishArray.toString()= " + wishArray.toString());
+        BizManager.getInstance(getActivity()).addOrder(goodArray,wishArray, new ApiListener() {
+            @Override
+            public void success(JSONObject jsonObject) {
+                Log.e(TAG + " sdlu", "jsonObject.toString()= " + jsonObject.toString());
+                dismissDialogLoading();
+                beginRefresh();
+            }
+
+            @Override
+            public void error(String string) {
+                Log.e(TAG + " sdlu", "string= " + string);
+                showToastMessage(string);
+                dismissDialogLoading();
+                beginRefresh();
+            }
+        });
+    }
+
     public void setTotalPrice(){
         float total = 0;
         for (ContentWishList.Wish wish: ContentWishList.ITEMS){
@@ -178,16 +212,21 @@ public class FragmentWishList extends FragmentParentList implements AdapterWishL
         getWishList();
     }
 
-    class OnSelectAllListener implements View.OnClickListener{
-
-        @Override
-        public void onClick(View v) {
-            for (ContentWishList.Wish wish: ContentWishList.ITEMS){
-                wish.setCheck(cbSelectAll.isChecked());
-            }
-            mAdapter.notifyDataSetChanged();
-
+    @Override
+    public void onClick(View v) {
+        Log.e(TAG + " sdlu", "v.getId()= " + v.getId());
+        switch (v.getId()){
+            case R.id.frag_wish_select_all:
+                for (ContentWishList.Wish wish: ContentWishList.ITEMS){
+                    wish.setCheck(cbSelectAll.isChecked());
+                }
+                mAdapter.notifyDataSetChanged();
+                break;
+            case R.id.frag_wish_buy:
+                order();
+                break;
         }
+
     }
 
     @Override
@@ -209,5 +248,16 @@ public class FragmentWishList extends FragmentParentList implements AdapterWishL
         if (refreshLayout != null){
             refreshLayout.setRefreshing(false);
         }
+    }
+
+    public void beginRefresh(){
+        refreshLayout.post(new Runnable() {
+
+            @Override
+            public void run() {
+                refreshLayout.setRefreshing(true);
+                onRefresh();
+            }
+        });
     }
 }
