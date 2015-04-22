@@ -27,21 +27,21 @@ public class ContentHistoryList {
     public static class History {
         public String id;
         public ContentGoods.Good good;
-        public ContentStore.Store store;
         public String date;
         public int count;
         public String order_id;
         public int state;
         public boolean isCheck = true;
+        public  String price;
 
-        public History(String id, ContentGoods.Good good, ContentStore.Store store, String date, int count, String order_id, int state) {
+        public History(String id, ContentGoods.Good good, String date, int count, String order_id, int state, String price) {
             this.id = id;
             this.good = good;
-            this.store = store;
             this.date = date;
             this.count = count;
             this.order_id = order_id;
             this.state = state;
+            this.price = price;
         }
 
         public History(JSONObject jsonObject){
@@ -51,6 +51,7 @@ public class ContentHistoryList {
                 this.date = jsonObject.getString("date");
                 this.order_id = jsonObject.getString("order");
                 this.state = jsonObject.getInt("state");
+                this.price = jsonObject.getString("price");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -58,10 +59,6 @@ public class ContentHistoryList {
 
         public void setGood(ContentGoods.Good good) {
             this.good = good;
-        }
-
-        public void setStore(ContentStore.Store store) {
-            this.store = store;
         }
 
         public void setCheck(boolean isCheck) {

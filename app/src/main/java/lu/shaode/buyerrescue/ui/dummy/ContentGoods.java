@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import lu.shaode.netsupport.ApiConfig;
+
 /**
  * Helper class for providing sample content for user interfaces created by
  * Android template wizards.
@@ -33,7 +35,7 @@ public class ContentGoods {
         public String id;
         public String category;
         public String imageUrlTitle;
-        public String imageUrlOther;
+        public ArrayList<String> imageUrlOther;
 
         public Good(String id, String describe, String name, String price,
                     ContentStore.Store store, String count, String category) {
@@ -53,8 +55,13 @@ public class ContentGoods {
                 this.name = jsonObject.getString("name");
                 this.price = jsonObject.getString("price");
                 this.category = jsonObject.getString("category");
-                this.imageUrlOther= jsonObject.getString("image_url_other");
                 this.imageUrlTitle= jsonObject.getString("image_url_title");
+                for (int i = 1; i<5; i++){
+                    String image = jsonObject.getString("image"+i);
+                    if (!image.equals("")){
+                        imageUrlOther.add(ApiConfig._DOMAIN_ROOT + image);
+                    }
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -67,6 +74,10 @@ public class ContentGoods {
         @Override
         public String toString() {
             return describe;
+        }
+
+        public void setCount(String count) {
+            this.count = count;
         }
     }
 }

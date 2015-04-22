@@ -37,4 +37,10 @@ public class ApiConfig {
 
     public static final String _GET_HISTORY_LIST = _DOMAIN_ROOT
                                             + "getBuyHistory/";
+
+    public static final String _GET_ORDER   = _DOMAIN_ROOT
+                                            + "getOrder/";
+
+    public static final String _PAY         = _DOMAIN_ROOT
+                                            + "payForGoods/";
 }

@@ -27,15 +27,13 @@ public class ContentWishList {
     public static class Wish {
         public String id;
         public ContentGoods.Good good;
-        public ContentStore.Store store;
         public String date;
         public int count;
         public boolean isCheck = true;
 
-        public Wish(String id, ContentGoods.Good good, ContentStore.Store store, String date, int count) {
+        public Wish(String id, ContentGoods.Good good, String date, int count) {
             this.id = id;
             this.good = good;
-            this.store = store;
             this.date = date;
             this.count = count;
         }
@@ -52,10 +50,6 @@ public class ContentWishList {
 
         public void setGood(ContentGoods.Good good) {
             this.good = good;
-        }
-
-        public void setStore(ContentStore.Store store) {
-            this.store = store;
         }
 
         public void setCheck(boolean isCheck) {

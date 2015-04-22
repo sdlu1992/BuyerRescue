@@ -100,18 +100,13 @@ public class FragmentListItem extends FragmentParentList{
                                 JSONArray goods = jsonObject.getJSONArray("goods");
                                 for (int i = 0; i < goods.length(); i++){
                                     JSONObject foo = goods.getJSONObject(i);
-                                    String id = foo.getString("id");
-                                    String title = foo.getString("title");
-                                    String price = foo.getString("price");
+                                    ContentGoods.Good good = new ContentGoods.Good(foo);
                                     String count = foo.getString("count");
                                     ContentStore.Store store = new ContentStore.Store(
-                                            foo.getString("store"), foo.getString("store_name"),
-                                            null, null);
-                                    String category = foo.getString("category");
-                                    String describe = foo.getString("des");
-                                    ContentGoods.ITEMS.add(new ContentGoods.Good(
-                                            id, describe, title, price,
-                                            store, count, category));
+                                            foo.getJSONObject("store"));
+                                    good.setStore(store);
+                                    good.setCount(count);
+                                    ContentGoods.ITEMS.add(good);
                                 }
                                 mAdapter.notifyDataSetChanged();
                             }

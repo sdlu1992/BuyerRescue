@@ -66,6 +66,13 @@
     <string name="appraise_order">评价订单</string>
     <string name="money_suffix">&#160;元</string>
     <string name="total_price_prefix">实付：</string>
+    <string name="order_date_prefix">下单日期：</string>
+    <string name="order_buyer_prefix">购买者：</string>
+    <string name="order_id_prefix">订单号：</string>
+    <string name="is_pay">确认付款吗？</string>
+    <string name="pay_success">付款成功！</string>
+    <string name="is_buy">确认购买吗？</string>
+    <string name="buy_success">购买成功！</string>
     <string-array name="state_order">
         <item>未付款</item>
         <item>已付款</item>

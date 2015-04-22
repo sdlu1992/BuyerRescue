@@ -108,6 +108,18 @@ public class BizManager {
         post(ApiConfig._ORDER, params, listener);
     }
 
+    public void getOrder(String orderId, final  ApiListener listener){
+        Map<String, String> params = new HashMap<>();
+        params.put("order_id", orderId);
+        post(ApiConfig._GET_ORDER, params, listener);
+    }
+
+    public void pay(String orderId, final  ApiListener listener){
+        Map<String, String> params = new HashMap<>();
+        params.put("order_id", orderId);
+        post(ApiConfig._PAY, params, listener);
+    }
+
     public void post(String url, Map<String, String> params, final ApiListener listener){
 
 

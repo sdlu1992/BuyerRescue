@@ -4,8 +4,6 @@ package lu.shaode.buyerrescue.ui;
  * Created by sdlu on 15/3/20.
  */
 
-import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
@@ -25,7 +23,6 @@ public class ActParent extends ActionBarActivity{
 
     private Toast mToast;
     private DialogLoading mDialog;
-    private TextView mTextMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

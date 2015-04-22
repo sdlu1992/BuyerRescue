@@ -1,5 +1,6 @@
 package lu.shaode.buyerrescue.ui.dummy;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class ContentSolder {
         public String name;
         public String email;
         public String store;
+        public String address;
 
         public Solder(String id, String phone, String name, String email) {
             this.id = id;
@@ -38,8 +40,18 @@ public class ContentSolder {
         }
 
         public Solder(JSONObject jsonSolder){
+            try {
+                id = jsonSolder.getString("id");
+                phone = jsonSolder.getString("phone");
+                name = jsonSolder.getString("name");
+                email = jsonSolder.getString("email");
+                address = jsonSolder.getString("address");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
         }
+
         @Override
         public String toString() {
             return id;

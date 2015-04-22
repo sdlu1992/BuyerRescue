@@ -16,4 +16,8 @@ public class StringUtil {
         float m = Float.parseFloat(money);
         return getMoneyString(m);
     }
+
+    public static boolean isNullOrEmpty(String string){
+        return string == null || string.equals("");
+    }
 }

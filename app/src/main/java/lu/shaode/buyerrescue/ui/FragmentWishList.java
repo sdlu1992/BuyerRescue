@@ -1,6 +1,9 @@
 package lu.shaode.buyerrescue.ui;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
@@ -24,7 +27,6 @@ import lu.shaode.buyerrescue.adapter.AdapterWishList;
 import lu.shaode.buyerrescue.ui.dummy.ContentGoods;
 import lu.shaode.buyerrescue.ui.dummy.ContentStore;
 import lu.shaode.buyerrescue.ui.dummy.ContentWishList;
-import lu.shaode.buyerrescue.util.StringUtil;
 import lu.shaode.netsupport.BizManager;
 import lu.shaode.netsupport.listener.ApiListener;
 
@@ -41,6 +43,8 @@ public class FragmentWishList extends FragmentParentList implements AdapterWishL
     SwipeRefreshLayout refreshLayout;
     private OnFragmentInteractionListener mListener;
     public AdapterWishList mAdapter;
+
+    AlertDialog orderDialog;
 
     public static FragmentWishList newInstance() {
         return new FragmentWishList();
@@ -75,13 +79,18 @@ public class FragmentWishList extends FragmentParentList implements AdapterWishL
         btBuy.setOnClickListener(this);
         refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.frag_wish_refresh);
         refreshLayout.setOnRefreshListener(this);
-        beginRefresh();
         return view;
     }
 
     @Override
     protected int getLayoutContent() {
         return R.layout.fragment_fragment_wish_list;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        beginRefresh();
     }
 
     @Override
@@ -134,7 +143,6 @@ public class FragmentWishList extends FragmentParentList implements AdapterWishL
                                     ContentGoods.Good good = new ContentGoods.Good(goodJsonObject);
                                     good.setStore(store);
                                     ContentWishList.Wish wish = new ContentWishList.Wish(foo);
-                                    wish.setStore(store);
                                     wish.setGood(good);
                                     ContentWishList.ITEMS.add(wish);
 
@@ -185,8 +193,20 @@ public class FragmentWishList extends FragmentParentList implements AdapterWishL
             @Override
             public void success(JSONObject jsonObject) {
                 Log.e(TAG + " sdlu", "jsonObject.toString()= " + jsonObject.toString());
+                try {
+                    int response = jsonObject.getInt("response");
+                    switch (response){
+                        case 1:
+                            String orderId = jsonObject.getString("order_id");
+                            Intent intent = new Intent(getActivity(), ActOrderDetail.class);
+                            intent.putExtra("order_id", orderId);
+                            startActivity(intent);
+                            break;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 dismissDialogLoading();
-                beginRefresh();
             }
 
             @Override
@@ -194,7 +214,6 @@ public class FragmentWishList extends FragmentParentList implements AdapterWishL
                 Log.e(TAG + " sdlu", "string= " + string);
                 showToastMessage(string);
                 dismissDialogLoading();
-                beginRefresh();
             }
         });
     }
@@ -223,7 +242,7 @@ public class FragmentWishList extends FragmentParentList implements AdapterWishL
                 mAdapter.notifyDataSetChanged();
                 break;
             case R.id.frag_wish_buy:
-                order();
+                showOrderDialog();
                 break;
         }
 
@@ -259,5 +278,34 @@ public class FragmentWishList extends FragmentParentList implements AdapterWishL
                 onRefresh();
             }
         });
+    }
+
+    public void showOrderDialog() {
+        if (orderDialog == null) {
+            orderDialog = new AlertDialog.Builder(getActivity())
+                    .setTitle(getString(R.string.is_buy))
+                    .setPositiveButton(getString(R.string.ok),
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    order();
+                                    dismissOrderDialog();
+                                }
+                            })
+                    .setNegativeButton(getString(R.string.cancel),
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dismissOrderDialog();
+                                }
+                            }).create();
+        }
+        orderDialog.show();
+    }
+
+    public void dismissOrderDialog() {
+        if (orderDialog != null && orderDialog.isShowing()) {
+            orderDialog.dismiss();
+        }
     }
 }

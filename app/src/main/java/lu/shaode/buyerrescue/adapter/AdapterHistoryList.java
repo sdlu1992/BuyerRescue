@@ -24,6 +24,7 @@ import lu.shaode.buyerrescue.util.BuyerApplication;
 import lu.shaode.buyerrescue.util.BuyerImageCache;
 import lu.shaode.buyerrescue.util.StringUtil;
 import lu.shaode.buyerrescue.util.ViewHolder;
+import lu.shaode.netsupport.ApiConfig;
 
 /**
  * Created by sdlu on 15/4/12.
@@ -67,7 +68,7 @@ public class AdapterHistoryList extends BaseAdapter{
 
         NetworkImageView imageView = ViewHolder.get(convertView, R.id.item_history_image);
         ImageLoader loader = new ImageLoader(BuyerApplication.queue, BuyerImageCache.getInstance());
-        imageView.setImageUrl("https://www.baidu.com/img/bdlogo.png", loader);
+        imageView.setDefaultImageResId(R.drawable.no_pic);
         TextView tvTitle = ViewHolder.get(convertView, R.id.item_history_title);
         TextView tvCount = ViewHolder.get(convertView, R.id.item_history_count);
         TextView tvPrice = ViewHolder.get(convertView, R.id.item_history_price);
@@ -77,6 +78,7 @@ public class AdapterHistoryList extends BaseAdapter{
         Button btRefund = ViewHolder.get(convertView, R.id.item_history_bt_refund);
 
         ContentHistoryList.History history = getItem(position);
+        imageView.setImageUrl(history.good.imageUrlTitle, loader);
         tvTitle.setText(history.good.name);
         tvPrice.setText(StringUtil.getMoneyString(history.good.price) + context.getString(R.string.money_suffix));
         tvCount.setText("x "+history.count);

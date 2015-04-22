@@ -1,6 +1,7 @@
 package lu.shaode.buyerrescue.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -66,14 +68,6 @@ public class FragmentBuyHistoryList extends FragmentParentList implements
         View view = inflater.inflate(getLayoutContent(), container, false);
         refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.frag_history_refresh);
         refreshLayout.setOnRefreshListener(this);
-        refreshLayout.post(new Runnable() {
-
-            @Override
-            public void run() {
-                refreshLayout.setRefreshing(true);
-                onRefresh();
-            }
-        });
         return view;
     }
 
@@ -85,6 +79,14 @@ public class FragmentBuyHistoryList extends FragmentParentList implements
     @Override
     public void onResume() {
         super.onResume();
+        refreshLayout.post(new Runnable() {
+
+            @Override
+            public void run() {
+                refreshLayout.setRefreshing(true);
+                onRefresh();
+            }
+        });
     }
 
     @Override
@@ -113,10 +115,11 @@ public class FragmentBuyHistoryList extends FragmentParentList implements
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-
-        if (null != mListener) {
-            mListener.onFragmentInteraction(ContentGoods.ITEMS.get(position).id);
-        }
+        Log.e(TAG + " sdlu", "position= " + position);
+        Intent intent = new Intent(getActivity(), ActOrderDetail.class);
+        intent.putExtra("order_id", ContentHistoryList.ITEMS.get(position).order_id);
+        Log.e(TAG + " sdlu", "ContentHistoryList.ITEMS.get(position).order_id= " + ContentHistoryList.ITEMS.get(position).order_id);
+        startActivity(intent);
     }
 
     public void getHistoryList(){
@@ -144,7 +147,6 @@ public class FragmentBuyHistoryList extends FragmentParentList implements
                                 ContentGoods.Good good = new ContentGoods.Good(goodJsonObject);
                                 good.setStore(store);
                                 ContentHistoryList.History his = new ContentHistoryList.History(foo);
-                                his.setStore(store);
                                 his.setGood(good);
                                 ContentHistoryList.ITEMS.add(his);
 

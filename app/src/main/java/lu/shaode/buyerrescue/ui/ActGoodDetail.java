@@ -20,8 +20,10 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -113,25 +115,11 @@ public class ActGoodDetail extends ActParent implements ViewPager.OnPageChangeLi
                     JSONObject jsonGood = jsonObject.getJSONObject("good");
                     JSONObject jsonSolder = jsonObject.getJSONObject("solder");
                     JSONObject jsonStore = jsonObject.getJSONObject("store");
-                    solder = new ContentSolder.Solder(
-                            jsonSolder.getString("id"),
-                            jsonSolder.getString("phone"),
-                            jsonSolder.getString("name"),
-                            jsonSolder.getString("email"));
-                    store = new ContentStore.Store(
-                            jsonStore.getString("id"),
-                            jsonStore.getString("name"),
-                            jsonStore.getString("credit"),
-                            solder);
-                    good = new ContentGoods.Good(
-                            jsonGood.getString("id"),
-                            jsonGood.getString("des"),
-                            jsonGood.getString("name"),
-                            jsonGood.getString("price"),
-                            store,
-                            jsonGood.getString("count"),
-                            jsonGood.getString("category")
-                    );
+                    solder = new ContentSolder.Solder(jsonSolder);
+                    store = new ContentStore.Store(jsonStore);
+                    store.setSolder(solder);
+                    good = new ContentGoods.Good(jsonGood);
+                    good.setStore(store);
                     tvTitle.setText(good.name);
                     tvPrice.setText(StringUtil.getMoneyString(good.price) + " 元");
                     tvCount.setText("已售出" + good.count + "件");
@@ -144,6 +132,7 @@ public class ActGoodDetail extends ActParent implements ViewPager.OnPageChangeLi
                     tvSolderName.setText(store.name);
                     tvSolderCredit.setText("信誉: " + store.credit);
                     tvSolderPhone.setText("手机号: " + solder.phone);
+                    initViewPager();
                 } catch(Exception e){
                     e.printStackTrace();
                 }
@@ -158,7 +147,6 @@ public class ActGoodDetail extends ActParent implements ViewPager.OnPageChangeLi
 
             }
         });
-        initViewPager();
 
     }
 
@@ -207,15 +195,29 @@ public class ActGoodDetail extends ActParent implements ViewPager.OnPageChangeLi
         mGood.put("id", good.id);
         mGood.put("count", String.valueOf(dialogNumberPicker.npCount.getValue()));
         JSONObject jGood = new JSONObject(mGood);
-        JSONArray jsonArray = new JSONArray();
+        final JSONArray jsonArray = new JSONArray();
         jsonArray.put(jGood);
         Log.e(TAG + " sdlu", "jsonArray.toString()= " + jsonArray.toString());
         BizManager.getInstance(ActGoodDetail.this).addOrder(jsonArray, new ApiListener() {
                     @Override
                     public void success(JSONObject jsonObject) {
                         Log.e(TAG + " sdlu", "jsonObject.toString()= " + jsonObject.toString());
+                        try {
+                            int response = jsonObject.getInt("response");
+                            switch (response){
+                                case 1:
+                                    String orderId = jsonObject.getString("order_id");
+                                    Intent intent = new Intent(ActGoodDetail.this, ActOrderDetail.class);
+                                    intent.putExtra("order_id", orderId);
+                                    startActivity(intent);
+                                    dismissPickerDialog();
+                                    break;
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
                         dismissDialogLoading();
-                        dismissPickerDialog();
                     }
 
                     @Override
@@ -315,8 +317,14 @@ public class ActGoodDetail extends ActParent implements ViewPager.OnPageChangeLi
     }
 
     public void initViewPager(){
-        //载入图片资源ID
-        imgUrlArray = new String[]{"https://www.baidu.com/img/bdlogo.png", "http://images.csdn.net/20150413/201504101030411793.jpg"};
+        ArrayList<String> arrays = (ArrayList<String>)(good.imageUrlOther.clone());
+        if (!StringUtil.isNullOrEmpty(good.imageUrlTitle)){
+            arrays.add(0, good.imageUrlTitle);
+        }
+        if (imgUrlArray.length == 0){
+            imgUrlArray = new String[]{"baidu.com"};
+        }
+        imgUrlArray = (String[])arrays.toArray();
 
         //将点点加入到ViewGroup中
         tips = new ImageView[imgUrlArray.length];
@@ -342,6 +350,7 @@ public class ActGoodDetail extends ActParent implements ViewPager.OnPageChangeLi
         mImageViews = new NetworkImageView[imgUrlArray.length];
         for(int i=0; i<mImageViews.length; i++) {
             NetworkImageView imageView = new NetworkImageView(this);
+            imageView.setDefaultImageResId(R.drawable.no_pic);
             mImageViews[i] = imageView;
             ImageLoader loader = new ImageLoader(BuyerApplication.queue, BuyerImageCache.getInstance());
             imageView.setImageUrl(imgUrlArray[i], loader);

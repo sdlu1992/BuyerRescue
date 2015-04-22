@@ -24,6 +24,7 @@ import lu.shaode.buyerrescue.util.BuyerApplication;
 import lu.shaode.buyerrescue.util.BuyerImageCache;
 import lu.shaode.buyerrescue.util.StringUtil;
 import lu.shaode.buyerrescue.util.ViewHolder;
+import lu.shaode.netsupport.ApiConfig;
 
 /**
  * Created by sdlu on 15/4/12.
@@ -88,6 +89,7 @@ public class AdapterWishList extends BaseAdapter{
         tvPrice.setText(StringUtil.getMoneyString(wish.good.price) + " 元");
         checkBox.setChecked(wish.isCheck());
         checkBox.setOnCheckedChangeListener(new OnCheckBoxListener(position));
+        imageView.setImageUrl(wish.good.imageUrlTitle, loader);
         return convertView;
     }
 
