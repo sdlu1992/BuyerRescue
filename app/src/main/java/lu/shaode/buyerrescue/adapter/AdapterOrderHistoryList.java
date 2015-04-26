@@ -62,7 +62,8 @@ public class AdapterOrderHistoryList extends BaseAdapter{
 
         NetworkImageView imageView = ViewHolder.get(convertView, R.id.item_order_image);
         ImageLoader loader = new ImageLoader(BuyerApplication.queue, BuyerImageCache.getInstance());
-        imageView.setDefaultImageResId(R.drawable.no_pic);
+        imageView.setDefaultImageResId(R.drawable.pic_loading);
+        imageView.setErrorImageResId(R.drawable.no_pic);
         TextView tvTitle = ViewHolder.get(convertView, R.id.item_order_title);
         TextView tvCount = ViewHolder.get(convertView, R.id.item_order_count);
         TextView tvPrice = ViewHolder.get(convertView, R.id.item_order_price);
@@ -70,7 +71,7 @@ public class AdapterOrderHistoryList extends BaseAdapter{
         TextView tvStorePhone = ViewHolder.get(convertView, R.id.item_order_store_phone);
 
         ContentHistoryList.History history = getItem(position);
-        imageView.setImageUrl(ApiConfig._DOMAIN_ROOT + history.good.imageUrlTitle, loader);
+        imageView.setImageUrl(history.good.imageUrlTitle, loader);
         tvTitle.setText(history.good.name);
         tvPrice.setText(StringUtil.getMoneyString(history.good.price) + context.getString(R.string.money_suffix));
         tvCount.setText("x "+history.count);

@@ -81,7 +81,7 @@ public class ActCategory extends ActParent
         // 新建一个集合类，用于存放多条数据
         ArrayList<HashMap<String, Object>> list = new ArrayList<>();
         try {
-            HashMap<String, Object> map = null;
+            HashMap<String, Object> map;
             Iterator<String> keys = jsonObject.keys();
             for (; keys.hasNext(); ) {
                 map = new HashMap<>();

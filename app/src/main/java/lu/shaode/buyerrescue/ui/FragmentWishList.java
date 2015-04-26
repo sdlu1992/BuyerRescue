@@ -131,9 +131,9 @@ public class FragmentWishList extends FragmentParentList implements AdapterWishL
                     switch (responseCode) {
                         case 1:
                             int length = jsonObject.getInt("len");
+                            ContentWishList.ITEMS.clear();
                             if (length != 0) {
                                 JSONArray wish_list = jsonObject.getJSONArray("wish_list");
-                                ContentWishList.ITEMS.clear();
                                 for (int i = 0; i < wish_list.length(); i++) {
                                     JSONObject foo = wish_list.getJSONObject(i);
                                     JSONObject storeJsonObject = foo.getJSONObject("store");

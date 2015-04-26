@@ -73,6 +73,7 @@
     <string name="pay_success">付款成功！</string>
     <string name="is_buy">确认购买吗？</string>
     <string name="buy_success">购买成功！</string>
+    <string name="is_continue">确认继续吗？</string>
     <string-array name="state_order">
         <item>未付款</item>
         <item>已付款</item>
@@ -83,6 +84,16 @@
         <item>已退款</item>
         <item>已关闭</item>
     </string-array>
-    <string name="title_activity_act_order_detail">ActOrderDetail</string>
+    <string-array name="state_will">
+        <item>现在付款</item>
+        <item>已付款</item>
+        <item>现在评价</item>
+        <item>现在评价</item>
+        <item>交易完成</item>
+        <item>退款中</item>
+        <item>已退款</item>
+        <item>已关闭</item>
+    </string-array>
+    <string name="title_activity_act_order_detail">订单详情</string>
 
 </resources>

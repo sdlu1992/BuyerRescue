@@ -7,9 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
@@ -19,12 +16,10 @@ import java.util.List;
 
 import lu.shaode.buyerrescue.R;
 import lu.shaode.buyerrescue.ui.dummy.ContentHistoryList;
-import lu.shaode.buyerrescue.ui.dummy.ContentWishList;
 import lu.shaode.buyerrescue.util.BuyerApplication;
 import lu.shaode.buyerrescue.util.BuyerImageCache;
 import lu.shaode.buyerrescue.util.StringUtil;
 import lu.shaode.buyerrescue.util.ViewHolder;
-import lu.shaode.netsupport.ApiConfig;
 
 /**
  * Created by sdlu on 15/4/12.
@@ -34,9 +29,9 @@ public class AdapterHistoryList extends BaseAdapter{
     private final String TAG = ((Object) this).getClass().getSimpleName();
     Context context;
     List<ContentHistoryList.History> list;
-    private OnCountChange mListener;
+    private OnItemButtonClick mListener;
 
-    public AdapterHistoryList(Context context, List<ContentHistoryList.History> list, OnCountChange mListener) {
+    public AdapterHistoryList(Context context, List<ContentHistoryList.History> list, OnItemButtonClick mListener) {
         this.context = context;
         this.list = list;
         this.mListener = mListener;
@@ -68,7 +63,8 @@ public class AdapterHistoryList extends BaseAdapter{
 
         NetworkImageView imageView = ViewHolder.get(convertView, R.id.item_history_image);
         ImageLoader loader = new ImageLoader(BuyerApplication.queue, BuyerImageCache.getInstance());
-        imageView.setDefaultImageResId(R.drawable.no_pic);
+        imageView.setDefaultImageResId(R.drawable.pic_loading);
+        imageView.setErrorImageResId(R.drawable.no_pic);
         TextView tvTitle = ViewHolder.get(convertView, R.id.item_history_title);
         TextView tvCount = ViewHolder.get(convertView, R.id.item_history_count);
         TextView tvPrice = ViewHolder.get(convertView, R.id.item_history_price);
@@ -106,9 +102,27 @@ public class AdapterHistoryList extends BaseAdapter{
                 break;
             default:
         }
+        button.setOnClickListener(new OnButtonClickListener(history, position));
         return convertView;
     }
 
-    public interface OnCountChange{
+    class OnButtonClickListener implements View.OnClickListener{
+
+        ContentHistoryList.History history;
+        int position;
+
+        OnButtonClickListener(ContentHistoryList.History history, int position) {
+            this.history = history;
+            this.position = position;
+        }
+
+        @Override
+        public void onClick(View v) {
+            mListener.onButtonClick(history, position);
+        }
+    }
+
+    public interface OnItemButtonClick {
+        public void onButtonClick(ContentHistoryList.History history, int position);
     }
 }

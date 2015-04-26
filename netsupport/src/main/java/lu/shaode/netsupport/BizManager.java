@@ -114,14 +114,21 @@ public class BizManager {
         post(ApiConfig._GET_ORDER, params, listener);
     }
 
-    public void pay(String orderId, final  ApiListener listener){
+    public void pay(String orderId, String historyId, final  ApiListener listener){
         Map<String, String> params = new HashMap<>();
         params.put("order_id", orderId);
+        params.put("history_id", historyId);
         post(ApiConfig._PAY, params, listener);
     }
 
-    public void post(String url, Map<String, String> params, final ApiListener listener){
+    public void takeGoods(String orderId, String historyId, final  ApiListener listener){
+        Map<String, String> params = new HashMap<>();
+        params.put("order_id", orderId);
+        params.put("history_id", historyId);
+        post(ApiConfig._TAKE_GOODS, params, listener);
+    }
 
+    public void post(String url, Map<String, String> params, final ApiListener listener){
 
         params.put("platform", "android");
         params.put("token", AppConfigCache.getCacheConfigString(context, "token"));

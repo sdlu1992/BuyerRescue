@@ -46,7 +46,8 @@ public class ActOrderDetail extends ActParent implements View.OnClickListener {
     ContentOrderList.Order order;
     ContentSolder.Solder buyer;
 
-    AlertDialog buyDialog;
+    AlertDialog okDialog;
+    int state = Integer.MAX_VALUE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,7 +150,7 @@ public class ActOrderDetail extends ActParent implements View.OnClickListener {
 
     public void pay() {
         showDialogLoading();
-        BizManager.getInstance(this).pay(order.id, new ApiListener() {
+        BizManager.getInstance(this).pay(order.id, "", new ApiListener() {
             @Override
             public void success(JSONObject jsonObject) {
                 Log.e(TAG + " sdlu", "jsonObject.toString()= " + jsonObject.toString());
@@ -181,9 +182,11 @@ public class ActOrderDetail extends ActParent implements View.OnClickListener {
         ViewUtil.setListViewHeightBasedOnChildren(listHistory);
         tvState.setText(getResources().getStringArray(R.array.state_order)[order.getHistories().get(0).state]);
         tvAddress.setText(buyer.address);
-        tvDate.setText(getString(R.string.order_date_prefix) + order.date.substring(0, 15));
+        tvDate.setText(getString(R.string.order_date_prefix) + order.date.substring(0, 19));
         tvId.setText(getString(R.string.order_id_prefix) + order.id);
         tvBuyer.setText(getString(R.string.order_buyer_prefix) + buyer.name);
+        minState();
+        btPay.setText(getResources().getStringArray(R.array.state_will)[state]);
         setTotalPrice();
     }
 
@@ -196,31 +199,77 @@ public class ActOrderDetail extends ActParent implements View.OnClickListener {
     }
 
     public void showBuyDialog() {
-        if (buyDialog == null) {
-            buyDialog = new AlertDialog.Builder(this)
-                    .setTitle(getString(R.string.is_pay))
-                    .setPositiveButton(getString(R.string.ok),
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    pay();
-                                    dismissBuyDialog();
+        okDialog = new AlertDialog.Builder(this)
+                .setTitle(getResources().getStringArray(R.array.state_will)[state])
+                .setMessage(getString(R.string.is_continue))
+                .setPositiveButton(getString(R.string.ok),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                showDialogLoading();
+                                Log.e(TAG + " sdlu", "order= " + order.id);
+                                switch (state) {
+                                    case 0:
+                                        BizManager.getInstance(ActOrderDetail.this).pay(order.id, "", new BizApiListener());
+                                        break;
+                                    case 2:
+                                        BizManager.getInstance(ActOrderDetail.this).takeGoods(order.id, "", new BizApiListener());
+                                        break;
+                                    case 3:
+                                        //TODO:appraise
+                                        BizManager.getInstance(ActOrderDetail.this).pay(order.id, "", new BizApiListener());
+                                        break;
                                 }
-                            })
-                    .setNegativeButton(getString(R.string.cancel),
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dismissBuyDialog();
-                                }
-                            }).create();
-        }
-        buyDialog.show();
+                            }
+                        })
+                .setNegativeButton(getString(R.string.cancel),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dismissDialogLoading();
+                            }
+                        }).create();
+        okDialog.show();
     }
 
     public void dismissBuyDialog() {
-        if (buyDialog != null && buyDialog.isShowing()) {
-            buyDialog.dismiss();
+        if (okDialog != null && okDialog.isShowing()) {
+            okDialog.dismiss();
+        }
+    }
+
+    public int minState(){
+        state = Integer.MAX_VALUE;
+        for (ContentHistoryList.History history : order.histories){
+            state = history.state > state ? state : history.state;
+        }
+        return state;
+    }
+
+    class BizApiListener implements lu.shaode.netsupport.listener.ApiListener {
+
+        @Override
+        public void success(JSONObject jsonObject) {
+            try {
+                int responseCode = jsonObject.getInt("response");
+                switch (responseCode) {
+                    case 1:
+                        showToastMessage("成功");
+                        getOrder();
+                        break;
+                    default:
+                        showToastMessage(jsonObject.getString("error_msg"));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                showToastMessage(e.toString());
+            }
+            dismissDialogLoading();
+        }
+
+        @Override
+        public void error(String string) {
+            dismissDialogLoading();
         }
     }
 }

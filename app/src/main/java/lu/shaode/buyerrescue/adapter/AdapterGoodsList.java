@@ -61,7 +61,8 @@ public class AdapterGoodsList extends BaseAdapter{
 
         NetworkImageView imageView = ViewHolder.get(convertView, R.id.item_goods_image);
         ImageLoader loader = new ImageLoader(BuyerApplication.queue, BuyerImageCache.getInstance());
-        imageView.setDefaultImageResId(R.drawable.no_pic);
+        imageView.setDefaultImageResId(R.drawable.pic_loading);
+        imageView.setErrorImageResId(R.drawable.no_pic);
         TextView tvTitle = ViewHolder.get(convertView, R.id.item_goods_title);
         TextView tvCount = ViewHolder.get(convertView, R.id.item_goods_count);
         TextView tvPrice = ViewHolder.get(convertView, R.id.item_goods_price);

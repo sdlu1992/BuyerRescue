@@ -17,9 +17,9 @@ import lu.shaode.netsupport.ApiConfig;
  */
 public class ContentGoods {
 
-    public static List<Good> ITEMS = new ArrayList<Good>();
+    public static List<Good> ITEMS = new ArrayList<>();
 
-    public static Map<String, Good> ITEM_MAP = new HashMap<String, Good>();
+    public static Map<String, Good> ITEM_MAP = new HashMap<>();
 
     private static void addItem(Good item) {
         ITEMS.add(item);
@@ -55,7 +55,8 @@ public class ContentGoods {
                 this.name = jsonObject.getString("name");
                 this.price = jsonObject.getString("price");
                 this.category = jsonObject.getString("category");
-                this.imageUrlTitle= jsonObject.getString("image_url_title");
+                this.imageUrlTitle= ApiConfig._DOMAIN_ROOT + jsonObject.getString("image_url_title");
+                imageUrlOther = new ArrayList<>();
                 for (int i = 1; i<5; i++){
                     String image = jsonObject.getString("image"+i);
                     if (!image.equals("")){

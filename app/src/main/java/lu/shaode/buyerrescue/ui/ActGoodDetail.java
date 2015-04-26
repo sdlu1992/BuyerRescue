@@ -104,7 +104,7 @@ public class ActGoodDetail extends ActParent implements ViewPager.OnPageChangeLi
         btWishAdd.setOnClickListener(this);
         btBuy.setOnClickListener(this);
 
-        String good_id = getIntent().getStringExtra("good_id");
+        final String good_id = getIntent().getStringExtra("good_id");
         Log.e(TAG + " sdlu", "good_id= " + good_id);
 
         showDialogLoading();
@@ -120,6 +120,7 @@ public class ActGoodDetail extends ActParent implements ViewPager.OnPageChangeLi
                     store.setSolder(solder);
                     good = new ContentGoods.Good(jsonGood);
                     good.setStore(store);
+                    good.setCount(jsonGood.getString("count"));
                     tvTitle.setText(good.name);
                     tvPrice.setText(StringUtil.getMoneyString(good.price) + " 元");
                     tvCount.setText("已售出" + good.count + "件");
@@ -159,16 +160,7 @@ public class ActGoodDetail extends ActParent implements ViewPager.OnPageChangeLi
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -304,7 +296,7 @@ public class ActGoodDetail extends ActParent implements ViewPager.OnPageChangeLi
 
     /**
      * 设置选中的tip的背景
-     * @param selectItems
+     * @param selectItems position
      */
     private void setImageBackground(int selectItems){
         for(int i=0; i<tips.length; i++){
@@ -321,10 +313,10 @@ public class ActGoodDetail extends ActParent implements ViewPager.OnPageChangeLi
         if (!StringUtil.isNullOrEmpty(good.imageUrlTitle)){
             arrays.add(0, good.imageUrlTitle);
         }
-        if (imgUrlArray.length == 0){
+        if (arrays.size() == 0){
             imgUrlArray = new String[]{"baidu.com"};
         }
-        imgUrlArray = (String[])arrays.toArray();
+        imgUrlArray = arrays.toArray(new String[arrays.size()]);
 
         //将点点加入到ViewGroup中
         tips = new ImageView[imgUrlArray.length];
@@ -350,7 +342,8 @@ public class ActGoodDetail extends ActParent implements ViewPager.OnPageChangeLi
         mImageViews = new NetworkImageView[imgUrlArray.length];
         for(int i=0; i<mImageViews.length; i++) {
             NetworkImageView imageView = new NetworkImageView(this);
-            imageView.setDefaultImageResId(R.drawable.no_pic);
+            imageView.setErrorImageResId(R.drawable.no_pic);
+            imageView.setDefaultImageResId(R.drawable.pic_loading);
             mImageViews[i] = imageView;
             ImageLoader loader = new ImageLoader(BuyerApplication.queue, BuyerImageCache.getInstance());
             imageView.setImageUrl(imgUrlArray[i], loader);

@@ -43,4 +43,7 @@ public class ApiConfig {
 
     public static final String _PAY         = _DOMAIN_ROOT
                                             + "payForGoods/";
+
+    public static final String _TAKE_GOODS  = _DOMAIN_ROOT
+                                            + "takeGoods/";
 }

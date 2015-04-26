@@ -68,13 +68,15 @@ public class AdapterWishList extends BaseAdapter{
 
         NetworkImageView imageView = ViewHolder.get(convertView, R.id.item_wish_image);
         ImageLoader loader = new ImageLoader(BuyerApplication.queue, BuyerImageCache.getInstance());
-        imageView.setImageUrl("https://www.baidu.com/img/bdlogo.png", loader);
+        imageView.setErrorImageResId(R.drawable.no_pic);
+        imageView.setDefaultImageResId(R.drawable.pic_loading);
         TextView tvTitle = ViewHolder.get(convertView, R.id.item_wish_title);
         NumberPicker npCount = ViewHolder.get(convertView, R.id.item_wish_count);
         TextView tvPrice = ViewHolder.get(convertView, R.id.item_wish_price);
         CheckBox checkBox = ViewHolder.get(convertView, R.id.item_wish_check);
 
         ContentWishList.Wish wish = getItem(position);
+        imageView.setImageUrl(wish.good.imageUrlTitle, loader);
         tvTitle.setText(wish.good.name);
 //        resizeNumberPicker(npCount);
         // 显示气泡
