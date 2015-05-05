@@ -188,7 +188,18 @@ public class FragmentBuyHistoryList extends FragmentParentList implements
 
     @Override
     public void onButtonClick(ContentHistoryList.History history, int position) {
+        if(history.state == 3){
+            Intent intent = new Intent(getActivity(), ActAppraise.class);
+            intent.putExtra("history_id", history.id);
+            startActivity(intent);
+            return;
+        }
         showDialog(history);
+    }
+
+    @Override
+    public void onRefundButtonClick(ContentHistoryList.History history, int position) {
+        showRefundDialog(history);
     }
 
     class BizApiListener implements lu.shaode.netsupport.listener.ApiListener {
@@ -235,11 +246,32 @@ public class FragmentBuyHistoryList extends FragmentParentList implements
                                     case 2:
                                         BizManager.getInstance(getActivity()).takeGoods(history.order_id, history.id, new BizApiListener());
                                         break;
-                                    case 3:
-                                        //TODO:appraise
-                                        BizManager.getInstance(getActivity()).pay(history.order_id, history.id, new BizApiListener());
-                                        break;
                                 }
+                                dismissDialog();
+                            }
+                        })
+                .setNegativeButton(getString(R.string.cancel),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dismissDialog();
+                                dismissDialogLoading();
+                            }
+                        }).create();
+        okDialog.show();
+    }
+
+    public void showRefundDialog(final ContentHistoryList.History history) {
+        okDialog = new AlertDialog.Builder(getActivity())
+                .setTitle(getString(R.string.apply_refund))
+                .setMessage(getString(R.string.is_continue))
+                .setPositiveButton(getString(R.string.ok),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                showDialogLoading();
+                                Log.e(TAG + " sdlu", "history= " + history.id);
+                                BizManager.getInstance(getActivity()).applyRefund(history.order_id, history.id, new BizApiListener());
                                 dismissDialog();
                             }
                         })

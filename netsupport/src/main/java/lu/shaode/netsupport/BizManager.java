@@ -128,8 +128,29 @@ public class BizManager {
         post(ApiConfig._TAKE_GOODS, params, listener);
     }
 
-    public void post(String url, Map<String, String> params, final ApiListener listener){
+    public void applyRefund(String orderId, String historyId, final  ApiListener listener){
+        Map<String, String> params = new HashMap<>();
+        params.put("order_id", orderId);
+        params.put("history_id", historyId);
+        post(ApiConfig._APPLY_REFUND, params, listener);
+    }
 
+    public void appraise(String orderId, String historyId,int type, String content, final  ApiListener listener){
+        Map<String, String> params = new HashMap<>();
+        params.put("history_id", historyId);
+        params.put("order_id", orderId);
+        params.put("type", String.valueOf(type));
+        params.put("content", content);
+        post(ApiConfig._APPRAISE, params, listener);
+    }
+
+    public void getAppraiseList(String goodId, final  ApiListener listener){
+        Map<String, String> params = new HashMap<>();
+        params.put("good_id", goodId);
+        post(ApiConfig._APPRAISE_LIST, params, listener);
+    }
+
+    public void post(String url, Map<String, String> params, final ApiListener listener){
         params.put("platform", "android");
         params.put("token", AppConfigCache.getCacheConfigString(context, "token"));
         Request<JSONObject> request = mQueue.add(new JsonObjectRequest(Request.Method.POST, url,

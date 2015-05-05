@@ -304,4 +304,12 @@ public class FragmentNavigationDrawer extends Fragment {
         stringArrayAdapter.addAll(items);
         stringArrayAdapter.notifyDataSetChanged();
     }
+
+    public void openDrawer(){
+        mDrawerLayout.openDrawer(mFragmentContainerView);
+    }
+
+    public void closeDrawer(){
+        mDrawerLayout.closeDrawer(mFragmentContainerView);
+    }
 }

@@ -50,6 +50,18 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/item_history_date"
+        android:textSize="14dip"
+        android:text="hello"
+        android:textColor="@color/grey_light"
+        android:layout_marginRight="10dip"
+        android:layout_alignLeft="@+id/item_history_title"
+        android:layout_alignBottom="@+id/item_history_image"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/item_history_state"
         android:text="未付款"
         android:textSize="17dip"
@@ -71,42 +83,46 @@
         android:layout_marginBottom="5dip"
         />
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_below="@+id/item_history_line1"
         android:layout_marginBottom="5dip"
         android:layout_width="fill_parent"
+        android:orientation="horizontal"
+        android:gravity="center"
         android:layout_height="wrap_content">
 
-        <Button
-            style="@style/ButtonStyleOrangeStroke"
-            android:id="@+id/item_history_button"
-            android:text="@string/pay_now"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="5dip"
-            android:focusable="false"
-            android:visibility="gone"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/item_history_price_total"
+            android:layout_marginLeft="5dip"
+            android:text="145"
+            android:textSize="17dip"
+            android:textColor="@color/grey_deep"
             />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
         <Button
             style="@style/ButtonStyleGreyStroke"
             android:id="@+id/item_history_bt_refund"
             android:text="@string/apply_refund"
             android:layout_marginRight="5dip"
-            android:layout_toLeftOf="@+id/item_history_button"
+            android:layout_gravity="right"
             android:focusable="false"
             android:visibility="gone"
             />
+        <Button
+            style="@style/ButtonStyleOrangeStroke"
+            android:id="@+id/item_history_button"
+            android:text="@string/pay_now"
+            android:layout_gravity="right"
+            android:layout_marginRight="5dip"
+            android:focusable="false"
+            android:visibility="gone"
             />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/item_history_price_total"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="5dip"
-            android:text="145"
-            android:textSize="17dip"
-            android:textColor="@color/grey_deep"
-            />
-        </RelativeLayout>
+        </LinearLayout>
 </RelativeLayout>

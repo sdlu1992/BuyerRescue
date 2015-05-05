@@ -43,6 +43,14 @@
             android:name=".ui.ActOrderDetail"
             android:label="@string/title_activity_act_order_detail" >
         </activity>
+        <activity
+            android:name=".ui.ActAppraise"
+            android:label="@string/title_activity_act_appraise" >
+        </activity>
+        <activity
+            android:name=".ui.ActAppraiseList"
+            android:label="@string/title_activity_act_appraise_list" >
+        </activity>
     </application>
 
 </manifest>

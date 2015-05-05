@@ -70,6 +70,7 @@ public class AdapterHistoryList extends BaseAdapter{
         TextView tvPrice = ViewHolder.get(convertView, R.id.item_history_price);
         TextView tvTotal = ViewHolder.get(convertView, R.id.item_history_price_total);
         TextView tvState = ViewHolder.get(convertView, R.id.item_history_state);
+        TextView tvDate = ViewHolder.get(convertView, R.id.item_history_date);
         Button button = ViewHolder.get(convertView, R.id.item_history_button);
         Button btRefund = ViewHolder.get(convertView, R.id.item_history_bt_refund);
 
@@ -78,6 +79,7 @@ public class AdapterHistoryList extends BaseAdapter{
         tvTitle.setText(history.good.name);
         tvPrice.setText(StringUtil.getMoneyString(history.good.price) + context.getString(R.string.money_suffix));
         tvCount.setText("x "+history.count);
+        tvDate.setText(context.getString(R.string.order_date_prefix) + "\n" + history.date.substring(0, 19));
         float total = history.count * Float.parseFloat(history.good.price);
         tvTotal.setText(context.getString(R.string.total_price_prefix)
                 + StringUtil.getMoneyString(total)
@@ -87,22 +89,34 @@ public class AdapterHistoryList extends BaseAdapter{
             case 0:
                 button.setVisibility(View.VISIBLE);
                 button.setText(context.getString(R.string.pay_now));
+                btRefund.setVisibility(View.GONE);
                 break;
             case 2:
                 button.setVisibility(View.VISIBLE);
                 button.setText(context.getString(R.string.affirm_take_good));
+                btRefund.setVisibility(View.GONE);
                 break;
             case 3:
                 button.setVisibility(View.VISIBLE);
                 button.setText(context.getString(R.string.appraise_order));
-                //its no break on purpose
+                break;
             case 1:
+                btRefund.setVisibility(View.VISIBLE);
+                button.setVisibility(View.GONE);
+                break;
             case 4:
                 btRefund.setVisibility(View.VISIBLE);
+                button.setVisibility(View.GONE);
                 break;
+            case 5:
+                btRefund.setVisibility(View.GONE);
+                button.setVisibility(View.GONE);
             default:
+                btRefund.setVisibility(View.GONE);
+                break;
         }
         button.setOnClickListener(new OnButtonClickListener(history, position));
+        btRefund.setOnClickListener(new OnButtonClickListener(history, position));
         return convertView;
     }
 
@@ -118,11 +132,19 @@ public class AdapterHistoryList extends BaseAdapter{
 
         @Override
         public void onClick(View v) {
-            mListener.onButtonClick(history, position);
+            switch (v.getId()){
+                case R.id.item_history_button:
+                    mListener.onButtonClick(history, position);
+                    break;
+                case R.id.item_history_bt_refund:
+                    mListener.onRefundButtonClick(history, position);
+                    break;
+            }
         }
     }
 
     public interface OnItemButtonClick {
         public void onButtonClick(ContentHistoryList.History history, int position);
+        public void onRefundButtonClick(ContentHistoryList.History history, int position);
     }
 }

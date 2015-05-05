@@ -1,0 +1,57 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="lu.shaode.buyerrescue.ui.FragmentParent">
+
+
+    <LinearLayout
+        android:id="@+id/frag_appraise_bottom"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/frag_appraise_total_good"
+            android:layout_width="wrap_content"
+            android:layout_height="50dip"
+            android:gravity="center|left"
+            android:paddingLeft="10dip"
+            android:layout_weight="1"
+            android:text="@string/appraise_good"
+            android:textColor="@color/orange" />
+        <TextView
+            android:id="@+id/frag_appraise_total_middle"
+            android:layout_width="wrap_content"
+            android:layout_height="50dip"
+            android:layout_weight="1"
+            android:gravity="center|left"
+            android:paddingLeft="10dip"
+            android:text="@string/appraise_middle"
+            android:textColor="@color/black" />
+        <TextView
+            android:id="@+id/frag_appraise_total_bad"
+            android:layout_width="wrap_content"
+            android:layout_height="50dip"
+            android:gravity="center|left"
+            android:paddingLeft="10dip"
+            android:layout_weight="1"
+            android:text="@string/appraise_bad"
+            android:textColor="@color/grey_light" />
+    </LinearLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/frag_appraise_refresh"
+        android:layout_above="@+id/frag_appraise_bottom"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <ListView
+            android:id="@android:id/list"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</RelativeLayout>

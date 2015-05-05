@@ -2,6 +2,7 @@ package lu.shaode.buyerrescue.ui;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -97,6 +98,13 @@ public class ActOrderDetail extends ActParent implements View.OnClickListener {
 
         switch (v.getId()) {
             case R.id.act_order_buy:
+                minState();
+                if (state == 3){
+                    Intent intent = new Intent(this, ActAppraise.class);
+                    intent.putExtra("order_id", order.id);
+                    startActivity(intent);
+                    return;
+                }
                 showBuyDialog();
                 break;
             case R.id.act_order_refund:
@@ -214,10 +222,6 @@ public class ActOrderDetail extends ActParent implements View.OnClickListener {
                                         break;
                                     case 2:
                                         BizManager.getInstance(ActOrderDetail.this).takeGoods(order.id, "", new BizApiListener());
-                                        break;
-                                    case 3:
-                                        //TODO:appraise
-                                        BizManager.getInstance(ActOrderDetail.this).pay(order.id, "", new BizApiListener());
                                         break;
                                 }
                             }

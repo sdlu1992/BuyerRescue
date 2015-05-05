@@ -73,6 +73,7 @@
     <string name="pay_success">付款成功！</string>
     <string name="is_buy">确认购买吗？</string>
     <string name="buy_success">购买成功！</string>
+    <string name="appraise_success">评价成功！</string>
     <string name="is_continue">确认继续吗？</string>
     <string-array name="state_order">
         <item>未付款</item>
@@ -87,13 +88,31 @@
     <string-array name="state_will">
         <item>现在付款</item>
         <item>已付款</item>
-        <item>现在评价</item>
+        <item>确认收货</item>
         <item>现在评价</item>
         <item>交易完成</item>
-        <item>退款中</item>
+        <item>现在退款</item>
         <item>已退款</item>
         <item>已关闭</item>
     </string-array>
+    <string-array name="appraise_type">
+        <item>好评</item>
+        <item>中评</item>
+        <item>差评</item>
+    </string-array>
+
+    <string name="appraise_good">好评</string>
+    <string name="appraise_middle">中评</string>
+    <string name="appraise_bad">差评</string>
+    <string name="appraise_now">现在评价</string>
+    <string name="appraise_type_empty">请选择评价类型</string>
+    <string name="appraise_content_empty">请写点评价吧</string>
+    <string name="no_appraise_content">这个人没写评价</string>
+    <string name="appraise_date_prefix">评价日期：</string>
+
+    <string name="appraise_content_hint">亲，写点什么吧，您的意见对其他朋友帮助很大哦！</string>
     <string name="title_activity_act_order_detail">订单详情</string>
+    <string name="title_activity_act_appraise">ActAppraise</string>
+    <string name="title_activity_act_appraise_list">商品评价</string>
 
 </resources>

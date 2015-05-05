@@ -32,7 +32,8 @@ public class ContentHistoryList {
         public String order_id;
         public int state;
         public boolean isCheck = true;
-        public  String price;
+        public String price;
+        public ContentAppraiseList.Appraise appraise = null;
 
         public History(String id, ContentGoods.Good good, String date, int count, String order_id, int state, String price) {
             this.id = id;
@@ -67,6 +68,14 @@ public class ContentHistoryList {
 
         public boolean isCheck() {
             return isCheck;
+        }
+
+        public ContentAppraiseList.Appraise getAppraise() {
+            return appraise;
+        }
+
+        public void setAppraise(ContentAppraiseList.Appraise appraise) {
+            this.appraise = appraise;
         }
 
         @Override

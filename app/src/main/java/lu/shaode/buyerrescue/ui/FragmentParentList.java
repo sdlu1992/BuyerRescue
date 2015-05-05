@@ -49,8 +49,7 @@ public class FragmentParentList extends ListFragment {
         try {
             mListener = (OnFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
+            e.printStackTrace();
         }
     }
 
@@ -61,7 +60,6 @@ public class FragmentParentList extends ListFragment {
     }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         public void onFragmentInteraction(String String);
     }
 

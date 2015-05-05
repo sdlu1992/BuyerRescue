@@ -51,6 +51,7 @@ public class ActGoodDetail extends ActParent implements ViewPager.OnPageChangeLi
     Button btCollect;
     Button btWishAdd;
     Button btBuy;
+    Button btAppraise;
     ViewPager imagePager;
     ViewGroup imageTips;
     DialogNumberPicker dialogNumberPicker;
@@ -91,6 +92,7 @@ public class ActGoodDetail extends ActParent implements ViewPager.OnPageChangeLi
         btBuy = (Button) findViewById(R.id.act_good_buy);
         btCollect = (Button) findViewById(R.id.act_good_collect);
         btWishAdd = (Button) findViewById(R.id.act_good_wish_add);
+        btAppraise = (Button) findViewById(R.id.act_good_appraise);
         tvCount = (TextView) findViewById(R.id.act_good_count);
         tvTitle = (TextView) findViewById(R.id.act_good_title);
         tvDes = (TextView) findViewById(R.id.act_good_des);
@@ -103,6 +105,7 @@ public class ActGoodDetail extends ActParent implements ViewPager.OnPageChangeLi
         btCollect.setOnClickListener(this);
         btWishAdd.setOnClickListener(this);
         btBuy.setOnClickListener(this);
+        btAppraise.setOnClickListener(this);
 
         final String good_id = getIntent().getStringExtra("good_id");
         Log.e(TAG + " sdlu", "good_id= " + good_id);
@@ -166,9 +169,10 @@ public class ActGoodDetail extends ActParent implements ViewPager.OnPageChangeLi
 
     @Override
     public void onClick(View v) {
+        Intent intent;
         switch (v.getId()){
             case R.id.act_good_solder_phone:
-                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+solder.phone));
+                intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+solder.phone));
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 break;
@@ -177,6 +181,11 @@ public class ActGoodDetail extends ActParent implements ViewPager.OnPageChangeLi
                 break;
             case R.id.act_good_buy:
                 showNumberPickerDialog(getString(R.string.buy_now), new OnBuyOkClickListener());
+                break;
+            case R.id.act_good_appraise:
+                intent = new Intent(this, ActAppraiseList.class);
+                intent.putExtra("good_id", good.id);
+                startActivity(intent);
                 break;
         }
     }

@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -209,5 +210,20 @@ public class ActMain extends ActParent
     public void logout(){
         mNavigationDrawerFragment.notifyItems();
         AppConfigCache.logout(this);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode){
+            case KeyEvent.KEYCODE_BACK:
+                if (mNavigationDrawerFragment.isDrawerOpen()){
+                    mNavigationDrawerFragment.closeDrawer();
+                    return true;
+                } else {
+                    super.onKeyDown(keyCode, event);
+                }
+                break;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
