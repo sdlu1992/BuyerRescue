@@ -150,6 +150,12 @@ public class BizManager {
         post(ApiConfig._APPRAISE_LIST, params, listener);
     }
 
+    public void recharge(String money, final  ApiListener listener){
+        Map<String, String> params = new HashMap<>();
+        params.put("money", money);
+        post(ApiConfig._RECHARGE, params, listener);
+    }
+
     public void post(String url, Map<String, String> params, final ApiListener listener){
         params.put("platform", "android");
         params.put("token", AppConfigCache.getCacheConfigString(context, "token"));

@@ -44,6 +44,10 @@
     <string name="name">姓名</string>
     <string name="phone">手机号</string>
     <string name="email">电子邮箱</string>
+    <string name="rest_money">账户余额</string>
+    <string name="recharge">充值</string>
+    <string name="recharge_hint">请输入要充值的金额</string>
+    <string name="recharge_success">充值成功！</string>
     <string name="title_activity_act_category">类目</string>
     <string name="title_activity_act_goods_list">商品列表</string>
     <string name="logout">登出</string>

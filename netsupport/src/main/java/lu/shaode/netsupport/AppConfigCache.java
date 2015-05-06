@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class AppConfigCache {
 
     private static final String APP_CONFIG = "app_config";
@@ -49,6 +52,19 @@ public class AppConfigCache {
         AppConfigCache.setCacheConfig(ctx, "name", name);
         AppConfigCache.setCacheConfig(ctx, "phone", phone);
         AppConfigCache.setCacheConfig(ctx, "email", email);
+
+    }
+
+    public static void saveLoginInfo(Context ctx, JSONObject info){
+        try {
+            AppConfigCache.setCacheConfig(ctx, "token", info.getString("token"));
+            AppConfigCache.setCacheConfig(ctx, "name", info.getString("name"));
+            AppConfigCache.setCacheConfig(ctx, "phone", info.getString("phone"));
+            AppConfigCache.setCacheConfig(ctx, "email", info.getString("email"));
+            AppConfigCache.setCacheConfig(ctx, "money", info.getString("money"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 

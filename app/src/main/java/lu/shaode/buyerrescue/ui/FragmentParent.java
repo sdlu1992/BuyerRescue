@@ -70,7 +70,7 @@ public class FragmentParent extends Fragment {
 
     public void showDialogWorking() {
         if (mDialog == null) {
-            mDialog = new DialogLoading(getActivity().getApplicationContext());
+            mDialog = new DialogLoading(getActivity());
             mDialog.setCancelable(false);
             mDialog.setCanceledOnTouchOutside(false);
         }

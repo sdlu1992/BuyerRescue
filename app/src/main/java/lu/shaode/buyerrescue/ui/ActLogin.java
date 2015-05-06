@@ -127,9 +127,7 @@ public class ActLogin extends ActParent implements View.OnClickListener{
                     switch (responseCode) {
                         case 1://success
                             JSONObject info = jsonObject.getJSONObject("info");
-                            AppConfigCache.saveLoginInfo(ActLogin.this, jsonObject.getString("token"),
-                                    info.getString("name"), info.getString("phone"),
-                                    info.getString("email"));
+                            AppConfigCache.saveLoginInfo(ActLogin.this, info);
 
                             Toast.makeText(ActLogin.this, getString(R.string.login_success), Toast.LENGTH_SHORT).show();
                             setResult(RESULT_OK);
