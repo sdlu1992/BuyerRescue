@@ -95,6 +95,18 @@ public class ActMain extends ActParent
                             .commit();
                 }
                 break;
+            case 4:
+                if (AppConfigCache.getCacheConfigString(this, "token").equals("")){
+                    Intent intent = new Intent();
+                    intent.setClass(ActMain.this, ActLogin.class);
+                    startActivity(intent);
+                } else {
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.container, FragmentCollectList.newInstance())
+                            .commit();
+                }
+                break;
+
 
         }
     }

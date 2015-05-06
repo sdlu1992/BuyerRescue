@@ -101,11 +101,9 @@ public class FragmentListItem extends FragmentParentList{
                                 for (int i = 0; i < goods.length(); i++){
                                     JSONObject foo = goods.getJSONObject(i);
                                     ContentGoods.Good good = new ContentGoods.Good(foo);
-                                    String count = foo.getString("count");
                                     ContentStore.Store store = new ContentStore.Store(
                                             foo.getJSONObject("store"));
                                     good.setStore(store);
-                                    good.setCount(count);
                                     ContentGoods.ITEMS.add(good);
                                 }
                                 mAdapter.notifyDataSetChanged();

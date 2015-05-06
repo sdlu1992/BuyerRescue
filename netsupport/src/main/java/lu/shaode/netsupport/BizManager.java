@@ -156,6 +156,17 @@ public class BizManager {
         post(ApiConfig._RECHARGE, params, listener);
     }
 
+    public void addCollect(String goodId, final  ApiListener listener){
+        Map<String, String> params = new HashMap<>();
+        params.put("good_id", goodId);
+        post(ApiConfig._COLLECT, params, listener);
+    }
+
+    public void getCollectList(final  ApiListener listener){
+        Map<String, String> params = new HashMap<>();
+        post(ApiConfig._GET_COLLECT_LIST, params, listener);
+    }
+
     public void post(String url, Map<String, String> params, final ApiListener listener){
         params.put("platform", "android");
         params.put("token", AppConfigCache.getCacheConfigString(context, "token"));

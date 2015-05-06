@@ -58,4 +58,10 @@ public class ApiConfig {
 
     public static final String _RECHARGE    = _DOMAIN_ROOT
                                             + "recharge/";
+
+    public static final String _COLLECT     = _DOMAIN_ROOT
+                                            + "collect/";
+
+    public static final String _GET_COLLECT_LIST = _DOMAIN_ROOT
+                                            + "getCollectList/";
 }

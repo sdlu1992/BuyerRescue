@@ -295,6 +295,7 @@ public class FragmentNavigationDrawer extends Fragment {
         array.add(getString(R.string.title_section3));
         array.add(getString(R.string.title_section4));
         array.add(getString(R.string.title_section5));
+        array.add(getString(R.string.title_section6));
         items = (String[])(array.toArray(new String[0]));
         return items;
     }

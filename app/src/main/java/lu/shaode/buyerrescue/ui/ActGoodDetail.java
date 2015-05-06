@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import lu.shaode.buyerrescue.R;
+import lu.shaode.buyerrescue.ui.dummy.ContentCollectList;
 import lu.shaode.buyerrescue.ui.dummy.ContentGoods;
 import lu.shaode.buyerrescue.ui.dummy.ContentSolder;
 import lu.shaode.buyerrescue.ui.dummy.ContentStore;
@@ -124,19 +125,7 @@ public class ActGoodDetail extends ActParent implements ViewPager.OnPageChangeLi
                     good = new ContentGoods.Good(jsonGood);
                     good.setStore(store);
                     good.setCount(jsonGood.getString("count"));
-                    tvTitle.setText(good.name);
-                    tvPrice.setText(StringUtil.getMoneyString(good.price) + " 元");
-                    tvCount.setText("已售出" + good.count + "件");
-                    if (good.describe.equals("")){
-                        tvDes.setText(getString(R.string.good_no_des));
-                    } else {
-                        tvDes.setText(good.describe);
-                    }
-                    tvSolderEmail.setText("Email: " + solder.email);
-                    tvSolderName.setText(store.name);
-                    tvSolderCredit.setText("信誉: " + store.credit);
-                    tvSolderPhone.setText("手机号: " + solder.phone);
-                    initViewPager();
+                    displayGood();
                 } catch(Exception e){
                     e.printStackTrace();
                 }
@@ -152,6 +141,23 @@ public class ActGoodDetail extends ActParent implements ViewPager.OnPageChangeLi
             }
         });
 
+    }
+
+    public void displayGood(){
+        tvTitle.setText(good.name);
+        tvPrice.setText(StringUtil.getMoneyString(good.price) + " 元");
+        tvCount.setText("已售出" + good.count + "件");
+        if (good.describe.equals("")){
+            tvDes.setText(getString(R.string.good_no_des));
+        } else {
+            tvDes.setText(good.describe);
+        }
+        tvSolderEmail.setText("Email: " + solder.email);
+        tvSolderName.setText(store.name);
+        tvSolderCredit.setText("信誉: " + store.credit);
+        tvSolderPhone.setText("手机号: " + solder.phone);
+        btCollect.setText(getString(good.isCollect == 1 ? R.string.collected : R.string.collect));
+        initViewPager();
     }
 
     @Override
@@ -186,6 +192,9 @@ public class ActGoodDetail extends ActParent implements ViewPager.OnPageChangeLi
                 intent = new Intent(this, ActAppraiseList.class);
                 intent.putExtra("good_id", good.id);
                 startActivity(intent);
+                break;
+            case R.id.act_good_collect:
+                collect();
                 break;
         }
     }
@@ -247,6 +256,30 @@ public class ActGoodDetail extends ActParent implements ViewPager.OnPageChangeLi
             public void error(String string) {
                 Log.e(TAG + " sdlu", "string= " + string);
                 dismissDialogLoading();
+            }
+        });
+    }
+
+    public void collect(){
+        showDialogLoading();
+        BizManager.getInstance(this).addCollect(good.id, new ApiListener() {
+            @Override
+            public void success(JSONObject jsonObject) {
+                Log.e(TAG + " sdlu", "jsonObject.toString()= " + jsonObject.toString());
+                try {
+                    int response = jsonObject.getInt("response");
+                    ContentCollectList.Collect collect = new ContentCollectList.Collect(jsonObject.getJSONObject("collect"));
+                    btCollect.setText(getString(collect.isCollect == 1 ? R.string.collected : R.string.collect));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                dismissDialogLoading();
+            }
+
+            @Override
+            public void error(String string) {
+                dismissDialogLoading();
+                showToastMessage(string);
             }
         });
     }

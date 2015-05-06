@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <com.android.volley.toolbox.NetworkImageView
+        android:layout_width="100dip"
+        android:layout_height="100dip"
+        android:id="@+id/item_goods_image"
+        android:layout_margin="3dip"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/item_goods_title"
+        android:layout_toRightOf="@+id/item_goods_image"
+        android:layout_marginLeft="10dip"
+        android:layout_marginTop="10dip"
+        android:textSize="17dip"
+        android:textColor="@color/black"
+        android:text="hello"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/item_goods_count"
+        android:layout_below="@+id/item_goods_title"
+        android:text="10人购买"
+        android:layout_marginTop="10dip"
+        android:textSize="8dip"
+        android:textColor="@color/grey"
+        android:layout_alignLeft="@+id/item_goods_title"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/item_goods_price"
+        android:text="145"
+        android:textSize="20dip"
+        android:textColor="@color/red_light"
+        android:layout_alignBottom="@+id/item_goods_image"
+        android:layout_alignLeft="@+id/item_goods_title"/>
+</RelativeLayout>

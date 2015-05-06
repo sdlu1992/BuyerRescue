@@ -36,6 +36,7 @@ public class ContentGoods {
         public String category;
         public String imageUrlTitle;
         public ArrayList<String> imageUrlOther;
+        public int isCollect;
 
         public Good(String id, String describe, String name, String price,
                     ContentStore.Store store, String count, String category) {
@@ -65,6 +66,17 @@ public class ContentGoods {
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
+            }
+            try {
+                this.isCollect = jsonObject.getInt("isCollect");
+            } catch (JSONException e){
+                this.isCollect = 0;
+            }
+            try{
+                this.count = jsonObject.getString("count");
+            } catch (JSONException e){
+                e.printStackTrace();
+                this.count = "0";
             }
         }
 
