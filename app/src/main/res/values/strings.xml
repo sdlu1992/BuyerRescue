@@ -9,6 +9,9 @@
     <string name="title_section5">个人收藏</string>
     <string name="title_section6">设置</string>
 
+    <string name="home_random_title">随便看看</string>
+    <string name="home_cate_title">你可能喜欢</string>
+    <string name="home_others_title">别人喜欢的</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
@@ -119,5 +122,8 @@
     <string name="title_activity_act_order_detail">订单详情</string>
     <string name="title_activity_act_appraise">ActAppraise</string>
     <string name="title_activity_act_appraise_list">商品评价</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

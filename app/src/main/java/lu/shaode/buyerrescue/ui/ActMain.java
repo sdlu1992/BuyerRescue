@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -24,6 +25,7 @@ public class ActMain extends ActParent
         FragmentParent.OnFragmentInteractionListener,
         FragmentParentList.OnFragmentInteractionListener{
 
+    private final String TAG = ((Object) this).getClass().getSimpleName();
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -60,8 +62,14 @@ public class ActMain extends ActParent
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
+        Log.e(TAG + " sdlu", "position= " + position);
         FragmentManager fragmentManager = getSupportFragmentManager();
         switch (position){
+            case 0:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, FragmentHome.newInstance())
+                        .commit();
+                break;
             case 1:
                 if (AppConfigCache.getCacheConfigString(this, "token").equals("")){
                     Intent intent = new Intent();

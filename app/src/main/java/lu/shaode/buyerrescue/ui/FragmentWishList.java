@@ -61,6 +61,7 @@ public class FragmentWishList extends FragmentParentList implements AdapterWishL
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        getActionBar().setTitle(getString(R.string.title_section3));
         mAdapter = new AdapterWishList(getActivity(), ContentWishList.ITEMS, FragmentWishList.this);
         Log.e(TAG + " sdlu", "ContentWishList.ITEMS.size()= " + ContentWishList.ITEMS.size());
         setListAdapter(mAdapter);

@@ -2,7 +2,6 @@ package lu.shaode.buyerrescue.ui;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -16,15 +15,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import lu.shaode.buyerrescue.R;
 import lu.shaode.buyerrescue.adapter.AdapterCollectList;
-import lu.shaode.buyerrescue.adapter.AdapterWishList;
 import lu.shaode.buyerrescue.ui.dummy.ContentCollectList;
-import lu.shaode.buyerrescue.ui.dummy.ContentGoods;
-import lu.shaode.buyerrescue.ui.dummy.ContentStore;
 import lu.shaode.buyerrescue.ui.dummy.ContentWishList;
 import lu.shaode.netsupport.BizManager;
 import lu.shaode.netsupport.listener.ApiListener;
@@ -56,6 +49,7 @@ public class FragmentCollectList extends FragmentParentList implements SwipeRefr
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        getActionBar().setTitle(getString(R.string.title_section5));
         mAdapter = new AdapterCollectList(getActivity(), ContentCollectList.ITEMS);
         Log.e(TAG + " sdlu", "ContentWishList.ITEMS.size()= " + ContentWishList.ITEMS.size());
         setListAdapter(mAdapter);

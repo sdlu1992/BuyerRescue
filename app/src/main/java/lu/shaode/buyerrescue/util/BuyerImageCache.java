@@ -35,6 +35,11 @@ public class BuyerImageCache implements ImageLoader.ImageCache {
     public void initilize(Context context) {
         memory = new HashMap<String, Bitmap>();
         cacheDir = context.getCacheDir().toString()+File.separator;
+        File file = new File(cacheDir);
+        if (file.exists()){
+            file.mkdirs();
+        }
+        Log.e(TAG + " sdlu", "cacheDir= " + cacheDir);
     }
 
     @Override
@@ -64,9 +69,10 @@ public class BuyerImageCache implements ImageLoader.ImageCache {
                 try {
                     Bitmap temp = memory.get(s);
                     File file = new File(cacheDir + s);
+                    Log.e(TAG + " sdlu", "s= " + s);
                     FileOutputStream os;
                     os = new FileOutputStream(file, false);
-                    temp.compress(Bitmap.CompressFormat.JPEG, 100, os);
+                    temp.compress(Bitmap.CompressFormat.PNG, 80, os);
                     os.flush();
                     os.close();
                 } catch (Exception e) {
@@ -74,8 +80,8 @@ public class BuyerImageCache implements ImageLoader.ImageCache {
                 }
                 memory.clear();
             }
-            // 放入图片到内存
-            memory.put(MD5Util.MD5(url), bitmap);
         }
+        // 放入图片到内存
+        memory.put(MD5Util.MD5(url), bitmap);
     }
 }

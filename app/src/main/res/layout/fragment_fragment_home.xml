@@ -1,0 +1,108 @@
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frag_home_refresh"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="lu.shaode.buyerrescue.ui.FragmentHome">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/MyTextViewStyle"
+            android:text="@string/home_random_title"
+            android:id="@+id/frag_home_tv_random"
+            android:layout_marginLeft="10dip"
+            android:layout_marginTop="10dip"
+            android:layout_marginBottom="5dip"
+            android:textSize="20dip"
+            />
+
+        <HorizontalScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fillViewport="true"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <GridView
+                    android:id="@+id/frag_home_grid_random"
+                    android:layout_width="600dip"
+                    android:columnWidth="100dip"
+                    android:horizontalSpacing="10dip"
+                    android:gravity="center"
+                    android:paddingLeft="10dip"
+                    android:paddingRight="10dip"
+                    android:layout_height="wrap_content" />
+                </LinearLayout>
+        </HorizontalScrollView>
+
+        <TextView
+            style="@style/MyTextViewStyle"
+            android:text="@string/home_cate_title"
+            android:id="@+id/frag_home_tv_cate"
+            android:layout_marginLeft="10dip"
+            android:layout_marginTop="30dip"
+            android:textSize="20dip"
+            android:layout_marginBottom="5dip"
+            />
+        <HorizontalScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fillViewport="true"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <GridView
+                    android:id="@+id/frag_home_grid_cate"
+                    android:layout_width="600dip"
+                    android:columnWidth="100dip"
+                    android:horizontalSpacing="10dip"
+                    android:gravity="center"
+                    android:paddingLeft="10dip"
+                    android:paddingRight="10dip"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <TextView
+            style="@style/MyTextViewStyle"
+            android:text="@string/home_others_title"
+            android:id="@+id/frag_home_tv_others"
+            android:layout_marginLeft="10dip"
+            android:layout_marginTop="30dip"
+            android:textSize="20dip"
+            android:layout_marginBottom="5dip"
+            />
+        <HorizontalScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fillViewport="true"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <GridView
+                    android:id="@+id/frag_home_grid_others"
+                    android:layout_width="600dip"
+                    android:columnWidth="100dip"
+                    android:horizontalSpacing="10dip"
+                    android:gravity="center"
+                    android:paddingLeft="10dip"
+                    android:paddingRight="10dip"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </HorizontalScrollView>
+    </LinearLayout>
+    </ScrollView>
+</android.support.v4.widget.SwipeRefreshLayout>

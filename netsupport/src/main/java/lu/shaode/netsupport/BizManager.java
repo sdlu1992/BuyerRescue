@@ -167,6 +167,11 @@ public class BizManager {
         post(ApiConfig._GET_COLLECT_LIST, params, listener);
     }
 
+    public void getHome(final  ApiListener listener){
+        Map<String, String> params = new HashMap<>();
+        post(ApiConfig._GET_HOME, params, listener);
+    }
+
     public void post(String url, Map<String, String> params, final ApiListener listener){
         params.put("platform", "android");
         params.put("token", AppConfigCache.getCacheConfigString(context, "token"));
