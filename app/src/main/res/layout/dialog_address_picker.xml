@@ -3,13 +3,32 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Picker
-        android:id="@+id/dialog_np_number_picker"
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content">
+        <lu.shaode.buyerrescue.ui.WheelView
+            android:id="@+id/dialog_address_wheel_province"
+            android:layout_gravity="left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-        </Picker>
+        </lu.shaode.buyerrescue.ui.WheelView>
+        <lu.shaode.buyerrescue.ui.WheelView
+            android:id="@+id/dialog_address_wheel_city"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </lu.shaode.buyerrescue.ui.WheelView>
+        <lu.shaode.buyerrescue.ui.WheelView
+            android:id="@+id/dialog_address_wheel_county"
+            android:layout_gravity="right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </lu.shaode.buyerrescue.ui.WheelView>
+        </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"

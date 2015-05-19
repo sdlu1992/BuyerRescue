@@ -61,7 +61,11 @@ public class FragmentWishList extends FragmentParentList implements AdapterWishL
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getActionBar().setTitle(getString(R.string.title_section3));
+        try{
+            getActionBar().setTitle(getString(R.string.title_section3));
+        } catch (Exception e){
+            e.printStackTrace();
+        }
         mAdapter = new AdapterWishList(getActivity(), ContentWishList.ITEMS, FragmentWishList.this);
         Log.e(TAG + " sdlu", "ContentWishList.ITEMS.size()= " + ContentWishList.ITEMS.size());
         setListAdapter(mAdapter);
@@ -173,7 +177,7 @@ public class FragmentWishList extends FragmentParentList implements AdapterWishL
     }
 
     public void order(){
-        showDialogLoading();
+//        showDialogLoading();
         JSONArray goodArray = new JSONArray();
         JSONArray wishArray = new JSONArray();
         for(ContentWishList.Wish wish : ContentWishList.ITEMS){
@@ -190,33 +194,38 @@ public class FragmentWishList extends FragmentParentList implements AdapterWishL
         }
         Log.e(TAG + " sdlu", "jsonArray.toString()= " + goodArray.toString());
         Log.e(TAG + " sdlu", "wishArray.toString()= " + wishArray.toString());
-        BizManager.getInstance(getActivity()).addOrder(goodArray,wishArray, new ApiListener() {
-            @Override
-            public void success(JSONObject jsonObject) {
-                Log.e(TAG + " sdlu", "jsonObject.toString()= " + jsonObject.toString());
-                try {
-                    int response = jsonObject.getInt("response");
-                    switch (response){
-                        case 1:
-                            String orderId = jsonObject.getString("order_id");
-                            Intent intent = new Intent(getActivity(), ActOrderDetail.class);
-                            intent.putExtra("order_id", orderId);
-                            startActivity(intent);
-                            break;
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                dismissDialogLoading();
-            }
-
-            @Override
-            public void error(String string) {
-                Log.e(TAG + " sdlu", "string= " + string);
-                showToastMessage(string);
-                dismissDialogLoading();
-            }
-        });
+        Intent intent = new Intent(getActivity(), ActOrderVerify.class);
+        intent.putExtra("goods", goodArray.toString());
+        intent.putExtra("wishes", wishArray.toString());
+        startActivity(intent);
+        dismissOrderDialog();
+//        BizManager.getInstance(getActivity()).addOrder(goodArray,wishArray, new ApiListener() {
+//            @Override
+//            public void success(JSONObject jsonObject) {
+//                Log.e(TAG + " sdlu", "jsonObject.toString()= " + jsonObject.toString());
+//                try {
+//                    int response = jsonObject.getInt("response");
+//                    switch (response){
+//                        case 1:
+//                            String orderId = jsonObject.getString("order_id");
+//                            Intent intent = new Intent(getActivity(), ActOrderDetail.class);
+//                            intent.putExtra("order_id", orderId);
+//                            startActivity(intent);
+//                            break;
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//                dismissDialogLoading();
+//            }
+//
+//            @Override
+//            public void error(String string) {
+//                Log.e(TAG + " sdlu", "string= " + string);
+//                showToastMessage(string);
+//                dismissDialogLoading();
+//            }
+//        });
     }
 
     public void setTotalPrice(){

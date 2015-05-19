@@ -49,7 +49,11 @@ public class FragmentCollectList extends FragmentParentList implements SwipeRefr
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getActionBar().setTitle(getString(R.string.title_section5));
+        try{
+            getActionBar().setTitle(getString(R.string.title_section5));
+        } catch (Exception e){
+            e.printStackTrace();
+        }
         mAdapter = new AdapterCollectList(getActivity(), ContentCollectList.ITEMS);
         Log.e(TAG + " sdlu", "ContentWishList.ITEMS.size()= " + ContentWishList.ITEMS.size());
         setListAdapter(mAdapter);

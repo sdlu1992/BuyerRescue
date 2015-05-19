@@ -28,6 +28,7 @@ public class ContentOrderList {
         public String id;
         public ArrayList<ContentHistoryList.History> histories;
         public String date;
+        public ContentAddressList.Address address;
 
         public Order(String id, String date) {
             this.id = id;
@@ -46,6 +47,7 @@ public class ContentOrderList {
             try {
                 this.id = jsonObject.getString("id");
                 this.date = jsonObject.getString("date");
+                this.address = new ContentAddressList.Address(jsonObject.getJSONObject("address"));
             } catch (JSONException e) {
                 e.printStackTrace();
             }

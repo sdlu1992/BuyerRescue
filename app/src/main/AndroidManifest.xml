@@ -65,6 +65,14 @@
             android:name=".ui.ActAddressNew"
             android:label="@string/title_activity_act_address_new" >
         </activity>
+        <activity
+            android:name=".ui.ActAddressChoose"
+            android:label="@string/title_activity_act_address_choose" >
+        </activity>
+        <activity
+            android:name=".ui.ActOrderVerify"
+            android:label="@string/title_activity_act_order_verify" >
+        </activity>
     </application>
 
 </manifest>

@@ -36,12 +36,13 @@ public class ActOrderDetail extends ActParent implements View.OnClickListener {
     ListView listHistory;
     AdapterOrderHistoryList mAdapter;
     TextView tvState;
-    TextView tvAddress;
     TextView tvBuyer;
     TextView tvId;
     TextView tvDate;
     TextView tvPriceTotal;
-
+    TextView tvAddressName;
+    TextView tvAddressPhone;
+    TextView tvAddressDetail;
     String orderId;
 
     ContentOrderList.Order order;
@@ -72,11 +73,13 @@ public class ActOrderDetail extends ActParent implements View.OnClickListener {
         btRefund.setOnClickListener(this);
         listHistory = (ListView) findViewById(R.id.act_order_history_list);
         tvState = (TextView) findViewById(R.id.act_order_state);
-        tvAddress = (TextView) findViewById(R.id.act_order_address);
         tvBuyer = (TextView) findViewById(R.id.act_order_buyer);
         tvId = (TextView) findViewById(R.id.act_order_id);
         tvDate = (TextView) findViewById(R.id.act_order_date);
         tvPriceTotal = (TextView) findViewById(R.id.act_order_total);
+        tvAddressDetail = (TextView) findViewById(R.id.act_order_address_detail);
+        tvAddressName = (TextView) findViewById(R.id.act_order_address_name);
+        tvAddressPhone = (TextView) findViewById(R.id.act_order_address_phone);
 
     }
 
@@ -189,13 +192,15 @@ public class ActOrderDetail extends ActParent implements View.OnClickListener {
         listHistory.setAdapter(mAdapter);
         ViewUtil.setListViewHeightBasedOnChildren(listHistory);
         tvState.setText(getResources().getStringArray(R.array.state_order)[order.getHistories().get(0).state]);
-        tvAddress.setText(buyer.address);
         tvDate.setText(getString(R.string.order_date_prefix) + order.date.substring(0, 19));
         tvId.setText(getString(R.string.order_id_prefix) + order.id);
         tvBuyer.setText(getString(R.string.order_buyer_prefix) + buyer.name);
         minState();
         btPay.setText(getResources().getStringArray(R.array.state_will)[state]);
         setTotalPrice();
+        tvAddressDetail.setText(getString(R.string.address_address_prefix)+order.address.province+order.address.city+order.address.county);
+        tvAddressName.setText(getString(R.string.address_name_prefix)+order.address.name);
+        tvAddressPhone.setText(order.address.phone);
     }
 
     public void setTotalPrice() {

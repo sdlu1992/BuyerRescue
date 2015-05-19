@@ -17,9 +17,11 @@
             android:id="@+id/frag_address_add"
             android:layout_width="wrap_content"
             android:layout_height="50dip"
-            android:layout_alignParentRight="true"
+            android:layout_centerHorizontal="true"
             android:background="@drawable/sel_b_button_red"
-            android:text="@string/buy_now"
+            android:text="@string/address_new"
+            android:paddingRight="10dip"
+            android:paddingLeft="10dip"
             android:textColor="@color/white" />
 
     </RelativeLayout>

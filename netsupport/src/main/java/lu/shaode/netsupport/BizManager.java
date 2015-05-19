@@ -107,10 +107,13 @@ public class BizManager {
         post(ApiConfig._ORDER, params, listener);
     }
 
-    public void addOrder(JSONArray goods, JSONArray wishes, final  ApiListener listener){
+    public void addOrder(JSONArray goods, JSONArray wishes, String addressId, final  ApiListener listener){
         Map<String, String> params = new HashMap<>();
         params.put("goods", goods.toString());
-        params.put("wish_list", wishes.toString());
+        params.put("address_id", addressId);
+        if(wishes != null){
+            params.put("wish_list", wishes.toString());
+        }
         post(ApiConfig._ORDER, params, listener);
     }
 

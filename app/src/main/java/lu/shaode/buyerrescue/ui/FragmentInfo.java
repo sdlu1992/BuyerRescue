@@ -59,7 +59,11 @@ public class FragmentInfo extends FragmentParent implements View.OnClickListener
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActionBar().setTitle(getString(R.string.title_section2_2));
+        try{
+            getActionBar().setTitle(getString(R.string.title_section2_2));
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override

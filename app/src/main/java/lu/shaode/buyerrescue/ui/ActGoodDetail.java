@@ -201,7 +201,6 @@ public class ActGoodDetail extends ActParent implements ViewPager.OnPageChangeLi
     }
 
     public void order(){
-        showDialogLoading();
         Map<String, String> mGood = new HashMap<>();
         mGood.put("id", good.id);
         mGood.put("count", String.valueOf(dialogNumberPicker.npCount.getValue()));
@@ -209,35 +208,39 @@ public class ActGoodDetail extends ActParent implements ViewPager.OnPageChangeLi
         final JSONArray jsonArray = new JSONArray();
         jsonArray.put(jGood);
         Log.e(TAG + " sdlu", "jsonArray.toString()= " + jsonArray.toString());
-        BizManager.getInstance(ActGoodDetail.this).addOrder(jsonArray, new ApiListener() {
-                    @Override
-                    public void success(JSONObject jsonObject) {
-                        Log.e(TAG + " sdlu", "jsonObject.toString()= " + jsonObject.toString());
-                        try {
-                            int response = jsonObject.getInt("response");
-                            switch (response){
-                                case 1:
-                                    String orderId = jsonObject.getString("order_id");
-                                    Intent intent = new Intent(ActGoodDetail.this, ActOrderDetail.class);
-                                    intent.putExtra("order_id", orderId);
-                                    startActivity(intent);
-                                    dismissPickerDialog();
-                                    break;
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                        dismissDialogLoading();
-                    }
-
-                    @Override
-                    public void error(String string) {
-                        Log.e(TAG + " sdlu", "string= " + string);
-                        showToastMessage(string);
-                        dismissDialogLoading();
-                    }
-                });
+        Intent intent = new Intent(this, ActOrderVerify.class);
+        intent.putExtra("goods", jsonArray.toString());
+        startActivity(intent);
+        dismissPickerDialog();
+//        BizManager.getInstance(ActGoodDetail.this).addOrder(jsonArray, new ApiListener() {
+//                    @Override
+//                    public void success(JSONObject jsonObject) {
+//                        Log.e(TAG + " sdlu", "jsonObject.toString()= " + jsonObject.toString());
+//                        try {
+//                            int response = jsonObject.getInt("response");
+//                            switch (response){
+//                                case 1:
+//                                    String orderId = jsonObject.getString("order_id");
+//                                    Intent intent = new Intent(ActGoodDetail.this, ActOrderDetail.class);
+//                                    intent.putExtra("order_id", orderId);
+//                                    startActivity(intent);
+//                                    dismissPickerDialog();
+//                                    break;
+//                            }
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//
+//                        dismissDialogLoading();
+//                    }
+//
+//                    @Override
+//                    public void error(String string) {
+//                        Log.e(TAG + " sdlu", "string= " + string);
+//                        showToastMessage(string);
+//                        dismissDialogLoading();
+//                    }
+//                });
 
     }
 

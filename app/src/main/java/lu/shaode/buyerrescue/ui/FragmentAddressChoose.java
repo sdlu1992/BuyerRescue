@@ -3,15 +3,12 @@ package lu.shaode.buyerrescue.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,11 +16,7 @@ import org.json.JSONObject;
 
 import lu.shaode.buyerrescue.R;
 import lu.shaode.buyerrescue.adapter.AdapterAddressList;
-import lu.shaode.buyerrescue.adapter.AdapterGoodsList;
 import lu.shaode.buyerrescue.ui.dummy.ContentAddressList;
-import lu.shaode.buyerrescue.ui.dummy.ContentGoods;
-import lu.shaode.buyerrescue.ui.dummy.ContentStore;
-import lu.shaode.buyerrescue.util.StringUtil;
 import lu.shaode.netsupport.BizManager;
 import lu.shaode.netsupport.listener.ApiListener;
 
@@ -34,22 +27,22 @@ import lu.shaode.netsupport.listener.ApiListener;
  * Activities containing this fragment MUST implement the {@link lu.shaode.buyerrescue.ui.FragmentParentList.OnFragmentInteractionListener}
  * interface.
  */
-public class FragmentAddressList extends FragmentParentList implements View.OnClickListener{
+public class FragmentAddressChoose extends FragmentParentList{
 
     private final String TAG = ((Object) this).getClass().getSimpleName();
 
     Button btAddressNew;
     public AdapterAddressList mAdapter;
 
-    public static FragmentAddressList newInstance() {
-        return new FragmentAddressList();
+    public static FragmentAddressChoose newInstance() {
+        return new FragmentAddressChoose();
     }
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public FragmentAddressList() {
+    public FragmentAddressChoose() {
     }
 
     @Override
@@ -65,7 +58,7 @@ public class FragmentAddressList extends FragmentParentList implements View.OnCl
         // Inflate the layout for this fragment
         View view = inflater.inflate(getLayoutContent(), container, false);
         btAddressNew = (Button) view.findViewById(R.id.frag_address_add);
-        btAddressNew.setOnClickListener(this);
+        btAddressNew.setVisibility(View.GONE);
         return view;
     }
 
@@ -95,27 +88,21 @@ public class FragmentAddressList extends FragmentParentList implements View.OnCl
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-
+        Log.e(TAG + " sdlu", "position= " + position);
+        Intent intent = new Intent();
+        intent.putExtra("address", ContentAddressList.ITEMS.get(position).jsonObject.toString());
+        getActivity().setResult(Activity.RESULT_OK, intent);
+        getActivity().finish();
     }
 
     public void getAddressList(){
         btAddressNew.post(new Runnable() {
             @Override
             public void run() {
-                ((ActParent)getActivity()).showDialogLoading();
+                ((ActParent) getActivity()).showDialogLoading();
             }
         });
         BizManager.getInstance(getActivity()).getAddressList(new AddressApiListener());
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.frag_address_add:
-                Intent intent = new Intent(getActivity(), ActAddressNew.class);
-                startActivity(intent);
-                break;
-        }
     }
 
     class AddressApiListener implements ApiListener{

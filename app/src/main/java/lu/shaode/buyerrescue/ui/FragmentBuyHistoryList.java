@@ -54,7 +54,11 @@ public class FragmentBuyHistoryList extends FragmentParentList implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getActionBar().setTitle(getString(R.string.title_section4));
+        try{
+            getActionBar().setTitle(getString(R.string.title_section4));
+        } catch (Exception e){
+            e.printStackTrace();
+        }
         mAdapter = new AdapterHistoryList(getActivity(), ContentHistoryList.ITEMS, FragmentBuyHistoryList.this);
         Log.e(TAG + " sdlu", "ContentWishList.ITEMS.size()= " + ContentWishList.ITEMS.size());
         setListAdapter(mAdapter);

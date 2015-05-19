@@ -69,7 +69,11 @@ public class FragmentHome extends FragmentParent implements SwipeRefreshLayout.O
         randomItems.clear();
         cateItems.clear();
         othersItems.clear();
-        getActionBar().setTitle(getString(R.string.title_section1));
+        try{
+            getActionBar().setTitle(getString(R.string.title_section1));
+        } catch (Exception e){
+            e.printStackTrace();
+        }
         Log.e(TAG + " sdlu", "ContentWishList.ITEMS.size()= " + ContentWishList.ITEMS.size());
     }
 

@@ -34,7 +34,11 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_act_login">登录</string>
     <string name="cannot_empty_name">姓名不能为空</string>
+    <string name="cannot_empty_address_name">姓名不能为空</string>
     <string name="cannot_empty_phone">手机号不能为空</string>
+    <string name="cannot_empty_address_zip">邮政编码不能为空</string>
+    <string name="cannot_empty_address_detail">详细地址不能为空</string>
+    <string name="cannot_empty_address_simple">请选择省市区</string>
     <string name="cannot_empty_pwd">密码不能为空</string>
     <string name="cannot_empty_email">电子邮箱不能为空</string>
     <string name="pwd_not_same">密码不一致</string>
@@ -80,6 +84,7 @@
     <string name="pay_success">付款成功！</string>
     <string name="is_buy">确认购买吗？</string>
     <string name="buy_success">购买成功！</string>
+    <string name="add_address_success">添加收货地址成功！</string>
     <string name="appraise_success">评价成功！</string>
     <string name="is_continue">确认继续吗？</string>
     <string-array name="state_order">
@@ -132,4 +137,12 @@
     <string name="address_simple">省、市、区</string>
     <string name="address_detail">详细地址</string>
     <string name="address_zip">邮政编码</string>
+    <string name="address_new">添加收货地址</string>
+    <string name="save">保存</string>
+
+    <string name="address_name_prefix">收货人：</string>
+    <string name="address_address_prefix">收货地址：</string>
+    <string name="settings_address_manage">管理收货地址</string>
+    <string name="title_activity_act_address_choose">ActAddressChoose</string>
+    <string name="title_activity_act_order_verify">确认订单</string>
 </resources>

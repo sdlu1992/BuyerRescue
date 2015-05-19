@@ -1,5 +1,6 @@
 package lu.shaode.buyerrescue.util;
 
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
@@ -18,6 +19,7 @@ public class ViewUtil {
         }
 
         int totalHeight = 0;
+        Log.e("ViewUtil"+ " sdlu", "listAdapter= " + listAdapter.getCount());
         for (int i = 0; i < listAdapter.getCount(); i++) {
             View listItem = listAdapter.getView(i, null, listView);
             listItem.measure(0, 0);
@@ -25,7 +27,11 @@ public class ViewUtil {
         }
 
         ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        if (listAdapter.getCount()>1){
+           params.height = totalHeight/2;
+        } else {
+            params.height = totalHeight ;
+        }
         listView.setLayoutParams(params);
     }
 }

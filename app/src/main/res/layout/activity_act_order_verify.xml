@@ -1,0 +1,130 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="lu.shaode.buyerrescue.ui.ActOrderVerify">
+
+    <RelativeLayout
+        android:id="@+id/act_order_verify_bottom"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/act_order_verify_buy"
+            style="@android:style/ButtonBar"
+            android:layout_width="wrap_content"
+            android:layout_height="50dip"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/sel_b_button_red"
+            android:text="@string/title_activity_act_order_verify"
+            android:textColor="@color/white" />
+
+    </RelativeLayout>
+    <ScrollView
+        android:layout_above="@+id/act_order_verify_bottom"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+            <RelativeLayout
+                android:id="@+id/act_order_verify_address_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/act_order_verify_address_sign"
+                    android:layout_alignParentRight="true"
+                    android:text=">"
+                    android:textSize="25dip"
+                    android:layout_marginLeft="10dip"
+                    android:layout_marginRight="10dip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:layout_centerVertical="true"/>
+
+                <TextView
+                    android:id="@+id/act_order_verify_address_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/grey_deep"
+                    android:layout_marginLeft="5dip"
+                    android:layout_marginTop="5dip"
+                    android:textSize="18dip"
+                    android:text="text"
+                    android:layout_alignParentLeft="true"/>
+
+                <TextView
+                    android:id="@+id/act_order_verify_address_phone"
+                    android:textColor="@color/grey_deep"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18dip"
+                    android:layout_marginRight="5dip"
+                    android:layout_toRightOf="@+id/act_order_verify_address_name"
+                    android:layout_toLeftOf="@+id/act_order_verify_address_sign"
+                    android:text="text"
+                    android:layout_alignBottom="@+id/act_order_verify_address_name"
+                    android:layout_alignTop="@+id/act_order_verify_address_name"
+                    android:gravity="right"
+                    />
+
+                <TextView
+                    android:id="@+id/act_order_verify_address_detail"
+                    android:text="text"
+                    android:layout_marginTop="5dip"
+                    android:layout_alignLeft="@+id/act_order_verify_address_name"
+                    android:layout_marginBottom="5dip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/act_order_verify_address_name"/>
+            </RelativeLayout>
+            <View
+                android:id="@+id/act_order_verify_line1"
+                android:layout_width="fill_parent"
+                android:layout_height="1px"
+                android:layout_below="@+id/act_order_verify_address"
+                android:background="@color/grey_light"
+                />
+
+            <View
+                android:id="@+id/act_order_verify_line2"
+                android:layout_width="fill_parent"
+                android:layout_height="1px"
+                android:layout_marginTop="20dip"
+                android:layout_below="@+id/act_order_verify_line1"
+                android:background="@color/grey_light"
+                />
+            <ListView
+                android:id="@+id/act_order_verify_history_list"
+                android:background="@color/white"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+            </ListView>
+            <TextView
+                android:id="@+id/act_order_verify_total"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="10dip"
+                android:gravity="right"
+                android:visibility="gone"
+                android:text="100yuan"/>
+
+            <View
+                android:id="@+id/act_order_verify_line3"
+                android:layout_width="fill_parent"
+                android:layout_height="1px"
+                android:layout_below="@+id/act_order_verify_total"
+                android:background="@color/grey_light"
+                />
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

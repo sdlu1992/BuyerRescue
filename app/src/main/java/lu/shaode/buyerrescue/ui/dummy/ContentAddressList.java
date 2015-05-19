@@ -33,8 +33,10 @@ public class ContentAddressList {
         public String city;
         public String county;
         public String zip;
+        public int isDefault;
+        public JSONObject jsonObject;
 
-        public Address(String id, String detail, String name, String phone, String province, String city, String county, String zip) {
+        public Address(String id, String detail, String name, String phone, String province, String city, String county, String zip, int isDefault) {
             this.id = id;
             this.detail = detail;
             this.name = name;
@@ -43,6 +45,7 @@ public class ContentAddressList {
             this.city = city;
             this.county = county;
             this.zip = zip;
+            this.isDefault = isDefault;
         }
 
         public Address(JSONObject jsonObject){
@@ -55,9 +58,11 @@ public class ContentAddressList {
                 this.city = jsonObject.getString("city");
                 this.county = jsonObject.getString("county");
                 this.zip = jsonObject.getString("zip");
+                this.isDefault = jsonObject.getInt("is_default");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+            this.jsonObject = jsonObject;
         }
 
         @Override

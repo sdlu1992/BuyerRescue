@@ -10,18 +10,23 @@
     <EditText
         android:id="@+id/act_address_new_name"
         android:hint="@string/address_name"
+        android:singleLine="true"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
 
     <EditText
         android:id="@+id/act_address_new_phone"
         android:hint="@string/phone"
+        android:singleLine="true"
+        android:inputType="phone"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
 
     <EditText
         android:id="@+id/act_address_new_zip"
         android:hint="@string/address_zip"
+        android:singleLine="true"
+        android:inputType="numberDecimal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
 
@@ -40,4 +45,23 @@
         android:gravity="left|top"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dip"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/act_address_new_save"
+            android:layout_width="wrap_content"
+            android:layout_height="50dip"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/sel_b_button_red"
+            android:text="@string/save"
+            android:paddingRight="10dip"
+            android:paddingLeft="10dip"
+            android:textColor="@color/white" />
+
+    </RelativeLayout>
 </LinearLayout>
