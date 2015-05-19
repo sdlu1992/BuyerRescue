@@ -2,14 +2,21 @@ package lu.shaode.buyerrescue.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import lu.shaode.buyerrescue.R;
 import lu.shaode.buyerrescue.adapter.AdapterGoodsList;
 import lu.shaode.buyerrescue.ui.dummy.ContentGoods;
 import lu.shaode.buyerrescue.ui.dummy.ContentStore;
@@ -21,29 +28,27 @@ import lu.shaode.netsupport.listener.ApiListener;
  * A fragment representing a list of Items.
  * <p/>
  * <p/>
- * Activities containing this fragment MUST implement the {@link OnFragmentInteractionListener}
+ * Activities containing this fragment MUST implement the {@link lu.shaode.buyerrescue.ui.FragmentParentList.OnFragmentInteractionListener}
  * interface.
  */
-public class FragmentListItem extends FragmentParentList{
+public class FragmentAddressList extends FragmentParentList{
 
     private final String TAG = ((Object) this).getClass().getSimpleName();
 
     int type = 0;
-    String category = "";
-    String searchKey = "";
 
     private OnFragmentInteractionListener mListener;
     public AdapterGoodsList mAdapter;
 
-    public static FragmentListItem newInstance() {
-        return new FragmentListItem();
+    public static FragmentAddressList newInstance() {
+        return new FragmentAddressList();
     }
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public FragmentListItem() {
+    public FragmentAddressList() {
     }
 
     @Override
@@ -51,16 +56,21 @@ public class FragmentListItem extends FragmentParentList{
         super.onCreate(savedInstanceState);
         mAdapter = new AdapterGoodsList(getActivity(), ContentGoods.ITEMS);
         setListAdapter(mAdapter);
-        category = getActivity().getIntent().getStringExtra("category");
-        searchKey = getActivity().getIntent().getStringExtra("search_key");
-        if (!StringUtil.isNullOrEmpty(category)){
-            type = 0;
-        } else if (!StringUtil.isNullOrEmpty(searchKey)){
-            type = 1;
-        }
-        Log.e(TAG + "sdlu", "category= " + category);
         ContentGoods.ITEMS.clear();
         getGoodList();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(getLayoutContent(), container, false);
+        return view;
+    }
+
+    @Override
+    protected int getLayoutContent() {
+        return R.layout.fragment_fragment_address_list;
     }
 
 
@@ -93,17 +103,9 @@ public class FragmentListItem extends FragmentParentList{
 
     public void getGoodList(){
         ((ActParent)getActivity()).showDialogLoading();
-        switch (type){
-            case 0:
-                BizManager.getInstance(getActivity()).getGoodsByCategory(category, new GoodsApiListener());
-                break;
-            case 1:
-                BizManager.getInstance(getActivity()).getGoodsBySearch(searchKey, new GoodsApiListener());
-                break;
-        }
     }
 
-    class GoodsApiListener implements ApiListener{
+    class AddressApiListener implements ApiListener{
 
         @Override
         public void success(JSONObject jsonObject) {

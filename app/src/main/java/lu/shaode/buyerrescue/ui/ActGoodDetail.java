@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import lu.shaode.buyerrescue.R;
+import lu.shaode.buyerrescue.ui.dialog.DialogNumberPicker;
 import lu.shaode.buyerrescue.ui.dummy.ContentCollectList;
 import lu.shaode.buyerrescue.ui.dummy.ContentGoods;
 import lu.shaode.buyerrescue.ui.dummy.ContentSolder;

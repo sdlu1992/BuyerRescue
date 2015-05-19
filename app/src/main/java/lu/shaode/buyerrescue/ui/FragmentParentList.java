@@ -8,14 +8,17 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import lu.shaode.buyerrescue.R;
+import lu.shaode.buyerrescue.ui.dialog.DialogLoading;
 
 public class FragmentParentList extends ListFragment {
 
     private Toast mToast;
     private DialogLoading mDialog;
+    private TextView tvNoGoods;
     private OnFragmentInteractionListener mListener;
 
     public static FragmentParentList newInstance() {
@@ -36,7 +39,9 @@ public class FragmentParentList extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(getLayoutContent(), container, false);
+        View view = inflater.inflate(getLayoutContent(), container, false);
+        tvNoGoods = (TextView) view.findViewById(R.id.frag_parent_no_goods);
+        return view;
     }
 
     protected int getLayoutContent() {
@@ -93,5 +98,13 @@ public class FragmentParentList extends ListFragment {
         mToast.setText(text);
         mToast.setDuration(Toast.LENGTH_SHORT);
         mToast.show();
+    }
+
+    public void showNoGoods(){
+        tvNoGoods.setVisibility(View.VISIBLE);
+    }
+
+    public void hiddenNoGoods(){
+        tvNoGoods.setVisibility(View.GONE);
     }
 }

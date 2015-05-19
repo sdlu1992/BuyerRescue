@@ -162,15 +162,17 @@ public class ActMain extends ActParent
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         switch (id){
             case R.id.action_category:
                 Intent intent = new Intent(ActMain.this, ActCategory.class);
                 startActivity(intent);
+                break;
+            case R.id.action_search:
+                Intent intent1 = new Intent(ActMain.this, ActSearch.class);
+                startActivity(intent1);
+                break;
         }
 
         return super.onOptionsItemSelected(item);

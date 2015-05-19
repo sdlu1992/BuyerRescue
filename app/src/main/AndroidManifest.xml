@@ -53,6 +53,18 @@
             android:name=".ui.ActAppraiseList"
             android:label="@string/title_activity_act_appraise_list" >
         </activity>
+        <activity
+            android:name=".ui.ActSearch"
+            android:label="@string/title_activity_act_search" >
+        </activity>
+        <activity
+            android:name=".ui.ActAddressManage"
+            android:label="@string/title_activity_act_address_manage" >
+        </activity>
+        <activity
+            android:name=".ui.ActAddressNew"
+            android:label="@string/title_activity_act_address_new" >
+        </activity>
     </application>
 
 </manifest>

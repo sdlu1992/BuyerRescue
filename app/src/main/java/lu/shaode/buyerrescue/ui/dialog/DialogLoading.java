@@ -1,4 +1,4 @@
-package lu.shaode.buyerrescue.ui;
+package lu.shaode.buyerrescue.ui.dialog;
 
 import android.app.Dialog;
 import android.content.Context;

@@ -89,7 +89,11 @@ public class ActCategory extends ActParent
                 Log.e(TAG + "sdlu keys. = ", key);
                 map.put("category", jsonObject.getString(key));
                 map.put("id", key);
-                list.add(map);
+                try{
+                    list.add(Integer.parseInt(key) - 1, map);
+                } catch (IndexOutOfBoundsException e){
+                    list.add(map);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

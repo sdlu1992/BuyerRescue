@@ -6,7 +6,7 @@ package lu.shaode.netsupport;
 public class ApiConfig {
 
     public static final boolean isDebug = true;
-    public static final String _DOMAIN_ROOT = isDebug ? "http://10.12.14.132:8098/" : "http://45.62.105.141:8000/";
+    public static final String _DOMAIN_ROOT = isDebug ? "http://10.12.64.144:8098/" : "http://45.62.105.141:8000/";
 
     public static final String _REGISTER    = _DOMAIN_ROOT
                                             + "register/";
@@ -67,4 +67,17 @@ public class ApiConfig {
 
     public static final String _GET_HOME    = _DOMAIN_ROOT
                                             + "getHome/";
+
+    public static final String _GET_GOODS_BY_SEARCH     = _DOMAIN_ROOT
+                                            + "getGoodsBySearch/";
+
+    public static final String _GET_ADDRESS_LIST = _DOMAIN_ROOT
+                                            + "getAddressList/";
+
+    public static final String _ADD_ADDRESS = _DOMAIN_ROOT
+                                            + "addAddress/";
+
+    public static final String _DEL_ADDRESS = _DOMAIN_ROOT
+                                            + "delAddress/";
+
 }

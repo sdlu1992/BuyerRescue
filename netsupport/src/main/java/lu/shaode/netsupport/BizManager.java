@@ -72,6 +72,12 @@ public class BizManager {
         post(ApiConfig._GET_GOODS_BY_CATEGORY, params, listener);
     }
 
+    public void getGoodsBySearch(String searchKey, final ApiListener listener){
+        Map<String, String> params = new HashMap<>();
+        params.put("search_key", searchKey);
+        post(ApiConfig._GET_GOODS_BY_SEARCH, params, listener);
+    }
+
     public void getGoodById(String id, final  ApiListener listener){
         Map<String, String> params = new HashMap<>();
         params.put("good_id", id);
@@ -170,6 +176,29 @@ public class BizManager {
     public void getHome(final  ApiListener listener){
         Map<String, String> params = new HashMap<>();
         post(ApiConfig._GET_HOME, params, listener);
+    }
+
+    public void getAddressList(final  ApiListener listener){
+        Map<String, String> params = new HashMap<>();
+        post(ApiConfig._GET_ADDRESS_LIST, params, listener);
+    }
+
+    public void addAddress(String name, String phone, String zip, String province, String city, String county, String detail, final  ApiListener listener){
+        Map<String, String> params = new HashMap<>();
+        params.put("name", name);
+        params.put("phone", phone);
+        params.put("province", province);
+        params.put("city", city);
+        params.put("county", county);
+        params.put("zip", zip);
+        params.put("detail", detail);
+        post(ApiConfig._ADD_ADDRESS, params, listener);
+    }
+
+    public void delAddress(String id, final  ApiListener listener){
+        Map<String, String> params = new HashMap<>();
+        params.put("address_id", id);
+        post(ApiConfig._DEL_ADDRESS, params, listener);
     }
 
     public void post(String url, Map<String, String> params, final ApiListener listener){

@@ -14,7 +14,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import lu.shaode.buyerrescue.R;
-import lu.shaode.buyerrescue.ui.dummy.ContentCollectList;
+import lu.shaode.buyerrescue.ui.dialog.DialogEditText;
 import lu.shaode.netsupport.AppConfigCache;
 import lu.shaode.netsupport.BizManager;
 import lu.shaode.netsupport.listener.ApiListener;

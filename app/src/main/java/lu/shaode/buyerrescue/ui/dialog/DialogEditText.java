@@ -1,50 +1,46 @@
-package lu.shaode.buyerrescue.ui;
+package lu.shaode.buyerrescue.ui.dialog;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.NumberPicker;
-import android.widget.TextView;
 
 import lu.shaode.buyerrescue.R;
 
 /**
  * Created by sdlu on 15/4/13.
  */
-public class DialogNumberPicker extends Dialog {
+public class DialogEditText extends Dialog {
 
     Button btOk;
     Button btCancel;
-    NumberPicker npCount;
+    EditText etNumber;
     View.OnClickListener onOkListener;
 
-    public DialogNumberPicker(Context context) {
+    public DialogEditText(Context context) {
         super(context, R.style.DialogNumberPicker);
-        setContentView(R.layout.dialog_number_picker);
+        setContentView(R.layout.dialog_edit);
         initViews();
     }
 
-    public DialogNumberPicker(Context context, int theme) {
+    public DialogEditText(Context context, int theme) {
         super(context, R.style.DialogNumberPicker);
-        setContentView(R.layout.dialog_number_picker);
+        setContentView(R.layout.dialog_edit);
         initViews();
     }
 
-    protected DialogNumberPicker(Context context, boolean cancelable, OnCancelListener cancelListener) {
+    protected DialogEditText(Context context, boolean cancelable, OnCancelListener cancelListener) {
         super(context, R.style.DialogNumberPicker);
-        setContentView(R.layout.dialog_number_picker);
+        setContentView(R.layout.dialog_edit);
         initViews();
     }
 
     public void initViews(){
-        btOk = (Button) findViewById(R.id.dialog_np_ok);
-        btCancel = (Button) findViewById(R.id.dialog_np_cancel);
-        npCount = (NumberPicker) findViewById(R.id.dialog_np_number_picker);
-        npCount.setMaxValue(100);
-        npCount.setMinValue(1);
-        npCount.setValue(1);
+        btOk = (Button) findViewById(R.id.dialog_et_ok);
+        btCancel = (Button) findViewById(R.id.dialog_et_cancel);
+        etNumber = (EditText) findViewById(R.id.dialog_et_et);
         btCancel.setOnClickListener(new OnCancelClickListener());
     }
 
@@ -59,5 +55,13 @@ public class DialogNumberPicker extends Dialog {
     public void setOnOkListener(View.OnClickListener onOkListener) {
         this.onOkListener = onOkListener;
         btOk.setOnClickListener(onOkListener);
+    }
+
+    public void setEditTextHint(String string){
+        etNumber.setHint(string);
+    }
+
+    public String getEditTextString(){
+        return etNumber.getText().toString();
     }
 }

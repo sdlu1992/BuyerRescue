@@ -2,12 +2,14 @@ package lu.shaode.buyerrescue.ui;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -84,13 +86,13 @@ public class FragmentHome extends FragmentParent implements SwipeRefreshLayout.O
         tvRandomTitle = (TextView) view.findViewById(R.id.frag_home_tv_random);
         tvOthersTitle = (TextView) view.findViewById(R.id.frag_home_tv_others);
         refreshLayout.setOnRefreshListener(this);
+        beginRefresh();
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        beginRefresh();
     }
 
     @Override
@@ -201,6 +203,23 @@ public class FragmentHome extends FragmentParent implements SwipeRefreshLayout.O
                 ViewGroup.LayoutParams.MATCH_PARENT);
         gridView.setLayoutParams(lp);
         gridView.setNumColumns(list.size());
+        gridView.setOnItemClickListener(new OnGoodClickListener(list));
         Log.e(TAG + " sdlu", "randomGridView.getWidth()= " + gridView.getWidth());
+    }
+
+    class OnGoodClickListener implements AdapterView.OnItemClickListener{
+
+        List<ContentGoods.Good> list;
+
+        OnGoodClickListener(List<ContentGoods.Good> list) {
+            this.list = list;
+        }
+
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            Intent intent = new Intent(getActivity(), ActGoodDetail.class);
+            intent.putExtra("good_id", list.get(position).id);
+            startActivity(intent);
+        }
     }
 }

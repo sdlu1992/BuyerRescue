@@ -1,8 +1,6 @@
 package lu.shaode.buyerrescue.ui;
 
 import android.app.Activity;
-import android.app.ListFragment;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
@@ -13,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import lu.shaode.buyerrescue.R;
+import lu.shaode.buyerrescue.ui.dialog.DialogLoading;
 
 public class FragmentParent extends Fragment {
 
