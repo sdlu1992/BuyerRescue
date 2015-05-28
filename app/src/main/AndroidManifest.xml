@@ -73,6 +73,10 @@
             android:name=".ui.ActOrderVerify"
             android:label="@string/title_activity_act_order_verify" >
         </activity>
+        <activity
+            android:name=".ui.ActAddressDetail"
+            android:label="@string/title_activity_act_address_detail" >
+        </activity>
     </application>
 
 </manifest>

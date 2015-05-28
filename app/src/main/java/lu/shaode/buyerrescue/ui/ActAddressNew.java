@@ -127,6 +127,7 @@ public class ActAddressNew extends ActParent implements View.OnClickListener{
                     switch (response){
                         case 1:
                             showToastMessage(R.string.add_address_success);
+                            finish();
                             break;
                         default:
                             showToastMessage(response+"");

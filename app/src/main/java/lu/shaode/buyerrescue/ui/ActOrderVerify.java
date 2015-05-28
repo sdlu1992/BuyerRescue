@@ -125,14 +125,20 @@ public class ActOrderVerify extends ActParent implements View.OnClickListener {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.e(TAG + " sdlu", "requestCode= " + requestCode);
-        String string = data.getStringExtra("address");
-        Log.e(TAG + " sdlu", "string= " + string);
-        try {
-            address = new ContentAddressList.Address(new JSONObject(string));
-            displayAddress();
-        } catch (JSONException e) {
-            e.printStackTrace();
+        switch (requestCode){
+            case REQUEST_VERIFY_ORDER:
+                if (resultCode == RESULT_OK){
+                    Log.e(TAG + " sdlu", "requestCode= " + requestCode);
+                    String string = data.getStringExtra("address");
+                    Log.e(TAG + " sdlu", "string= " + string);
+                    try {
+                        address = new ContentAddressList.Address(new JSONObject(string));
+                        displayAddress();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                break;
         }
     }
 
@@ -205,6 +211,8 @@ public class ActOrderVerify extends ActParent implements View.OnClickListener {
                                 }
                             }
                             displayAddress();
+                        } else{
+                            tvAddressName.setText(R.string.please_add_address);
                         }
                         break;
                     case 2:

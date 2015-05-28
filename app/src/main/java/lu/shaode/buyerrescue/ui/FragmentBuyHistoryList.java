@@ -22,6 +22,7 @@ import lu.shaode.buyerrescue.ui.dummy.ContentGoods;
 import lu.shaode.buyerrescue.ui.dummy.ContentHistoryList;
 import lu.shaode.buyerrescue.ui.dummy.ContentStore;
 import lu.shaode.buyerrescue.ui.dummy.ContentWishList;
+import lu.shaode.buyerrescue.util.AES;
 import lu.shaode.netsupport.BizManager;
 import lu.shaode.netsupport.listener.ApiListener;
 
@@ -244,12 +245,20 @@ public class FragmentBuyHistoryList extends FragmentParentList implements
                             public void onClick(DialogInterface dialog, int which) {
                                 showDialogLoading();
                                 Log.e(TAG + " sdlu", "history= " + history.id);
+                                String aesOrderId = "";
+                                String aesHistoryId = "";
+                                try {
+                                    aesOrderId = AES.getInstance().encrypt_string(history.order_id);
+                                    aesHistoryId = AES.getInstance().encrypt_string(history.id);
+                                } catch (Exception e){
+                                    e.printStackTrace();
+                                }
                                 switch (history.state) {
                                     case 0:
-                                        BizManager.getInstance(getActivity()).pay(history.order_id, history.id, new BizApiListener());
+                                        BizManager.getInstance(getActivity()).pay(aesOrderId, aesHistoryId, new BizApiListener());
                                         break;
                                     case 2:
-                                        BizManager.getInstance(getActivity()).takeGoods(history.order_id, history.id, new BizApiListener());
+                                        BizManager.getInstance(getActivity()).takeGoods(aesOrderId, aesHistoryId, new BizApiListener());
                                         break;
                                 }
                                 dismissDialog();

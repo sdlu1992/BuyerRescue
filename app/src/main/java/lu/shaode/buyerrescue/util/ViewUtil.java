@@ -32,6 +32,7 @@ public class ViewUtil {
         } else {
             params.height = totalHeight ;
         }
+        Log.e("ViewUtil" + " sdlu", "totalHeight= " + totalHeight);
         listView.setLayoutParams(params);
     }
 }

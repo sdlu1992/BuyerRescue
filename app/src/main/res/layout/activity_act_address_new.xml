@@ -34,6 +34,7 @@
         android:id="@+id/act_address_new_province"
         android:editable="false"
         android:hint="@string/address_simple"
+        android:focusableInTouchMode="false"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
 

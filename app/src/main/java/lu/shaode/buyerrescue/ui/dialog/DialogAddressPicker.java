@@ -64,6 +64,7 @@ public class DialogAddressPicker extends Dialog {
     }
 
     public void initViews(){
+        setTitle(R.string.dialog_choose_title);
         btOk = (Button) findViewById(R.id.dialog_np_ok);
         btCancel = (Button) findViewById(R.id.dialog_np_cancel);
         btCancel.setOnClickListener(new OnCancelClickListener());

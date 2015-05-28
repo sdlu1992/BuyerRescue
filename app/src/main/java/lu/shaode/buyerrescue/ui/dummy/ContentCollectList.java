@@ -38,7 +38,7 @@ public class ContentCollectList {
         public Collect(JSONObject jsonObject){
             try {
                 this.id = jsonObject.getString("id");
-                this.isCollect = jsonObject.getInt("isCollect");
+                this.isCollect = jsonObject.getInt("is_collect");
                 good = new ContentGoods.Good(jsonObject.getJSONObject("good"));
                 ContentStore.Store store = new ContentStore.Store(jsonObject.getJSONObject("store"));
                 good.setStore(store);

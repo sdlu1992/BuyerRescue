@@ -1,6 +1,7 @@
 package lu.shaode.buyerrescue.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v7.app.ActionBar;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import lu.shaode.buyerrescue.R;
 import lu.shaode.buyerrescue.ui.dialog.DialogLoading;
+import lu.shaode.buyerrescue.util.UserUtil;
 
 public class FragmentParentList extends ListFragment {
 
@@ -106,5 +108,21 @@ public class FragmentParentList extends ListFragment {
 
     public void hiddenNoGoods(){
         tvNoGoods.setVisibility(View.GONE);
+    }
+
+    public boolean loginVerify(){
+        if (getActivity() == null){
+            return true;
+        }
+        boolean isLogin = UserUtil.isLogin(getActivity());
+        if (!isLogin){
+            startLoginActivity();
+        }
+        return isLogin;
+    }
+
+    public void startLoginActivity(){
+        Intent intent = new Intent(getActivity(), ActLogin.class);
+        startActivity(intent);
     }
 }

@@ -15,6 +15,7 @@ import org.json.JSONObject;
 
 import lu.shaode.buyerrescue.R;
 import lu.shaode.buyerrescue.ui.dialog.DialogEditText;
+import lu.shaode.buyerrescue.util.AES;
 import lu.shaode.netsupport.AppConfigCache;
 import lu.shaode.netsupport.BizManager;
 import lu.shaode.netsupport.listener.ApiListener;
@@ -167,6 +168,11 @@ public class FragmentInfo extends FragmentParent implements View.OnClickListener
             @Override
             public void onClick(View v) {
                 showDialogLoading();
+                try {
+                    AES.getInstance().encrypt_string(dialogEditText.getEditTextString());
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
                 BizManager.getInstance(getActivity()).recharge(dialogEditText.getEditTextString(), new ApiListener() {
                     @Override
                     public void success(JSONObject jsonObject) {

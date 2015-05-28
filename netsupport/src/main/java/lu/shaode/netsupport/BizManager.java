@@ -15,6 +15,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import lu.shaode.netsupport.listener.ApiListener;
 
@@ -25,7 +26,7 @@ public class BizManager {
 
     private final String TAG = ((Object) this).getClass().getSimpleName();
     private static BizManager singleton;
-    private Context context;
+    private Context context = null;
     private RequestQueue mQueue;
 
     public static synchronized BizManager getInstance(Context context){
@@ -36,6 +37,9 @@ public class BizManager {
     }
 
     public BizManager(Context context){
+        if(this.context != null && this.context.equals(context)){
+            return;
+        }
         this.context = context;
         mQueue = Volley.newRequestQueue(context);
     }
@@ -204,7 +208,11 @@ public class BizManager {
         post(ApiConfig._DEL_ADDRESS, params, listener);
     }
 
-    public void post(String url, Map<String, String> params, final ApiListener listener){
+    public void post(final String url, final Map<String, String> params, final ApiListener listener){
+        post(url, params, 0, listener);
+    }
+
+    public void post(final String url, final Map<String, String> params, final int re, final ApiListener listener){
         params.put("platform", "android");
         params.put("token", AppConfigCache.getCacheConfigString(context, "token"));
         Request<JSONObject> request = mQueue.add(new JsonObjectRequest(Request.Method.POST, url,
@@ -219,7 +227,11 @@ public class BizManager {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e(TAG + "sdlu error.getMessage() = ", error.toString());
-                listener.error(error.toString());
+                if (re > 2) {
+                    listener.error(error.toString());
+                } else {
+                    post(url, params, re+1, listener);
+                }
             }
         }));
         mQueue.start();
@@ -244,5 +256,9 @@ public class BizManager {
             }
         }));
         mQueue.start();
+    }
+
+    public void cancel(){
+        mQueue.cancelAll(new Object());
     }
 }

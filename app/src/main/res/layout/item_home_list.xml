@@ -15,7 +15,7 @@
         android:layout_below="@+id/item_home_image"
         android:layout_marginTop="10dip"
         android:maxLines="2"
-        android:textSize="14dip"
+        android:textSize="12dip"
         android:textColor="@color/black"
         android:text="hello"
         />

@@ -56,7 +56,6 @@
                     android:layout_marginLeft="5dip"
                     android:layout_marginTop="5dip"
                     android:textSize="18dip"
-                    android:text="text"
                     android:layout_alignParentLeft="true"/>
 
                 <TextView
@@ -68,7 +67,6 @@
                     android:layout_marginRight="5dip"
                     android:layout_toRightOf="@+id/act_order_verify_address_name"
                     android:layout_toLeftOf="@+id/act_order_verify_address_sign"
-                    android:text="text"
                     android:layout_alignBottom="@+id/act_order_verify_address_name"
                     android:layout_alignTop="@+id/act_order_verify_address_name"
                     android:gravity="right"
@@ -76,7 +74,6 @@
 
                 <TextView
                     android:id="@+id/act_order_verify_address_detail"
-                    android:text="text"
                     android:layout_marginTop="5dip"
                     android:layout_alignLeft="@+id/act_order_verify_address_name"
                     android:layout_marginBottom="5dip"
@@ -92,14 +89,14 @@
                 android:background="@color/grey_light"
                 />
 
-            <View
-                android:id="@+id/act_order_verify_line2"
-                android:layout_width="fill_parent"
-                android:layout_height="1px"
-                android:layout_marginTop="20dip"
-                android:layout_below="@+id/act_order_verify_line1"
-                android:background="@color/grey_light"
-                />
+            <!--<View-->
+                <!--android:id="@+id/act_order_verify_line2"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="1px"-->
+                <!--android:layout_marginTop="20dip"-->
+                <!--android:layout_below="@+id/act_order_verify_line1"-->
+                <!--android:background="@color/grey_light"-->
+                <!--/>-->
             <ListView
                 android:id="@+id/act_order_verify_history_list"
                 android:background="@color/white"
@@ -117,13 +114,13 @@
                 android:visibility="gone"
                 android:text="100yuan"/>
 
-            <View
-                android:id="@+id/act_order_verify_line3"
-                android:layout_width="fill_parent"
-                android:layout_height="1px"
-                android:layout_below="@+id/act_order_verify_total"
-                android:background="@color/grey_light"
-                />
+            <!--<View-->
+                <!--android:id="@+id/act_order_verify_line3"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="1px"-->
+                <!--android:layout_below="@+id/act_order_verify_total"-->
+                <!--android:background="@color/grey_light"-->
+                <!--/>-->
         </LinearLayout>
     </ScrollView>
 

@@ -95,14 +95,16 @@ public class FragmentAddressList extends FragmentParentList implements View.OnCl
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-
+        Intent intent = new Intent(getActivity(), ActAddressDetail.class);
+        intent.putExtra("address", ContentAddressList.ITEMS.get(position).jsonObject.toString());
+        startActivity(intent);
     }
 
     public void getAddressList(){
         btAddressNew.post(new Runnable() {
             @Override
             public void run() {
-                ((ActParent)getActivity()).showDialogLoading();
+                ((ActParent) getActivity()).showDialogLoading();
             }
         });
         BizManager.getInstance(getActivity()).getAddressList(new AddressApiListener());
@@ -158,4 +160,6 @@ public class FragmentAddressList extends FragmentParentList implements View.OnCl
 
         }
     }
+
+
 }

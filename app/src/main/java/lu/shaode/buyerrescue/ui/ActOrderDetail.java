@@ -23,6 +23,7 @@ import lu.shaode.buyerrescue.ui.dummy.ContentHistoryList;
 import lu.shaode.buyerrescue.ui.dummy.ContentOrderList;
 import lu.shaode.buyerrescue.ui.dummy.ContentSolder;
 import lu.shaode.buyerrescue.ui.dummy.ContentStore;
+import lu.shaode.buyerrescue.util.AES;
 import lu.shaode.buyerrescue.util.ViewUtil;
 import lu.shaode.netsupport.BizManager;
 import lu.shaode.netsupport.listener.ApiListener;
@@ -221,12 +222,18 @@ public class ActOrderDetail extends ActParent implements View.OnClickListener {
                             public void onClick(DialogInterface dialog, int which) {
                                 showDialogLoading();
                                 Log.e(TAG + " sdlu", "order= " + order.id);
+                                String aes = "";
+                                try {
+                                    aes = AES.getInstance().encrypt_string(order.id);
+                                } catch (Exception e){
+                                    e.printStackTrace();
+                                }
                                 switch (state) {
                                     case 0:
-                                        BizManager.getInstance(ActOrderDetail.this).pay(order.id, "", new BizApiListener());
+                                        BizManager.getInstance(ActOrderDetail.this).pay(aes, "", new BizApiListener());
                                         break;
                                     case 2:
-                                        BizManager.getInstance(ActOrderDetail.this).takeGoods(order.id, "", new BizApiListener());
+                                        BizManager.getInstance(ActOrderDetail.this).takeGoods(aes, "", new BizApiListener());
                                         break;
                                 }
                             }

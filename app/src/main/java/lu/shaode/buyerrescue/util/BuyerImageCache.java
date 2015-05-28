@@ -78,8 +78,8 @@ public class BuyerImageCache implements ImageLoader.ImageCache {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                memory.clear();
             }
+            memory.clear();
         }
         // 放入图片到内存
         memory.put(MD5Util.MD5(url), bitmap);

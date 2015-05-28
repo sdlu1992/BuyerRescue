@@ -137,7 +137,11 @@
     <string name="address_simple">省、市、区</string>
     <string name="address_detail">详细地址</string>
     <string name="address_zip">邮政编码</string>
+    <string name="address_area">所在地区</string>
     <string name="address_new">添加收货地址</string>
+    <string name="address_default_set">设为默认地址</string>
+    <string name="address_delete">删除收货地址</string>
+    <string name="manage">管理</string>
     <string name="save">保存</string>
 
     <string name="address_name_prefix">收货人：</string>
@@ -145,4 +149,7 @@
     <string name="settings_address_manage">管理收货地址</string>
     <string name="title_activity_act_address_choose">ActAddressChoose</string>
     <string name="title_activity_act_order_verify">确认订单</string>
+    <string name="dialog_choose_title">请选择地址</string>
+    <string name="title_activity_act_address_detail">收货地址</string>
+    <string name="please_add_address">请添加收货地址</string>
 </resources>

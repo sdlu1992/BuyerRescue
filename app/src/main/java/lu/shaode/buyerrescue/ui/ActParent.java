@@ -5,6 +5,7 @@ package lu.shaode.buyerrescue.ui;
  */
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -17,6 +18,7 @@ import java.util.HashMap;
 
 import lu.shaode.buyerrescue.R;
 import lu.shaode.buyerrescue.ui.dialog.DialogLoading;
+import lu.shaode.buyerrescue.util.UserUtil;
 import lu.shaode.netsupport.AppConfigCache;
 
 public class ActParent extends ActionBarActivity{
@@ -147,9 +149,17 @@ public class ActParent extends ActionBarActivity{
         return new HashMap<String, String>();
     }
 
-    public boolean isLogin(){
-        return !AppConfigCache.getCacheConfigString(this, "token").equals("");
+    public boolean loginVerify(){
+        boolean isLogin = UserUtil.isLogin(this);
+        if (!isLogin){
+            startLoginActivity();
+        }
+        return isLogin;
     }
 
+    public void startLoginActivity(){
+        Intent intent = new Intent(this, ActLogin.class);
+        startActivity(intent);
+    }
 }
 

@@ -15,10 +15,19 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+
 import lu.shaode.buyerrescue.R;
+import lu.shaode.buyerrescue.util.AES;
 import lu.shaode.netsupport.BizManager;
 import lu.shaode.netsupport.listener.ApiListener;
 
@@ -104,7 +113,15 @@ public class ActRegister extends ActParent implements View.OnClickListener {
         }
 
         BizManager bizManager = BizManager.getInstance(getApplicationContext());
-        bizManager.register(phone, name, pwd, email, new ApiListener() {
+        String aesPwd = "";
+        try {
+            aesPwd = AES.getInstance().encrypt_string(pwd);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, getString(R.string.net_wrong), Toast.LENGTH_SHORT).show();
+            return;
+        }
+        bizManager.register(phone, name, aesPwd, email, new ApiListener() {
             @Override
             public void success(JSONObject jsonObject) {
                 Log.e(TAG + "sdlu jsonObject.toString() = " , jsonObject.toString());

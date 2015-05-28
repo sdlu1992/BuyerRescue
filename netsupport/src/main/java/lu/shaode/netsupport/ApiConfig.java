@@ -6,7 +6,7 @@ package lu.shaode.netsupport;
 public class ApiConfig {
 
     public static final boolean isDebug = true;
-    public static final String _DOMAIN_ROOT = isDebug ? "http://10.12.64.144:8098/" : "http://45.62.105.141:8000/";
+    public static final String _DOMAIN_ROOT = isDebug ? "http://10.12.64.18:8098/" : "http://45.62.105.141:8000/";
 
     public static final String _REGISTER    = _DOMAIN_ROOT
                                             + "register/";

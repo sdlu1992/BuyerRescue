@@ -13,22 +13,31 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+
 import lu.shaode.buyerrescue.R;
+import lu.shaode.buyerrescue.util.AES;
 import lu.shaode.netsupport.AppConfigCache;
 import lu.shaode.netsupport.BizManager;
 import lu.shaode.netsupport.listener.ApiListener;
 
-public class ActLogin extends ActParent implements View.OnClickListener{
+public class ActLogin extends ActParent implements View.OnClickListener {
 
     private final String TAG = ((Object) this).getClass().getSimpleName();
-    public static final int         REQUEST_REGISTER = 1992;
-    EditText    etPhone;
-    EditText    etPwd;
-    Button      btRegister;
-    Button      btLogin;
+    public static final int REQUEST_REGISTER = 1992;
+    EditText etPhone;
+    EditText etPwd;
+    Button btRegister;
+    Button btLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +81,7 @@ public class ActLogin extends ActParent implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.act_login_bt_register:
                 Intent intent = new Intent(ActLogin.this, ActRegister.class);
                 startActivityForResult(intent, REQUEST_REGISTER);
@@ -86,36 +95,41 @@ public class ActLogin extends ActParent implements View.OnClickListener{
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode){
+        switch (requestCode) {
             case REQUEST_REGISTER:
-                if (resultCode == RESULT_OK){
+                if (resultCode == RESULT_OK) {
                     etPhone.setText(data.getStringExtra("phone"));
                     etPwd.setText(data.getStringExtra("password"));
                 }
         }
     }
 
-    private void startActivity(Class clazz){
+    private void startActivity(Class clazz) {
         Intent intent = new Intent(ActLogin.this, clazz);
         startActivity(intent);
     }
 
-    private void login(){
+    private void login() {
         final String phone = etPhone.getText().toString();
-        final String pwd = etPwd.getText().toString();
-        if (phone.equals("")){
+        String pwd = etPwd.getText().toString();
+        if (phone.equals("")) {
             Toast.makeText(this, getString(R.string.cannot_empty_phone), Toast.LENGTH_SHORT).show();
             return;
-        } else if (pwd.equals("")){
+        } else if (pwd.equals("")) {
             Toast.makeText(this, getString(R.string.cannot_empty_pwd), Toast.LENGTH_SHORT).show();
             return;
         }
-        if (pwd.length() < 6){
+        if (pwd.length() < 6) {
             Toast.makeText(this, getString(R.string.pwd_more_6), Toast.LENGTH_SHORT).show();
             return;
         }
         showDialogLoading();
         BizManager bizManager = BizManager.getInstance(getApplicationContext());
+        try {
+            pwd = AES.getInstance().encrypt_string(pwd);
+        } catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException | IOException e) {
+            e.printStackTrace();
+        }
         bizManager.login(phone, pwd, new ApiListener() {
             @Override
             public void success(JSONObject jsonObject) {
