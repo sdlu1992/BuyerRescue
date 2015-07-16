@@ -109,6 +109,9 @@ public class ActOrderDetail extends ActParent implements View.OnClickListener {
                     startActivity(intent);
                     return;
                 }
+                if ((state == 4) || (state == 1) || (state == 5) || state == 6 || state == 7){
+                    return;
+                }
                 showBuyDialog();
                 break;
             case R.id.act_order_refund:
@@ -202,6 +205,11 @@ public class ActOrderDetail extends ActParent implements View.OnClickListener {
         tvAddressDetail.setText(getString(R.string.address_address_prefix)+order.address.province+order.address.city+order.address.county);
         tvAddressName.setText(getString(R.string.address_name_prefix)+order.address.name);
         tvAddressPhone.setText(order.address.phone);
+        if (minState() == 4){
+            btRefund.setVisibility(View.VISIBLE);
+        } else {
+            btRefund.setVisibility(View.GONE);
+        }
     }
 
     public void setTotalPrice() {
@@ -225,7 +233,7 @@ public class ActOrderDetail extends ActParent implements View.OnClickListener {
                                 String aes = "";
                                 try {
                                     aes = AES.getInstance().encrypt_string(order.id);
-                                } catch (Exception e){
+                                } catch (Exception e) {
                                     e.printStackTrace();
                                 }
                                 switch (state) {

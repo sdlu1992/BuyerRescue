@@ -26,6 +26,7 @@
         android:hint="@string/please_input_pwd"
         android:inputType="textPassword"
         android:layout_below="@id/act_register_et_phone"
+        android:maxLength="18"
         android:layout_marginTop="20dip"
         />
 
@@ -34,6 +35,7 @@
         style="@style/MyEditTextStyle"
         android:hint="@string/please_input_pwd_again"
         android:inputType="textPassword"
+        android:maxLength="18"
         android:layout_below="@id/act_register_et_pwd"
         android:layout_marginTop="20dip"
         />

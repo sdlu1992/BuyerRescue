@@ -168,12 +168,13 @@ public class FragmentInfo extends FragmentParent implements View.OnClickListener
             @Override
             public void onClick(View v) {
                 showDialogLoading();
+                String aes = "";
                 try {
-                    AES.getInstance().encrypt_string(dialogEditText.getEditTextString());
+                    aes = AES.getInstance().encrypt_string(dialogEditText.getEditTextString());
                 } catch (Exception e){
                     e.printStackTrace();
                 }
-                BizManager.getInstance(getActivity()).recharge(dialogEditText.getEditTextString(), new ApiListener() {
+                BizManager.getInstance(getActivity()).recharge(aes, new ApiListener() {
                     @Override
                     public void success(JSONObject jsonObject) {
                         Log.e(TAG + " sdlu", "jsonObject= " + jsonObject.toString());

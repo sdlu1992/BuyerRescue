@@ -99,10 +99,11 @@ public class AdapterHistoryList extends BaseAdapter{
             case 3:
                 button.setVisibility(View.VISIBLE);
                 button.setText(context.getString(R.string.appraise_order));
+                btRefund.setVisibility(View.GONE);
                 break;
             case 1:
-                btRefund.setVisibility(View.VISIBLE);
                 button.setVisibility(View.GONE);
+                btRefund.setVisibility(View.GONE);
                 break;
             case 4:
                 btRefund.setVisibility(View.VISIBLE);
